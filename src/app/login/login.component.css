@@ -1,0 +1,59 @@
+body {
+    display: flex;
+    font-size: 1.5em;
+    height: 100%;
+    width: 100%;
+    align-items: center;
+    justify-content: center;
+}
+
+.loginBox {
+    margin: auto;
+    width: 40%;
+    height: 70%;
+    align-self: center;
+    display: flex;
+    border: 1px solid gray;
+    border-radius: 10px;
+    flex-direction: column;
+}
+
+.loginLogo img {
+    width: 100%;
+    height: auto;
+}
+
+form {
+    text-align: center;
+}
+
+input {
+    border: none;
+    outline: none;
+}
+
+input[type="text"], input[type="password"] {
+    width: 50%;
+    height: 32px;
+    margin: 15px 0;
+    border-bottom: 1px solid gray;
+}
+
+input[type="submit"] {
+    margin-bottom: 20px;
+    color: white;
+    background-color: #009999;    
+    cursor: pointer;
+    width: 25%;
+    height: 32px;
+    border-radius: 10px; 
+}
+
+
+@media screen and (max-width: 500px) {
+    .loginBox {
+        width: 100%;
+        border: none;
+        align-content: stretch;
+    }
+}

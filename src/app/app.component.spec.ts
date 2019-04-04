@@ -1,35 +1,44 @@
 import { TestBed, async } from '@angular/core/testing';
-import { RouterTestingModule } from '@angular/router/testing';
 import { AppComponent } from './app.component';
+import { EsriMapComponent } from './esri-map/esri-map.component';
 
 describe('AppComponent', () => {
-  beforeEach(async(() => {
+  let fixture, app;
+
+  beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [
-        RouterTestingModule
-      ],
       declarations: [
-        AppComponent
+        AppComponent,
+        EsriMapComponent
       ],
     }).compileComponents();
+
+    fixture = TestBed.createComponent(AppComponent);
+    app = fixture.debugElement.componentInstance;
+
+  });
+
+  it('should create the app', async(() => {
+    expect(app).toBeTruthy();
   }));
 
-  it('should create the app', () => {
-    const fixture = TestBed.createComponent(AppComponent);
-    const app = fixture.debugElement.componentInstance;
-    expect(app).toBeTruthy();
-  });
+  it('should set zoom level', async(() => {
+    expect(app.mapZoomLevel).toEqual(jasmine.any(Number));
+  }));
 
-  it(`should have as title 'movil-app'`, () => {
-    const fixture = TestBed.createComponent(AppComponent);
-    const app = fixture.debugElement.componentInstance;
-    expect(app.title).toEqual('movil-app');
-  });
+  it('should set basemap type', async(() => {
+    expect(app.basemapType).toEqual(jasmine.any(String));
+    expect(app.basemapType).toEqual('satellite');
+  }));
 
-  it('should render title in a h1 tag', () => {
-    const fixture = TestBed.createComponent(AppComponent);
-    fixture.detectChanges();
-    const compiled = fixture.debugElement.nativeElement;
-    expect(compiled.querySelector('h1').textContent).toContain('Welcome to movil-app!');
-  });
+  it('should set map center location', async(() => {
+    expect(app.mapCenter).toEqual(jasmine.any(Array));
+    expect(app.mapCenter.length).toEqual(2);
+  }));
+
+  it('zoom has a default value', async( () => {
+    expect(app.mapZoomLevel).toBeGreaterThanOrEqual(0);
+    expect(app.mapZoomLevel).toBeLessThanOrEqual(24);
+  }));
+
 });
