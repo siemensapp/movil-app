@@ -9,6 +9,10 @@ export class SideMenuComponent implements OnInit {
 
   constructor() { }
 
+  closeMenu() {
+    document.getElementById("side-menu-body").style.width = "0px";
+  }
+
   ngOnInit() {
   }
 

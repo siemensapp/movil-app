@@ -1,9 +1,11 @@
-.side-menu-body {
+#side-menu-body {
     width: 60%;
     height: 100vh;
     border-right: 1px solid lightgray;
     display: flex;
     flex-direction: column;
+    transition: 0.5s;
+    z-index: 1;
 }
 
 .side-menu-img {
@@ -46,10 +48,13 @@
     text-decoration: none;
     height: 32px;
     line-height: 32px;
+    transition: 0.5s;
+    background-size: 200% 100%;
+    background-image: linear-gradient(to right, white 50%, gray 50%);
 }
 
 .side-menu-options a:hover {
-    background-color: gray;
+    background-position: -100% 0;
     color: black;
     border-top-right-radius: 50px;
     border-bottom-right-radius: 50px;
