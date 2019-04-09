@@ -1,11 +1,12 @@
 #side-menu-body {
-    width: 60%;
+    width: 0;
     height: 100vh;
     border-right: 1px solid lightgray;
     display: flex;
     flex-direction: column;
     transition: 0.5s;
-    z-index: 1;
+    z-index: 999;
+    overflow-x: hidden;
 }
 
 .side-menu-img {
@@ -48,7 +49,7 @@
     text-decoration: none;
     height: 32px;
     line-height: 32px;
-    transition: 0.5s;
+    transition: 0.3s;
     background-size: 200% 100%;
     background-image: linear-gradient(to right, white 50%, gray 50%);
 }
