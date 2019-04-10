@@ -20,15 +20,16 @@ export class ContentFrameComponent implements OnInit {
         if (!this.openedbefore) {
           this.openedbefore = true;
         }
+        //document.getElementById("side-menu-body").style.borderRight = "1px solid lightgray";
         document.getElementById("side-menu-body").style.width = "60%";
         document.getElementById("side-menu-body").style.zIndex = "50";
         document.getElementById("openMenuBtn").style.transitionDelay = "0s";
-        document.getElementById("openMenuBtn").style.zIndex = "-1";
+        document.body.style.backgroundColor = "rgba(0, 0, 0, 0.6)";
       } else {
         if (this.openedbefore) {
           document.getElementById("openMenuBtn").style.transitionDelay = "0.3s";
         }
-        document.getElementById("openMenuBtn").style.zIndex = "1";
+        // document.getElementById("openMenuBtn").style.zIndex = "1";
       }
     })
   }
@@ -39,6 +40,8 @@ export class ContentFrameComponent implements OnInit {
 
   closeMenu() {
     document.getElementById("side-menu-body").style.width = "0";
+    //document.getElementById("side-menu-body").style.borderRight = "none";
+    document.body.style.backgroundColor = "white";
     this.openSource.next(false);
   }
 

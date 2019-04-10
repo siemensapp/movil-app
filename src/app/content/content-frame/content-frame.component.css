@@ -1,13 +1,15 @@
 /* side-menu-css */
 #side-menu-body {
     width: 0;
-    height: 100vh;
-    border-right: 1px solid lightgray;
+    height: 100%;
+    position: fixed;
     display: flex;
     flex-direction: column;
     transition: 0.5s;
-    z-index: 999;
+    z-index: 1;
     overflow-x: hidden;
+    top: 0;
+    left: 0;
 }
 
 .side-menu-img {
@@ -31,7 +33,7 @@
 
 .side-menu-img i {
     align-self: flex-end;
-    position: relative;
+    position: absolute;
     right: 5px;
     top: 5px;
 }
@@ -43,6 +45,8 @@
 .side-menu-options {
     color: gray;
     padding: 10px 10px 0 0;
+    height: 100%;
+    background-color: white;
 }
 
 .side-menu-options a {
@@ -64,21 +68,21 @@
 
 /* home-component-css */
 
-.frame {
-    height: 100vh;
-    width: 100%;
+body {
+    transition: background-color 0.5s;
 }
 
 #openMenuBtn{
     position: absolute;
-    top: 0;
-    left: 25px;
+    top: 5px;
+    left: 5px;
     z-index: -2;
     font-size: 32px;
     border: none;
     background-color: white;
     outline: none;
     transition: 0s;
+    display: block;
 }
 
 #openMenuBtn i {
@@ -87,4 +91,9 @@
 
 #openMenuBtn:focus {
     width: 0;
+}
+
+.content {
+    position: absolute;
+    top: 32px;
 }
