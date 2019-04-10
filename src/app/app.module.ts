@@ -7,6 +7,7 @@ import { EsriMapComponent } from './esri-map/esri-map.component';
 import { LoginComponent } from './login/login.component';
 import { HomeComponent } from './home/home.component';
 import { SideMenuComponent } from './side-menu/side-menu.component';
+import { ContentModule } from './content/content.module';
 
 @NgModule({
   declarations: [
@@ -19,7 +20,8 @@ import { SideMenuComponent } from './side-menu/side-menu.component';
   imports: [
     BrowserModule,
     AppRoutingModule,
-    HttpClientModule
+    HttpClientModule,
+    ContentModule
   ],
   providers: [],
   bootstrap: [AppComponent]

@@ -14,8 +14,8 @@ export class LoginComponent implements OnInit {
   constructor(private httpClient: HttpRequestsService, private router: Router) { }
 
   login() {
-    var email = document.getElementById("email").value;
-    var password = document.getElementById("password").value;
+    var email = (<HTMLInputElement>document.getElementById("email")).value;
+    var password = (<HTMLInputElement>document.getElementById("password")).value;
     var data = JSON.stringify({email: email, password: password});
     Swal.showLoading();
     this.httpClient.postData( url + '/api/login', data).then( result => {
@@ -23,7 +23,7 @@ export class LoginComponent implements OnInit {
       if (!result.hasOwnProperty('token')) Swal.fire({type: "error", title: "Error", text: String(result)});
       else {
         Swal.fire({type: "success", title: "Exito", text: JSON.stringify(result)})
-          .then(() => { this.router.navigate(['home']) });
+          .then(() => { this.router.navigate(['home/list']) });
       }
     })
     
