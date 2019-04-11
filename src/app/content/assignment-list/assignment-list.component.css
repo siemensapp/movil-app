@@ -23,6 +23,18 @@
     width: 100%;
 }
 
+.taskPreview {
+    padding: 20px;
+    width: 100vw;
+    background-image: linear-gradient(to right, white 50%, gray 50%);
+    background-size: 200% 100%;
+    transition: 0.3s;        
+}
+.taskPreview:hover {
+    background-color: gray;
+    background-position: -100% 0;
+}
+
 /* Loading Spinner */
 
 .lds-dual-ring {

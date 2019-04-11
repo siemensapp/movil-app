@@ -6,8 +6,9 @@
   <div *ngIf="results.length; else emptyResults">
 
     <div *ngFor="let tasks of results">
-      <div>
-        {{tasks.Celular}}
+      <div (click)="goToDetails(tasks)" class="taskPreview">
+        {{tasks.Descripcion}}<br>
+        {{tasks.FechaInicio.split("T")[0]}} 
       </div>
 
     </div>

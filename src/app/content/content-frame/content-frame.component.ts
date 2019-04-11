@@ -1,6 +1,6 @@
 import {Component,OnInit} from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
-import {ComponentsCommsService} from '../../components-comms.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-content-frame',
@@ -9,7 +9,7 @@ import {ComponentsCommsService} from '../../components-comms.service';
 })
 export class ContentFrameComponent implements OnInit {
 
-  constructor(private componentsComms: ComponentsCommsService) {}
+  constructor(private router: Router) {}
   private openSource = new BehaviorSubject(false);
   open = this.openSource.asObservable();
   openedbefore = false;
@@ -40,9 +40,17 @@ export class ContentFrameComponent implements OnInit {
 
   closeMenu() {
     document.getElementById("side-menu-body").style.width = "0";
-    //document.getElementById("side-menu-body").style.borderRight = "none";
     document.body.style.backgroundColor = "white";
     this.openSource.next(false);
+  }
+
+  logout() {
+    localStorage.setItem('user', null);
+    setTimeout(()=> {
+      document.body.style.backgroundColor = "white";
+      this.router.navigate(["login"]);
+    }, 1000);
+    
   }
 
 }

@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpRequestsService } from '../../http-requests.service';
+import { ComponentsCommsService } from '../../components-comms.service';
+import { Router } from '@angular/router';
 import { Subject } from 'rxjs';
 import { url } from '../../../assets/js/variables';
 
@@ -14,19 +16,22 @@ export class AssignmentListComponent implements OnInit {
   loadingData = new Subject();
 
 
-  constructor(private http: HttpRequestsService) { }
+  constructor(private http: HttpRequestsService, private componentsComms: ComponentsCommsService, private router: Router) { }
 
   ngOnInit() {
     this.getData();
   }
 
+  goToDetails( data:JSON ) {
+    this.componentsComms.setDataAssignment(data);
+    this.router.navigate(["home/details"]);
+  }
+
   getData() {
     this.user = localStorage.getItem('user');
     this.http.getData(url + "/api/getWorkerAssignments/" + this.user).then( result =>{
-      setTimeout(() => {
-        console.log(result);
-        this.loadingData.next(result);
-      }, 3000)
+      console.log(result);
+      this.loadingData.next(result);
     });     
   }
 

@@ -1,25 +1,18 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, Subject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ComponentsCommsService {
+  private dataAssignment = new BehaviorSubject(null);
+  data = this.dataAssignment.asObservable();
 
-  // Comunica los botones de abrir y cerrar el menu lateral
-  private openMenuSource = new BehaviorSubject(false);
-  open = this.openMenuSource.asObservable();
-  openedbefore = false;
-
-  constructor() { }
-
-  //Funcion que cambia el bool 'bandera', indica si esta abierto el menu
-  openMenu() {
-    this.openMenuSource.next(true);
+  setDataAssignment( data:JSON ) {
+    this.dataAssignment.next(data);
   }
 
-  //Funcion que cambia el bool 'bandera', indica si esta cerrado el menu
-  closeMenu() {
-    this.openMenuSource.next(false);
+  getDataAssignment() {
+    return this.data;
   }
 }
