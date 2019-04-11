@@ -1,99 +1,100 @@
 /* side-menu-css */
 #side-menu-body {
-    width: 0;
-    height: 100%;
-    position: fixed;
-    display: flex;
-    flex-direction: column;
-    transition: 0.5s;
-    z-index: 1;
-    overflow-x: hidden;
-    top: 0;
-    left: 0;
+  width: 0;
+  height: 100%;
+  position: fixed;
+  display: flex;
+  flex-direction: column;
+  transition: 0.5s;
+  z-index: 1;
+  overflow-x: hidden;
+  top: 0;
+  left: 0;
 }
 
 .side-menu-img {
-    height: 40%;
-    border-bottom: 1px gray solid;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    padding-bottom: 5px;
-    background-image: url("../../../assets/images/img-background5.jpeg");
-    background-size: cover;
-    color: white;
+  height: 40%;
+  border-bottom: 1px gray solid;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding-bottom: 5px;
+  background-image: url("../../../assets/images/img-background5.jpeg");
+  background-size: cover;
+  color: white;
 }
 
 .side-menu-img img {
-    border-radius: 50%;
-    width: 60%;
-    margin-bottom: 20px;
+  border-radius: 50%;
+  width: 60%;
+  margin-bottom: 20px;
 }
 
 .side-menu-img i {
-    align-self: flex-end;
-    position: absolute;
-    right: 5px;
-    top: 5px;
+  align-self: flex-end;
+  position: absolute;
+  right: 5px;
+  top: 5px;
 }
 
 .side-menu-options a i {
-    margin: 0 10px;
+  margin: 0 10px;
 }
 
 .side-menu-options {
-    color: gray;
-    padding: 10px 10px 0 0;
-    height: 100%;
-    background-color: white;
+  color: gray;
+  padding: 10px 10px 0 0;
+  height: 100%;
+  background-color: white;
 }
 
 .side-menu-options a {
-    display: block;
-    text-decoration: none;
-    height: 32px;
-    line-height: 32px;
-    transition: 0.3s;
-    background-size: 200% 100%;
-    background-image: linear-gradient(to right, white 50%, gray 50%);
+  display: block;
+  text-decoration: none;
+  height: 32px;
+  line-height: 32px;
+  transition: 0.3s;
+  background-size: 200% 100%;
+  background-image: linear-gradient(to right, white 50%, gray 50%);
 }
 
 .side-menu-options a:hover {
-    background-position: -100% 0;
-    color: black;
-    border-top-right-radius: 50px;
-    border-bottom-right-radius: 50px;
+  background-position: -100% 0;
+  color: black;
+  border-top-right-radius: 50px;
+  border-bottom-right-radius: 50px;
 }
 
 /* home-component-css */
 
 body {
-    transition: background-color 0.5s;
+  transition: background-color 0.5s;
 }
 
-#openMenuBtn{
-    position: absolute;
-    top: 5px;
-    left: 5px;
-    z-index: -2;
-    font-size: 32px;
-    border: none;
-    background-color: white;
-    outline: none;
-    transition: 0s;
-    display: block;
+#openMenuBtn {
+  position: absolute;
+  top: 5px;
+  left: 5px;
+  z-index: -2;
+  font-size: 32px;
+  border: none;
+  background-color: white;
+  outline: none;
+  transition: 0s;
+  display: block;
 }
 
 #openMenuBtn i {
-    transition: 0s;
+  transition: 0s;
 }
 
 #openMenuBtn:focus {
-    width: 0;
+  width: 0;
 }
 
+/* Content div */
 .content {
-    position: absolute;
-    top: 32px;
+  position: absolute;
+  top: 40px;
 }

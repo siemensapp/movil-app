@@ -18,4 +18,13 @@ export class HttpRequestsService {
       })
     })
   }
+
+  getData( url:string ) {
+    return new Promise( resolve => {
+      this.http.get(url).map( result => result ).subscribe(dataReceived => {
+        resolve(dataReceived);
+      })
+    })
+  }
+
 }

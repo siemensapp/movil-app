@@ -1,3 +1,28 @@
-<p>
-  assignment-list works!
-</p>
+<div class="gray-bar">
+  Asignaciones
+</div>
+
+<div class="main-content" *ngIf="loadingData | async as results; else loading">
+  <div *ngIf="results.length; else emptyResults">
+
+    <div *ngFor="let tasks of results">
+      <div>
+        {{tasks.Celular}}
+      </div>
+
+    </div>
+
+  </div>
+</div>
+
+
+<ng-template #loading>
+  <div class="lds-dual-ring"></div>
+</ng-template>
+
+<ng-template #emptyResults>
+  <div class="no-results-img">
+    <img src="../../../assets/images/no-results3.png" />
+    NO HAY ASIGNACIONES
+  </div>
+</ng-template>
