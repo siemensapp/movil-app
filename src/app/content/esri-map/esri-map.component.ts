@@ -95,7 +95,7 @@ export class EsriMapComponent implements OnInit {
         zoom: this._zoom,
         map: map
       };
-
+      console.log("Done loading modules");
       return new EsriMapView(mapViewProperties);
 
     } catch (error) {
@@ -106,6 +106,7 @@ export class EsriMapComponent implements OnInit {
 
   // Finalize a few things once the MapView has been loaded
   houseKeeping(mapView) {
+    console.log("Got into house keeping");
     mapView.when(() => {
       console.log('mapView ready: ', mapView.ready);
       this._loaded = mapView.ready;

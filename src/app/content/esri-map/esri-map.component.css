@@ -2,5 +2,6 @@
 @import url('https://js.arcgis.com/4.10/esri/css/main.css');
 
 .esri-view {
-  height: 50%;
+  height: 100%;
+  width: inherit;
 }
