@@ -1,6 +1,7 @@
 import {Component,OnInit} from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import { Router } from '@angular/router';
+import { ComponentsCommsService } from '../../components-comms.service';
 
 @Component({
   selector: 'app-content-frame',
@@ -9,18 +10,27 @@ import { Router } from '@angular/router';
 })
 export class ContentFrameComponent implements OnInit {
 
-  constructor(private router: Router) {}
+  constructor(private router: Router, private componentComms: ComponentsCommsService) {}
   private openSource = new BehaviorSubject(false);
   open = this.openSource.asObservable();
   openedbefore = false;
 
   ngOnInit() {
+    
+    this.componentComms.back.subscribe( result => {
+      if (result) {
+        document.getElementById("openMenuBtn").innerHTML = "<i class='fas fa-arrow-left'></i>";        
+      }
+      else {
+        document.getElementById("openMenuBtn").innerHTML = "<i class='fas fa-bars'></i>";        
+      }
+    })
+
     this.open.subscribe(data => {
       if (data) {
         if (!this.openedbefore) {
           this.openedbefore = true;
         }
-        //document.getElementById("side-menu-body").style.borderRight = "1px solid lightgray";
         document.getElementById("side-menu-body").style.width = "60%";
         document.getElementById("side-menu-body").style.zIndex = "50";
         document.getElementById("openMenuBtn").style.transitionDelay = "0s";
@@ -29,13 +39,15 @@ export class ContentFrameComponent implements OnInit {
         if (this.openedbefore) {
           document.getElementById("openMenuBtn").style.transitionDelay = "0.3s";
         }
-        // document.getElementById("openMenuBtn").style.zIndex = "1";
       }
     })
   }
 
-  openMenu() {
-    this.openSource.next(true);
+  menuFunction() {
+    if (this.componentComms.getBackStatus()) {
+      this.router.navigate(['home/list'])
+      this.componentComms.setBackStatus(false);
+    } else this.openSource.next(true);
   }
 
   closeMenu() {
