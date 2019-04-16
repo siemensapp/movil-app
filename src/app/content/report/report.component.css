@@ -1,0 +1,95 @@
+.report-frame {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    padding: 20px;
+}
+
+input, textarea {
+    outline: none;
+    border: none;
+    width: 100%;
+    margin: 20px 5px;
+    background-color: inherit;
+    transition: border-bottom ease-in-out;
+}
+
+.oneField {
+    display: flex;
+    width: 100%;
+}
+
+
+.twoField {
+    display: flex;
+    justify-content: space-between;
+}
+
+
+/*******************/
+.styledInput {
+    position: relative;
+    width: 100%;
+}
+
+/* input */
+.styledInput input {
+    border-bottom: 1px solid #757575;
+}
+
+.styledInput input:focus {
+    border-bottom: 2px solid #0077FF;
+}
+
+.styledInput input ~ label {
+    position: absolute;
+    left: 5px;
+    top: 15px;
+    z-index: -1;
+    transition: 0.2s;
+    color: #757575;
+}
+
+.styledInput input:focus ~ label {
+    color: #0077FF;
+    transform: translateY(-15px);
+    font-size: 0.8rem;
+}
+
+.styledInput input:not(:placeholder-shown) ~ label{
+    transform: translateY(-15px);
+    font-size: 0.8rem;
+}
+
+/* textarea */
+.styledInput textarea {
+    border-bottom: 1px solid #757575;
+}
+
+.styledInput textarea:focus {
+    border-bottom: 2px solid #0077FF;
+}
+
+.styledInput textarea ~ label {
+    position: absolute;
+    left: 5px;
+    top: 30px;
+    z-index: -1;
+    transition: 0.2s;
+    color: #757575;
+}
+
+.styledInput textarea:focus ~ label {
+    color: #0077FF;
+    transform: translateY(-15px);
+    font-size: 0.8rem;
+}
+
+.styledInput textarea:not(:placeholder-shown) ~ label{
+    transform: translateY(-30px);
+    font-size: 0.8rem;
+}
+
+
+
+

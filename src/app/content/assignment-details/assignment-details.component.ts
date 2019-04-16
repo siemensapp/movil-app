@@ -35,10 +35,10 @@ export class AssignmentDetailsComponent implements OnInit {
     let btn = document.getElementById("expandBtn");
     let details = document.getElementById("details");
 
-    map.style.height = (this.fullMap) ? "40vh" : "100vh";
-    details.style.display = (this.fullMap) ? "block" : "none";
+    map.style.height = (this.fullMap) ? "40vh" : "100vh";    
     btn.style.top = (this.fullMap) ? "37vh" : "85vh";
     btn.innerHTML = (this.fullMap) ? "<i class='fas fa-expand'></i>" : "<i class='fas fa-compress'></i>";
+    details.style.display = (this.fullMap) ? "block" : "none";
     this.fullMap = !this.fullMap;
   }
 

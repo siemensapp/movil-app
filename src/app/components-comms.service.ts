@@ -25,4 +25,8 @@ export class ComponentsCommsService {
   getDataAssignment() {
     return JSON.parse(localStorage.getItem('dataAssignment'));
   }
+
+  deleteDataAssignment() {
+    localStorage.removeItem('dataAssignment');
+  }
 }

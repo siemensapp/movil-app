@@ -6,16 +6,15 @@
 </div>
 
 <div id="details">
+  <div>
+    {{data.NombreSitio}}<br>
+    {{data.FechaInicio.split("T")[0]}} - {{data.FechaFin.split("T")[0]}}
+  </div>
   <h2>Descripción</h2>
   {{data.Descripcion}}
-  <hr>
-  <h2>Sitio</h2>
-  {{data.NombreSitio}}
+  <hr> 
   <h2>Contacto</h2>
   {{data.NombreContacto}}<br>
-  {{data.TelefonoContacto}}
-  <h2>Fecha inicio</h2>
-  {{data.FechaInicio.split("T")[0]}}
-  <h2>Fecha final</h2>
-  {{data.FechaFin.split("T")[0]}}
+  {{data.TelefonoContacto}}<br>
+  <a [routerLink]= "['/home/report']"><button>Reporte</button> </a>
 </div>

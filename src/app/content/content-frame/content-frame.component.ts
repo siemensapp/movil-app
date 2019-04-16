@@ -46,6 +46,7 @@ export class ContentFrameComponent implements OnInit {
   menuFunction() {
     if (this.componentComms.getBackStatus()) {
       this.router.navigate(['home/list'])
+      this.componentComms.deleteDataAssignment();
       this.componentComms.setBackStatus(false);
     } else this.openSource.next(true);
   }
