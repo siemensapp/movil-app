@@ -69,14 +69,23 @@
 /* home-component-css */
 
 body {
+  position: relative;
   transition: background-color 0.5s;
 }
 
+.navbar {
+  background-color: inherit;
+  border: 1px solid #757575;
+  width: 100vw;
+  position: sticky;
+  position: -webkit-sticky;
+  z-index: 10;
+  margin-top: 0;
+  top: 0;
+  left: 0;
+}
+
 #openMenuBtn {
-  position: absolute;
-  top: 5px;
-  left: 5px;
-  z-index: -2;
   font-size: 32px;
   border: none;
   background-color: white;
@@ -95,6 +104,6 @@ body {
 
 /* Content div */
 .content {
-  position: absolute;
-  top: 45px;
+  position: relative;
+  height: auto;
 }
