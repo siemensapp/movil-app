@@ -93,7 +93,10 @@ export class EsriMapComponent implements OnInit {
         container: this.mapViewEl.nativeElement,
         center: this._center,
         zoom: this._zoom,
-        map: map
+        map: map,
+        ui: {
+          components: ["attribution"]
+        }
       };
       console.log("Done loading modules");
       return new EsriMapView(mapViewProperties);

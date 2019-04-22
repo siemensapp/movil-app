@@ -2,7 +2,7 @@
   <app-esri-map [center]="mapCenter" [basemap]="basemapType" [zoom]="mapZoomLevel"
     (mapLoadedEvent)="mapLoadedEvent($event)">
   </app-esri-map>
-  <div id="expandBtn" (click)="fullScreenMap()"><i class="fas fa-expand"></i></div>
+  <!-- <div id="expandBtn" (click)="fullScreenMap()"><i class="fas fa-expand"></i></div> -->
 </div>
 
 <div id="details">
@@ -15,6 +15,7 @@
   <hr> 
   <h2>Contacto</h2>
   {{data.NombreContacto}}<br>
-  {{data.TelefonoContacto}}<br>
-  <a [routerLink]= "['/home/report']"><button>Reporte</button> </a>
+  <a href="tel:{{data.NombreContacto}}"><button class="callBtn"><i class="fas fa-phone"></i></button></a>
+  <br>
+  <a [routerLink]= "['/home/report']"><button class="reportBtn">Reporte</button> </a>
 </div>

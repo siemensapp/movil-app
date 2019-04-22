@@ -13,7 +13,7 @@ export class AssignmentDetailsComponent implements OnInit {
 
   // Set our map properties
   mapCenter = [-74.183888, 4.777068];
-  basemapType = 'topo';
+  basemapType = 'dark-gray';
   mapZoomLevel = 16;
 
   // See app.component.html

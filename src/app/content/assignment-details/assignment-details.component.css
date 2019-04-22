@@ -1,5 +1,5 @@
 #map-container {
-  height: 40vh;
+  height: 95vh;
   width: 100vw;
   outline: 1px solid gray;
   transition: height 0.6s;
@@ -21,4 +21,40 @@
   right: 15px;
   transition: 0.6s;
 
+}
+
+.reportBtn {
+  margin-left: 25%;
+  border: none;
+  background-color: #009999;
+  color: white;
+  text-transform: uppercase;
+  text-align: center;
+  width: 50%;
+}
+
+.callBtn {
+  background: none;
+  border: none;
+  outline: none;
+  border-radius: 50px;
+  color: #757575;
+}
+
+.callBtn:focus {
+  background-color: gray;
+  border: none;
+  border-radius: 50%;
+}
+
+
+#details {
+  border: 1px solid #757575;
+  border-top-left-radius: 25px;
+  border-top-right-radius: 25px;
+  position: absolute;
+  bottom: 5%;
+  left: 5%;
+  width: 90%;  
+  background-color: white;
 }

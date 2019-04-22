@@ -75,7 +75,7 @@ body {
 
 .navbar {
   background-color: inherit;
-  border: 1px solid #757575;
+  /* border: 1px solid #757575; */
   width: 100vw;
   position: sticky;
   position: -webkit-sticky;

@@ -46,16 +46,47 @@ body {
     outline: none;
 }
 
-input {
-    width: 60%;
-    margin: auto;
-    border-radius: 50px;
-    border: none;
-    height: 32px;
-    background-color: lightgray;
-    color: gray;
-    padding-left: 40px;
+input    {
     outline: none;
+    border: none;
+    width: 90%;
+    margin: 20px 5px;
+    background-color: inherit;
+    transition: border-bottom ease-in-out;
+}
+
+/* --------------------- */
+.styledInput {
+    position: relative;
+    width: 100%;
+}
+
+/* input */
+.styledInput input {
+    border-bottom: 1px solid #757575;
+}
+
+.styledInput input:focus {
+    border-bottom: 2px solid #009999;
+}
+
+.styledInput input ~ label {
+    position: absolute;
+    left: 5px;
+    top: 15px;
+    transition: 0.2s;
+    color: #757575;
+}
+
+.styledInput input:focus ~ label {
+    color: #009999;
+    transform: translateY(-15px);
+    font-size: 0.8rem;
+}
+
+.styledInput input:not(:placeholder-shown) ~ label{
+    transform: translateY(-15px);
+    font-size: 0.8rem;
 }
 
 @media (max-width: 500px) {
