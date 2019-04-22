@@ -1,0 +1,28 @@
+.row {
+    display: flex;
+    justify-content: space-around;
+}
+
+.title {
+    text-align: center;
+    font-weight: 400;
+    width: 100%;
+}
+
+.inputDate {
+    width: 100%;
+}
+
+input {
+    border: none;
+    outline: none;
+}
+
+.subtitleReport {
+    font-size: 1.2rem;
+    font-weight: 600;
+}
+
+
+
+

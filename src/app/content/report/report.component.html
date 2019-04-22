@@ -1,20 +1,23 @@
 <div class="report-frame">
+  <div class="titleReport">Reporte general de servicio</div>
   <div class="oneField">
     <div class="styledInput">
       <input type="text" name="nombreCliente" placeholder=" "><br>
       <label>Nombre Cliente</label>
     </div>
   </div>
-  <div class="twoField">
+  <div class="oneField">
       <div class="styledInput">
         <input type="text" name="nombreContacto" placeholder=" "><br>
         <label>Nombre Contacto</label>
       </div>
-      <div class="styledInput">
-        <input type="text" name="nombreColaborador" placeholder=" "><br>
-        <label>Nombre Colaborador</label>
-      </div>
     <br>
+  </div>
+  <div class="oneField">
+    <div class="styledInput">
+      <input type="text" name="nombreColaborador" placeholder=" "><br>
+      <label>Nombre Colaborador</label>
+    </div>
   </div>
   <div class="oneField">
     <div class="styledInput">
@@ -22,18 +25,87 @@
       <label>Nombre Proyecto</label>
     </div>
   </div>
+  <div class="subtitleReport">Descripciòn del Alcance</div>
   <div class="oneField">
       <div class="styledInput">
         <textarea placeholder=" " id="descripcionAlcance"></textarea>
-        <label>Descripcion Alcance</label>
+        <!-- <label>Descripcion Alcance</label> -->
       </div>
     </div>
+  <div class="subtitleReport">Hoja de Tiempo</div>
+    <a [routerLink]="['/home/hours']" class="addLink" ><i class="fas fa-plus"></i> Añadir nueva fecha</a>
+  <div class="subtitleReport">Datos Tècnicos</div>
+    <div class="oneField">
+        <div class="styledInput">
+          <input type="text" name="nombreMarca" placeholder=" "><br>
+          <label>Marca</label>
+        </div>
+      <br>
+    </div>
+    <div class="oneField">
+        <div class="styledInput">
+          <input type="text" name="denominacionInterna" placeholder=" "><br>
+          <label>Denominacion Interna - (Cliente)</label>
+        </div>
+      <br>
+    </div>
+    <div class="oneField">
+        <div class="styledInput">
+          <input type="text" name="numeroProducto" placeholder=" "><br>
+          <label>Numero Producto (P/N) / MLFD / ID</label>
+        </div>
+      <br>
+    </div>
+    <div class="oneField">
+        <div class="styledInput">
+          <input type="text" name="numeroSerial" placeholder=" "><br>
+          <label>Numero Serial</label>
+        </div>
+      <br>
+    </div>
+    <div class="oneField">
+        <div class="styledInput">
+          <input type="text" name="caracteristicasTecnicas" placeholder=" "><br>
+          <label>Caracteristicas Tècnicas</label>
+        </div>
+      <br>
+    </div>
+    <div class="oneField">
+        <div class="styledInput">
+          <input type="text" name="estadoInicial" placeholder=" "><br>
+          <label>Estado Inicial / Antecedentes</label>
+        </div>
+      <br>
+    </div>
+  <div class="subtitleReport">Actividades Realizadas</div>
+  <div class="oneField">
+      <div class="styledInput">
+        <textarea placeholder=" " id="descripcionAlcance"></textarea>
+        <!-- <label>Descripcion Alcance</label> -->
+      </div>
+    </div>
+  <div class="subtitleReport">Conclusiones y Recomnedaciones</div>
+  <div class="oneField">
+      <div class="styledInput">
+        <textarea placeholder=" " id="descripcionAlcance"></textarea>
+        <!-- <label>Descripcion Alcance</label> -->
+      </div>
+    </div>
+  <div class="subtitleReport">Repuestos Sugeridos</div>
+  <div class="oneField">
+      <div class="styledInput">
+        <textarea placeholder=" " id="descripcionAlcance"></textarea>
+        <!-- <label>Descripcion Alcance</label> -->
+      </div>
+    </div>
+  <div class="subtitleReport">Actividades Pendientes</div>
+  <div class="oneField">
+      <div class="styledInput">
+        <textarea placeholder=" " id="descripcionAlcance"></textarea>
+        <!-- <label>Descripcion Alcance</label> -->
+      </div>
+    </div>
+  <div class="subtitleReport">Firmas</div>
 
-  <div class="styledInput">
-    <input type="text" placeholder=" "><br>
-    <label>test</label>
-  </div>
-
-
-
+  
 </div>

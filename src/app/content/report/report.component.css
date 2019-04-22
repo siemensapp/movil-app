@@ -14,6 +14,17 @@ input, textarea {
     transition: border-bottom ease-in-out;
 }
 
+.titleReport {
+    font-size: 1.5rem;
+    font-weight: 600;
+    margin: 0 auto 10px auto;
+}
+
+.subtitleReport {
+    font-size: 1.2rem;
+    font-weight: 600;
+}
+
 .oneField {
     display: flex;
     width: 100%;
@@ -25,6 +36,11 @@ input, textarea {
     justify-content: space-between;
 }
 
+.addLink {
+    text-decoration: none;
+    color: #0077FF;
+    margin: 10px auto;
+}
 
 /*******************/
 .styledInput {
@@ -63,11 +79,14 @@ input, textarea {
 
 /* textarea */
 .styledInput textarea {
-    border-bottom: 1px solid #757575;
+    border-radius: 5px;
+    font-family: inherit;
+    font-size: inherit;
+    border: 1px solid #757575;
 }
 
 .styledInput textarea:focus {
-    border-bottom: 2px solid #0077FF;
+    border: 2px solid #0077FF;
 }
 
 .styledInput textarea ~ label {
