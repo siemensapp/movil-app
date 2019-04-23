@@ -2,40 +2,79 @@
   <div class="title">
     Fecha
   </div>
-  <div class="inputDate">
-    <input type="text" placeholder="Fecha" id="datepicker">
-  </div>
+  <input placeholder="Fecha" [owlDateTime]="dt3" [owlDateTimeTrigger]="dt3">
+        <owl-date-time [pickerMode]="'dialog'" [pickerType]="'calendar'" #dt3></owl-date-time>
 </div>
 
 <div class="subtitleReport">Horas Trabajadas</div>
 
 <div class="row">
-    <div class="title">
-      Desde
-    </div>
-    <div class="inputTime">
-        <input [ngxTimepicker]="pickerDesde" placeholder="Hora">
-        <ngx-material-timepicker #pickerDesde></ngx-material-timepicker>
-    </div>
+  <div class="title">
+    Desde
   </div>
+  <div class="inputTime">
+    <input [ngxTimepicker]="pickerDesde" placeholder="Hora" [format]="24">
+    <ngx-material-timepicker #pickerDesde></ngx-material-timepicker>
+  </div>
+</div>
 
-  <div class="row">
-      <div class="title">
-        Hasta
-      </div>
-      <div class="inputTime">
-          <input [ngxTimepicker]="pickerHasta" placeholder="Hora">
-          <ngx-material-timepicker #pickerHasta></ngx-material-timepicker>
-      </div>
-    </div>
+<div class="row">
+  <div class="title">
+    Hasta
+  </div>
+  <div class="inputTime">
+    <input [ngxTimepicker]="pickerHasta" placeholder="Hora" [format]="24">
+    <ngx-material-timepicker #pickerHasta></ngx-material-timepicker>
+  </div>
+</div>
 
-    <div class="row">
-        <div class="title">
-          Descuento
-        </div>
-        <div class="inputTime">
-            <input [ngxTimepicker]="pickerDescuento" placeholder="Hora">
-            <ngx-material-timepicker #pickerDescuento></ngx-material-timepicker>
-        </div>
-      </div>
+<div class="row">
+  <div class="title">
+    Descuento
+  </div>
+  <div class="inputTime">
+    <input [ngxTimepicker]="pickerDescuento" placeholder="Hora" [format]="24">
+    <ngx-material-timepicker #pickerDescuento></ngx-material-timepicker>
+  </div>
+</div>
+<div class="subtitleReport">Clase de Trabajo</div>
 
+<div class="row">
+  <div class="title">
+    Servicio en Sitio
+  </div>
+  <div class="inputTime">
+    <input [ngxTimepicker]="pickerServicioSitio" placeholder="Hora" [format]="24">
+    <ngx-material-timepicker #pickerServicioSitio></ngx-material-timepicker>
+  </div>
+</div>
+
+<div class="row">
+  <div class="title">
+    Entrenamiento
+  </div>
+  <div class="inputTime">
+    <input [ngxTimepicker]="pickerEntrenamiento" placeholder="Duraciòn" [format]="24">
+    <ngx-material-timepicker #pickerEntrenamiento></ngx-material-timepicker>
+  </div>
+</div>
+
+<div class="row">
+  <div class="title">
+    Tiempo de Viaje
+  </div>
+  <div class="inputTime">
+    <input [ngxTimepicker]="pickerTiempoViaje" placeholder="Duraciòn" [format]="24">
+    <ngx-material-timepicker #pickerTiempoViaje></ngx-material-timepicker>
+  </div>
+</div>
+
+<div class="row">
+  <div class="title">
+    Tiempo de Espera
+  </div>
+  <div class="inputTime">
+    <input [ngxTimepicker]="pickerTiempoEspera" placeholder="Duraciòn" [format]="24">
+    <ngx-material-timepicker #pickerTiempoEspera></ngx-material-timepicker>
+  </div>
+</div>

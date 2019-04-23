@@ -7,8 +7,11 @@ import { AssignmentDetailsComponent } from './assignment-details/assignment-deta
 import { EsriMapComponent } from './esri-map/esri-map.component';
 import { ReportComponent } from './report/report.component';
 import { AddHoursComponent } from './add-hours/add-hours.component';
+import { OwlDateTimeModule, OwlNativeDateTimeModule } from 'ng-pick-datetime';
 import {NgxMaterialTimepickerModule} from 'ngx-material-timepicker';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+
+
 
 
 
@@ -17,6 +20,8 @@ import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
   imports: [
     CommonModule,
     ContentRoutingModule,
+    OwlDateTimeModule,
+    OwlNativeDateTimeModule,
     NgxMaterialTimepickerModule,
     BrowserAnimationsModule
   ]
