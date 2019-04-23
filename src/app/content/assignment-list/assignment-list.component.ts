@@ -19,6 +19,7 @@ export class AssignmentListComponent implements OnInit {
   constructor(private http: HttpRequestsService, private componentsComms: ComponentsCommsService, private router: Router) { }
 
   ngOnInit() {
+    this.componentsComms.setBackStatus(false);
     this.getData();
   }
 

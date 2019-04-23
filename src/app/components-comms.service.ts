@@ -37,11 +37,11 @@ export class ComponentsCommsService {
 
   /* Funciones horas */
   getHours() {
-    return this.hours;
+    return JSON.parse(localStorage.getItem('hours'));
   }
 
   setHours( data ) {
-    this.hoursSource.next(data);
+    localStorage.setItem('hours', JSON.stringify(data));
   }
 
 }

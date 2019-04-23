@@ -34,8 +34,8 @@
     </div>
   <div class="subtitleReport">Hoja de Tiempo</div>
     
-    <div class="hoursList" *ngIf="hours.length | async as results">
-      <div *ngFor="let records of results">
+    <div class="hoursList" *ngIf="hours.length">
+      <div *ngFor="let records of hours">
         <div class="hoursRecord">
           Registro dia : {{records.fecha}}
         </div>
@@ -118,3 +118,8 @@
 
   
 </div>
+
+
+<!-- <ng-template #nothing>
+  Here is nothing
+</ng-template> -->

@@ -52,7 +52,11 @@ input {
   right: 20px;
   box-shadow: 0px 2px 5px gray;
   
-  transition: 0.6s;
+  transition: all 0.2s;
+}
+
+#saveBtn:hover {
+    box-shadow: 0px 3px 5px black;
 }
 
 

@@ -1,6 +1,7 @@
 import {Component,OnInit} from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import { Router } from '@angular/router';
+import {Location} from '@angular/common';
 import { ComponentsCommsService } from '../../components-comms.service';
 
 @Component({
@@ -10,7 +11,7 @@ import { ComponentsCommsService } from '../../components-comms.service';
 })
 export class ContentFrameComponent implements OnInit {
 
-  constructor(private router: Router, private componentComms: ComponentsCommsService) {}
+  constructor(private router: Router, private componentComms: ComponentsCommsService, private location: Location) {}
   private openSource = new BehaviorSubject(false);
   open = this.openSource.asObservable();
   openedbefore = false;
@@ -45,9 +46,7 @@ export class ContentFrameComponent implements OnInit {
 
   menuFunction() {
     if (this.componentComms.getBackStatus()) {
-      this.router.navigate(['home/list'])
-      this.componentComms.deleteDataAssignment();
-      this.componentComms.setBackStatus(false);
+      this.location.back();
     } else this.openSource.next(true);
   }
 

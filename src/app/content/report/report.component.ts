@@ -11,12 +11,13 @@ export class ReportComponent implements OnInit {
 
   private textAreas = [ 'descripcionAlcance', 'actividadesRealizadas', 'conclusionesRecomendaciones', 'repuestosSugeridos', 'actividadesPendientes' ];
   //private textAreas = [ 'descripcionAlcance' ];
-  hours = new Subject();
+  hours = [];
 
   constructor(private componentComms: ComponentsCommsService) { }
 
   ngOnInit() {
-    this.componentComms.hours.subscribe( result => this.hours.next(result));
+    this.componentComms.setBackStatus(true);
+    this.hours = this.componentComms.getHours()['hours'];
     this.resizeTextArea();
   }
 
