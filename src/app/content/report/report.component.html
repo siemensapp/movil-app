@@ -33,6 +33,15 @@
       </div>
     </div>
   <div class="subtitleReport">Hoja de Tiempo</div>
+    
+    <div class="hoursList" *ngIf="hours.length | async as results">
+      <div *ngFor="let records of results">
+        <div class="hoursRecord">
+          Registro dia : {{records.fecha}}
+        </div>
+      </div>
+    </div>
+
     <a [routerLink]="['/home/hours']" class="addLink" ><i class="fas fa-plus"></i> Añadir nueva fecha</a>
   <div class="subtitleReport">Datos Tècnicos</div>
     <div class="oneField">
@@ -80,28 +89,28 @@
   <div class="subtitleReport">Actividades Realizadas</div>
   <div class="oneField">
       <div class="styledInput">
-        <textarea placeholder=" " id="descripcionAlcance"></textarea>
+        <textarea placeholder=" " id="actividadesRealizadas"></textarea>
         <!-- <label>Descripcion Alcance</label> -->
       </div>
     </div>
-  <div class="subtitleReport">Conclusiones y Recomnedaciones</div>
+  <div class="subtitleReport">Conclusiones y Recomendaciones</div>
   <div class="oneField">
       <div class="styledInput">
-        <textarea placeholder=" " id="descripcionAlcance"></textarea>
+        <textarea placeholder=" " id="conclusionesRecomendaciones"></textarea>
         <!-- <label>Descripcion Alcance</label> -->
       </div>
     </div>
   <div class="subtitleReport">Repuestos Sugeridos</div>
   <div class="oneField">
       <div class="styledInput">
-        <textarea placeholder=" " id="descripcionAlcance"></textarea>
+        <textarea placeholder=" " id="repuestosSugeridos"></textarea>
         <!-- <label>Descripcion Alcance</label> -->
       </div>
     </div>
   <div class="subtitleReport">Actividades Pendientes</div>
   <div class="oneField">
       <div class="styledInput">
-        <textarea placeholder=" " id="descripcionAlcance"></textarea>
+        <textarea placeholder=" " id="actividadesPendientes"></textarea>
         <!-- <label>Descripcion Alcance</label> -->
       </div>
     </div>

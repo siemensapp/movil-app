@@ -2,8 +2,10 @@
   <div class="title">
     Fecha
   </div>
-  <input placeholder="Fecha" [owlDateTime]="dt3" [owlDateTimeTrigger]="dt3">
+  <div class="inputTime">
+    <input placeholder="Fecha" [owlDateTime]="dt3" [owlDateTimeTrigger]="dt3">
         <owl-date-time [pickerMode]="'dialog'" [pickerType]="'calendar'" #dt3></owl-date-time>
+  </div>
 </div>
 
 <div class="subtitleReport">Horas Trabajadas</div>
@@ -78,3 +80,6 @@
     <ngx-material-timepicker #pickerTiempoEspera></ngx-material-timepicker>
   </div>
 </div>
+
+
+<div id="saveBtn" (click)="fullScreenMap()"><i class="far fa-save"></i></div>

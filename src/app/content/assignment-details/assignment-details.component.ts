@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ComponentsCommsService } from '../../components-comms.service';
 import { Router } from '@angular/router';
 
+
 @Component({
   selector: 'app-assignment-details',
   templateUrl: './assignment-details.component.html',
@@ -9,12 +10,14 @@ import { Router } from '@angular/router';
 })
 export class AssignmentDetailsComponent implements OnInit {
   data = null;
-  private fullMap = false;
 
   // Set our map properties
   mapCenter = [-74.183888, 4.777068];
   basemapType = 'dark-gray';
   mapZoomLevel = 16;
+
+  // Hour table
+  hours = null;
 
   // See app.component.html
   mapLoadedEvent(status: boolean) {
@@ -27,19 +30,9 @@ export class AssignmentDetailsComponent implements OnInit {
   ngOnInit() {
     this.data = JSON.parse(localStorage.getItem('dataAssignment'));
     this.componentsComms.setBackStatus(true);
+    this.hours = this.componentsComms.getHours();
   }
   
-  // Expande y minimiza el mapa
-  fullScreenMap() {
-    let map = document.getElementById("map-container")
-    let btn = document.getElementById("expandBtn");
-    let details = document.getElementById("details");
-
-    map.style.height = (this.fullMap) ? "40vh" : "100vh";    
-    btn.style.top = (this.fullMap) ? "37vh" : "85vh";
-    btn.innerHTML = (this.fullMap) ? "<i class='fas fa-expand'></i>" : "<i class='fas fa-compress'></i>";
-    details.style.display = (this.fullMap) ? "block" : "none";
-    this.fullMap = !this.fullMap;
-  }
+  
 
 }

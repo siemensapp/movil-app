@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { ComponentsCommsService } from '../../components-comms.service';
+import { Subject } from 'rxjs';
 
 @Component({
   selector: 'app-report',
@@ -7,12 +9,14 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ReportComponent implements OnInit {
 
-  // private textAreas = [ 'descripcionAlcance', 'actividadesRealizadas', 'conclusionesRecomendaciones', 'repuestosSugeridos', 'actividadesPendientes', 'anexos' ];
-  private textAreas = [ 'descripcionAlcance' ];
+  private textAreas = [ 'descripcionAlcance', 'actividadesRealizadas', 'conclusionesRecomendaciones', 'repuestosSugeridos', 'actividadesPendientes' ];
+  //private textAreas = [ 'descripcionAlcance' ];
+  hours = new Subject();
 
-  constructor() { }
+  constructor(private componentComms: ComponentsCommsService) { }
 
   ngOnInit() {
+    this.componentComms.hours.subscribe( result => this.hours.next(result));
     this.resizeTextArea();
   }
 
@@ -21,9 +25,6 @@ export class ReportComponent implements OnInit {
       let item = document.getElementById(id);
       item.addEventListener('keydown', () => {
         if (item.scrollTop != 0) {
-          console.log("scrollHeight",item.scrollHeight + "px");
-          console.log("scrollTop",item.scrollTop + "px");
-          item.style.height = "auto";
           item.style.height = item.scrollHeight + "px";
         };
       })
