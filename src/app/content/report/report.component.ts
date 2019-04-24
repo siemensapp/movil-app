@@ -49,9 +49,9 @@ export class ReportComponent implements OnInit {
       }
     }
 
-    canvas.addEventListener('mousedown', function(e){
-      var mouseX = e.pageX - this.offsetLeft;
-      var mouseY = e.pageY - this.offsetTop;
+    canvas.addEventListener('touchstart', function(e){
+      var mouseX = e.changedTouches[0].pageX - this.offsetLeft;
+      var mouseY = e.changedTouches[0].pageY - this.offsetTop;
         
       paint = true;
       addClick(mouseX, mouseY, true);
@@ -65,24 +65,25 @@ export class ReportComponent implements OnInit {
       clickDrag = [];
     });
 
-    canvas.addEventListener('mousemove', function(e){
+    canvas.addEventListener('touchmove', function(e){
       if(paint){
-        addClick(e.pageX - this.offsetLeft, e.pageY - this.offsetTop, true);
+        addClick(e.changedTouches[0].pageX - this.offsetLeft, e.changedTouches[0].pageY - this.offsetTop, true);
         redraw();
       }
     });
 
-    canvas.addEventListener('mouseup', function(e){
+    canvas.addEventListener('touchend', function(e){
       paint = false;
     });
 
-    canvas.addEventListener('mouseleave', function(e){
+    canvas.addEventListener('touchleave', function(e){
       paint = false;
     });
 
     if(canvas.style.visibility == 'visible'){
       canvas.style.visibility = 'hidden';
       canvas.style.height = '0px';
+      canvas.style.touchAction = 'none';
       document.getElementById(borrar).style.visibility = 'hidden';
             
     }
