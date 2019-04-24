@@ -22,7 +22,11 @@ export class ReportComponent implements OnInit {
   }
 
   mostrar(campo: string, borrar:string){
+<<<<<<< HEAD
     var canvas = <HTMLCanvasElement>document.getElementById(campo);
+=======
+    var canvas = <HTMLCanvasElement> document.getElementById(campo);
+>>>>>>> andres
     var context = canvas.getContext('2d'); 
     var clickX = new Array();
     var clickY = new Array();
@@ -32,7 +36,7 @@ export class ReportComponent implements OnInit {
     function addClick(x, y, dragging)
     {
       clickX.push(x);
-      clickY.push(y);
+      clickY.push(y-40);
       clickDrag.push(dragging);
     }
 
@@ -95,7 +99,7 @@ export class ReportComponent implements OnInit {
     else{
     canvas.style.visibility = 'visible';
     canvas.style.height = '250px';
-    canvas.style.width = '900px';
+    canvas.style.width = '400px';
     document.getElementById(borrar).style.visibility = 'visible';
             
     }
