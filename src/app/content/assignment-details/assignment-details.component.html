@@ -2,20 +2,25 @@
   <app-esri-map [center]="mapCenter" [basemap]="basemapType" [zoom]="mapZoomLevel" [siteMarker]="siteMarker"
     (mapLoadedEvent)="mapLoadedEvent($event)">
   </app-esri-map>
-  <!-- <div id="expandBtn" (click)="fullScreenMap()"><i class="fas fa-expand"></i></div> -->
+  <div id="acceptBtn" (click)="startAssignment()"><i class="fas fa-play"></i></div>  
+  <div id="finishBtn" (click)="finishAssignment()"><i class="fas fa-stop"></i></div>  
+  <div id="finishedBtn"><i class="fas fa-flag-checkered"></i></div>
 </div>
 
 <div id="details">
-  <div>
+  <div id="contenidoDetalles">
     {{data.NombreSitio}}<br>
     {{data.FechaInicio.split("T")[0]}} - {{data.FechaFin.split("T")[0]}}
-  </div>
+  
   <h2>Descripción</h2>
   {{data.Descripcion}}
   <hr> 
   <h2>Contacto</h2>
-  {{data.NombreContacto}}<br>
+  <div id="contacto">
+  {{data.NombreContacto}}<br>  
   <a href="tel:{{data.NombreContacto}}"><button class="callBtn"><i class="fas fa-phone"></i></button></a>
   <br>
+  </div>
+</div>
   <a [routerLink]= "['/home/report']"><button class="reportBtn">Reporte</button> </a>
 </div>

@@ -13,7 +13,7 @@ export class AssignmentDetailsComponent implements OnInit {
 
   // Set our map properties
   mapCenter = [-74.183888, 4.777068];
-  basemapType = 'dark-gray';
+  basemapType = 'streets-navigation-vector';
   mapZoomLevel = 16;
   siteMarker = [-74.183888, 4.777068];
 
@@ -36,6 +36,17 @@ export class AssignmentDetailsComponent implements OnInit {
     this.componentsComms.setBackStatus(true);
     this.hours = this.componentsComms.getHours();
   }
+
+  startAssignment(){
+    document.getElementById('acceptBtn').style.visibility='hidden';
+    document.getElementById('finishBtn').style.visibility='visible';
+  }
+
+  finishAssignment(){
+    document.getElementById('finishBtn').style.visibility='hidden';
+    document.getElementById('finishedBtn').style.visibility='visible';
+  }
+
   
   
 
