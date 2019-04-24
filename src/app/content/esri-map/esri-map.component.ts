@@ -37,6 +37,7 @@ export class EsriMapComponent implements OnInit {
   private _center: Array<number> = [0.1278, 51.5074];
   private _basemap = 'streets';
   private _loaded = false;
+  private _siteMarker: Array<number> = [0.1278, 51.5074];
 
 
   get mapLoaded(): boolean {
@@ -70,15 +71,41 @@ export class EsriMapComponent implements OnInit {
     return this._basemap;
   }
 
+  @Input()
+  set siteMarker(siteMarker: Array<number>) {
+    this._siteMarker = siteMarker;
+  }
+
+  get siteMarker(): Array<number> {
+    return this._siteMarker;
+  }
+
   constructor() { }
+
+  prepareSitePoint() {
+    let pointMap = {
+      type: "point",
+      longitude: this._siteMarker[0],
+      latitude: this._siteMarker[1]
+    }
+    let markerSymbol = {
+      type: "picture-marker",
+      url: "src/assets/images/grayLocationIcon.png",
+      width: '64px',
+      height: '64px'
+    }
+    return [pointMap, markerSymbol];
+  }
 
   async initializeMap() {
     try {
 
       // Load the modules for the ArcGIS API for JavaScript
-      const [EsriMap, EsriMapView] = await loadModules([
+      const [EsriMap, EsriMapView, PictureMarkerSymbol, Graphic] = await loadModules([
         'esri/Map',
-        'esri/views/MapView'
+        'esri/views/MapView',
+        'esri/symbols/PictureMarkerSymbol',
+        'esri/Graphic'
       ]);
 
       // Configure the Map
@@ -99,7 +126,16 @@ export class EsriMapComponent implements OnInit {
         }
       };
       console.log("Done loading modules");
-      return new EsriMapView(mapViewProperties);
+      let view = new EsriMapView(mapViewProperties);
+      let markerParams = this.prepareSitePoint();
+      view.graphics.add(
+        new Graphic({
+          geometry: markerParams[0],
+          symbol: markerParams[1]
+        })
+      );
+
+      return view;
 
     } catch (error) {
       console.log('EsriLoader: ', error);

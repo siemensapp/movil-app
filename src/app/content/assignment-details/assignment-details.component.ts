@@ -15,6 +15,7 @@ export class AssignmentDetailsComponent implements OnInit {
   mapCenter = [-74.183888, 4.777068];
   basemapType = 'dark-gray';
   mapZoomLevel = 16;
+  siteMarker = [-74.183888, 4.777068];
 
   // Hour table
   hours = null;
@@ -29,6 +30,9 @@ export class AssignmentDetailsComponent implements OnInit {
 
   ngOnInit() {
     this.data = JSON.parse(localStorage.getItem('dataAssignment'));
+    console.log(this.data);
+    this.mapCenter = [ parseFloat(this.data['CoordenadasSitio'].split(",")[0]), parseFloat(this.data['CoordenadasSitio'].split(",")[1]) ];
+    this.siteMarker = [ parseFloat(this.data['CoordenadasSitio'].split(",")[0]), parseFloat(this.data['CoordenadasSitio'].split(",")[1]) ];
     this.componentsComms.setBackStatus(true);
     this.hours = this.componentsComms.getHours();
   }
