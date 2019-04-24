@@ -110,5 +110,36 @@ input, textarea {
 }
 
 
+#campoEmisor{
+    visibility: hidden;
+    height: 0px;
+    border: 1px ridge gray;
+    border-radius: 10px;
+}
+
+#campoResponsableO{
+    visibility: hidden;
+    height: 0px;
+    border: 1px ridge gray;
+    border-radius: 10px;
+}
+#campoComerciante{
+    visibility: hidden;
+    height: 0px;
+    border: 1px ridge gray;
+    border-radius: 10px;
+}
+#campoResponsableP{
+    visibility: hidden;
+    height: 0px;
+    border: 1px ridge gray;
+    border-radius: 10px;
+}
+#campoCliente{
+    visibility: hidden;
+    height: 0px;
+    border: 1px ridge gray;
+    border-radius: 10px;
+}
 
 
