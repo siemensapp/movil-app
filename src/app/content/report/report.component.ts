@@ -22,7 +22,7 @@ export class ReportComponent implements OnInit {
   }
 
   mostrar(campo: string, borrar:string){
-    var canvas = document.getElementById(campo);
+    var canvas = <HTMLCanvasElement>document.getElementById(campo);
     var context = canvas.getContext('2d'); 
     var clickX = new Array();
     var clickY = new Array();
