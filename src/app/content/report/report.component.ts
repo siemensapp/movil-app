@@ -32,9 +32,10 @@ export class ReportComponent implements OnInit {
     }
 
     function redraw(){
+        
       context.strokeStyle = "black";
       context.lineJoin = "round";
-      context.lineWidth = 3;
+      context.lineWidth = 2;
           
       for(var i=0; i < clickX.length; i++) {		
         context.beginPath();
@@ -54,7 +55,7 @@ export class ReportComponent implements OnInit {
       var mouseY = e.changedTouches[0].pageY - this.offsetTop;
         
       paint = true;
-      addClick(mouseX, mouseY, true);
+      addClick(mouseX, mouseY, false);
       redraw();
     });
 
@@ -83,14 +84,13 @@ export class ReportComponent implements OnInit {
     if(canvas.style.visibility == 'visible'){
       canvas.style.visibility = 'hidden';
       canvas.style.height = '0px';
-      canvas.style.touchAction = 'none';
       document.getElementById(borrar).style.visibility = 'hidden';
             
     }
     else{
     canvas.style.visibility = 'visible';
     canvas.style.height = '250px';
-    canvas.style.width = '92%';
+    canvas.style.width = '900px';
     document.getElementById(borrar).style.visibility = 'visible';
             
     }
