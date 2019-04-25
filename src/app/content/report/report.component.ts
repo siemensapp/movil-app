@@ -90,7 +90,7 @@ export class ReportComponent implements OnInit {
     else{
     canvas.style.visibility = 'visible';
     canvas.style.height = '250px';
-    canvas.style.width = '400px';
+    canvas.style.width = '900px';
     document.getElementById(borrar).style.visibility = 'visible';
             
     }
