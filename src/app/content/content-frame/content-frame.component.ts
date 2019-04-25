@@ -32,7 +32,9 @@ export class ContentFrameComponent implements OnInit {
         if (!this.openedbefore) {
           this.openedbefore = true;
         }
-        document.getElementById("side-menu-body").style.width = "60%";
+        // document.getElementById("side-menu-background").style.width = "100%";
+        document.getElementById("side-menu-body").style.width = "400px";
+        // document.getElementById("side-menu-body").style.zIndex = "49";
         document.getElementById("side-menu-body").style.zIndex = "50";
         document.getElementById("openMenuBtn").style.transitionDelay = "0s";
         document.body.style.backgroundColor = "rgba(0, 0, 0, 0.6)";
@@ -51,6 +53,7 @@ export class ContentFrameComponent implements OnInit {
   }
 
   closeMenu() {
+    document.getElementById("side-menu-background").style.width = "0";
     document.getElementById("side-menu-body").style.width = "0";
     document.body.style.backgroundColor = "white";
     this.openSource.next(false);

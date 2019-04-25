@@ -3,9 +3,9 @@
     text-align: center;
     text-transform: uppercase;
     line-height: 20px;
-    width: 100vw;
+    width: 100%;
     color: white;
-    margin: 10px 0;
+    margin: 10px auto 15px auto;
 }
 
 .main-content {
@@ -25,7 +25,7 @@
 
 .taskPreview {
     padding: 20px;
-    width: 100vw;
+    width: 100%;
     background-color: inherit;
     background-image: linear-gradient(to right, white 50%, gray 50%);
     background-size: 200% 100%;
@@ -33,7 +33,26 @@
 }
 .taskPreview:hover {
     background-color: gray;
+    color: white;
     background-position: -100% 0;
+}
+
+@media (max-width: 500px) {
+  .gray-bar {
+    width: 100vw;
+    overflow-x: hidden;
+  }
+}
+
+@media (min-width: 501px) {
+  .main-content {
+    justify-content: center;
+  }
+  .taskPreview {
+    width: 60vw;
+    border-radius: 25px;
+    border: 1px solid #757575;
+  }
 }
 
 /* Loading Spinner */

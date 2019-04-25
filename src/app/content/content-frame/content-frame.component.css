@@ -1,4 +1,11 @@
 /* side-menu-css */
+.side-menu-background {
+  width: 0;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.7);
+  transition: 0.5s;
+}
+
 #side-menu-body {
   width: 0;
   height: 100%;
@@ -13,22 +20,23 @@
 }
 
 .side-menu-img {
-  height: 40%;
+  height: 450px;
   border-bottom: 1px gray solid;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  padding-bottom: 5px;
+  padding-bottom: 10px;
   background-image: url("../../../assets/images/img-background5.jpeg");
   background-size: cover;
   color: white;
+  font-size: 1.2rem;
 }
 
 .side-menu-img img {
   border-radius: 50%;
-  width: 60%;
-  margin-bottom: 20px;
+  width: 50%;
+  margin: 20px 0;
 }
 
 .side-menu-img i {
@@ -36,6 +44,7 @@
   position: absolute;
   right: 5px;
   top: 5px;
+  font-size: 1.4rem;
 }
 
 .side-menu-options a i {
@@ -57,11 +66,12 @@
   transition: 0.3s;
   background-size: 200% 100%;
   background-image: linear-gradient(to right, white 50%, gray 50%);
+  font-size: 1.2rem;
 }
 
 .side-menu-options a:hover {
   background-position: -100% 0;
-  color: black;
+  color: white;
   border-top-right-radius: 50px;
   border-bottom-right-radius: 50px;
 }
@@ -76,7 +86,7 @@ body {
 .navbar {
   background-color: inherit;
   /* border: 1px solid #757575; */
-  width: 100vw;
+  width: 100%;
   position: sticky;
   position: -webkit-sticky;
   z-index: 10;

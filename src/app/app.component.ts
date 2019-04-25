@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 
 @Component({
   selector: 'app-root',
@@ -6,14 +6,13 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.css']
 })
 
-export class AppComponent {
-  // Set our map properties
-  mapCenter = [-122.4194, 37.7749];
-  basemapType = 'satellite';
-  mapZoomLevel = 12;
-
-  // See app.component.html
-  mapLoadedEvent(status: boolean) {
-    console.log('The map loaded: ' + status);
+export class AppComponent implements OnInit {
+  ngOnInit() {
+    if ("orientation" in screen) {
+      document.documentElement.requestFullscreen();
+      screen.orientation.lock("portrait");
+      // screen.msLockOrientation.lock("portrait-primary");
+      // screen.mozLockOrientation.lock("portrait-primary");
+    }
   }
 }

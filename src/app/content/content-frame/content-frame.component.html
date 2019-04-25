@@ -1,16 +1,19 @@
 <!-- side-menu-component -->
-<div id="side-menu-body">
+<div id="side-menu-background">
+  <div id="side-menu-body">
     <div class="side-menu-img">
-        <i class="fas fa-times closeBtn" (click)="closeMenu()"></i>
-        <img src="../../assets/images/user.jpg">
-        <div class="picture-name">Barack Obama</div>
-        <div class="picture-desc">Field service</div>
+      <i class="fas fa-times closeBtn" (click)="closeMenu()"></i>
+      <img src="../../assets/images/user.jpg">
+      <div class="picture-name">Barack Obama</div>
+      <div class="picture-desc">Field service</div>
     </div>
     <div class="side-menu-options">
       <a><i class="fas fa-cog"></i><span class="option-text">Configuración</span></a>
-      <a (click)="logout()" ><i class="fas fa-sign-out-alt"></i><span class="option-text">Cerrar sesión</span></a>
+      <a (click)="logout()"><i class="fas fa-sign-out-alt"></i><span class="option-text">Cerrar sesión</span></a>
     </div>
   </div>
+
+</div>
 <!-- home-component -->
 <div class="navbar">
   <button id="openMenuBtn" (click)="menuFunction()"><i class="fas fa-bars"></i></button>

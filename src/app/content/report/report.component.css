@@ -12,6 +12,7 @@ input, textarea {
     margin: 20px 5px;
     background-color: inherit;
     transition: border-bottom ease-in-out;
+    font-size: 1.2rem;
 }
 
 .titleReport {
@@ -51,6 +52,7 @@ input, textarea {
 /* input */
 .styledInput input {
     border-bottom: 1px solid #757575;
+    font-size: 1.2rem;
 }
 
 .styledInput input:focus {
@@ -69,12 +71,12 @@ input, textarea {
 .styledInput input:focus ~ label {
     color: #0077FF;
     transform: translateY(-15px);
-    font-size: 0.8rem;
+    font-size: 1rem;
 }
 
 .styledInput input:not(:placeholder-shown) ~ label{
     transform: translateY(-15px);
-    font-size: 0.8rem;
+    font-size: 1rem;
 }
 
 /* textarea */
@@ -101,12 +103,12 @@ input, textarea {
 .styledInput textarea:focus ~ label {
     color: #0077FF;
     transform: translateY(-15px);
-    font-size: 0.8rem;
+    font-size: 1rem;
 }
 
 .styledInput textarea:not(:placeholder-shown) ~ label{
     transform: translateY(-30px);
-    font-size: 0.8rem;
+    font-size: 1rem;
 }
 
 
