@@ -1,13 +1,21 @@
 #map-container {
-  height: 95vh;
+  height: 50vh;
   width: 100vw;
-  outline: 1px solid gray;
-  transition: height 0.6s;
+  
+}
+
+#details {
+  border: 2px ridge whitesmoke; 
+  position: relative;
+  bottom: 0%;
+  width: 99.3%;  
+  height: 45.3vh;
+  background-color: white;
 }
 
 #acceptBtn {
-  width: 50px;
-  height: 50px;
+  width: 60px;
+  height: 60px;
   border-radius: 50%;
   position: absolute;
   background-color: #879BAA;
@@ -22,50 +30,107 @@
   z-index: 1;
 }
 
-#finishBtn{
-  width: 50px;
-  height: 50px;
-  border-radius: 50%;
-  position: absolute;
-  background-color: #647D2D;
-  color: white;
-  font-size: 1.5rem;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  top: 47vh;
-  right: 25px;
-  transition: 0.6s;
-  z-index: 1;
-  visibility: hidden;
-}
 
-#finishedBtn{
-  width: 50px;
-  height: 50px;
-  border-radius: 50%;
-  position: absolute;
-  background-color: #FFB900;
+.dropdown-content {
+  display: none;
+  position: relative;
+  margin-left: 70%;
+  margin-top: 4%;
+  width: 40%;
+  background-color: lightgray;
+  overflow: auto;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  z-index: 1;
+}
+.dropdown-content a {
   color: black;
-  font-size: 1.5rem;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  top: 47vh;
-  right: 25px;
-  transition: 0.6s;
-  z-index: 1;
-  visibility: hidden;
+  padding: 12px 16px;
+  text-decoration: none;
+  display: block;
+  font-size: 18px;
 }
 
-.reportBtn {
-  margin-left: 25%;
-  border: none;
-  background-color: #009999;
-  color: white;
-  text-transform: uppercase;
-  text-align: center;
+
+
+.show {
+  display: block;
+}
+
+
+#nombreSitio{
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+  font-size: 40px;
+  font-weight: bold;
+  text-align: left;
+}
+
+#descripcion{
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+  font-size: 20px;
+  font-weight: bold;
+  margin-left: 2%;
+}
+
+#contenidoDescripcion{
+  margin-top: 1%;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+  font-size: 18px;
+  margin-bottom: 6%;
+}
+
+#descFechas{
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  height: 40%;
+}
+
+#descripcion{
   width: 50%;
+}
+
+#contenidoDescripcion{  
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+  text-align: left;
+  font-size: 14px;
+  font-weight: normal;
+}
+
+#barra{
+  padding: 2%;
+  background-color: orange;
+  border-radius: 50px;
+}
+
+#fechas{
+  width: 50%;
+  display: flex;
+  flex-direction: row;
+}
+
+#valorFechas{
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+  margin-left: 2%;
+  margin-top: 4%;
+  font-size: 26px;
+}
+
+#contacto{
+  display: flex;
+  justify-content: center;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+  font-weight: normal;
+  font-size: 14px;
+}
+
+#infoContacto{
+  float: left;
+}
+
+#contactoT{
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+  font-size: 20px;
+  font-weight: bold;
 }
 
 .callBtn {
@@ -82,22 +147,12 @@
   border-radius: 50%;
 }
 
-#contenidoDetalles{
-  text-align: center;
-}
-
-#details {
-  border: 2px ridge whitesmoke;
-  border-top-left-radius: 25px;
-  border-top-right-radius: 25px;
-  position: absolute;
-  bottom: 5%;
-  left: 5%;
-  width: 90%;  
-  background-color: white;
-}
-
-#contacto{
-  display: flex;
+#startAssignment{
+  margin-top: 5%;
   justify-content: center;
+  width: 50%;
+  height: 5vh;
+  background-color: #009999;
+  border: 2px ridge black;
+  margin-left: 25%;
 }
