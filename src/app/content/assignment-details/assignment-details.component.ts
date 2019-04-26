@@ -2,6 +2,8 @@
 import { Component, OnInit } from '@angular/core';
 import { ComponentsCommsService } from '../../components-comms.service';
 import { Router } from '@angular/router';
+import { HttpRequestsService } from 'src/app/http-requests.service';
+import { url } from '../../../assets/js/variables';
 
 
 @Component({
@@ -24,6 +26,7 @@ export class AssignmentDetailsComponent implements OnInit {
   // See app.component.html
   mapLoadedEvent(status: boolean) {
     console.log('The map loaded: ' + status);
+
   }
 
   parseDate(date1, date2) {
@@ -36,7 +39,7 @@ export class AssignmentDetailsComponent implements OnInit {
   }
 
 
-  constructor(private componentsComms: ComponentsCommsService, private router: Router) { }
+  constructor(private componentsComms: ComponentsCommsService, private router: Router, private httpRequests: HttpRequestsService) { }
 
   ngOnInit() {
     this.data = JSON.parse(localStorage.getItem('dataAssignment'));
@@ -45,13 +48,19 @@ export class AssignmentDetailsComponent implements OnInit {
     this.siteMarker = [ parseFloat(this.data['CoordenadasSitio'].split(",")[0]), parseFloat(this.data['CoordenadasSitio'].split(",")[1]) ];
     this.componentsComms.setBackStatus(true);
     this.hours = this.componentsComms.getHours();
+
+    this.componentsComms.coords.subscribe(coords => {
+      console.log("Recibido", coords);
+      var datos = {'Coords': coords,
+                   'IdAsignacion': this.data['IdAsignacion']
+                  }
+      this.httpRequests.postData(url + '/api/updateCoords', JSON.stringify(datos));
+    });
+
   }
 
   writeReport(){
     document.getElementById("reportsMenu").classList.toggle("show");
-  }
-
-  
-  
+  } 
 
 }

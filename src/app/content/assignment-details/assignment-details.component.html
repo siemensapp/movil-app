@@ -1,12 +1,12 @@
 <div id="map-container">
   <app-esri-map [center]="mapCenter" [basemap]="basemapType" [zoom]="mapZoomLevel" [siteMarker]="siteMarker"
-    (mapLoadedEvent)="mapLoadedEvent($event)">
+    (mapLoadedEvent)="mapLoadedEvent($event)" id="mapa">
   </app-esri-map>
   <div class="dropdown">
   <div id="acceptBtn" (click)="writeReport()"><i class="fas fa-plus"></i></div>
   
         <div id="reportsMenu" class="dropdown-content">
-        <a>Crear Reporte Horas</a>
+        <a [routerLink]="['/home/report']">Crear Reporte Horas</a>
         <a>Crear Reporte Gastos</a>
       </div>
     </div>
@@ -28,7 +28,9 @@
         <div id="barra">
         </div>
         <div id="valorFechas">
+          <div class='tituloF'>Desde</div>
           {{parseDate(data.FechaInicio.split("T")[0], data.FechaFin.split("T")[0]).split('-')[0]}}<br><br>
+          <div class='tituloF'>Hasta</div>
           {{parseDate(data.FechaInicio.split("T")[0], data.FechaFin.split("T")[0]).split('-')[1]}}
         </div>
       </div>

@@ -13,6 +13,7 @@
 
 import { Component, OnInit, ViewChild, ElementRef, Input, Output, EventEmitter } from '@angular/core';
 import { loadModules } from 'esri-loader';
+import { ComponentsCommsService } from '../../components-comms.service';
 import esri = __esri; // Esri TypeScript Types
 
 @Component({
@@ -80,7 +81,7 @@ export class EsriMapComponent implements OnInit {
     return this._siteMarker;
   }
 
-  constructor() { }
+  constructor(private componentsComms: ComponentsCommsService) { }
 
   prepareSitePoint() {
     let pointMap = {
@@ -101,11 +102,12 @@ export class EsriMapComponent implements OnInit {
     try {
 
       // Load the modules for the ArcGIS API for JavaScript
-      const [EsriMap, EsriMapView, PictureMarkerSymbol, Graphic] = await loadModules([
+      const [EsriMap, EsriMapView, PictureMarkerSymbol, Graphic, Locate] = await loadModules([
         'esri/Map',
         'esri/views/MapView',
         'esri/symbols/PictureMarkerSymbol',
-        'esri/Graphic'
+        'esri/Graphic',
+        "esri/widgets/Locate"
       ]);
 
       // Configure the Map
@@ -134,6 +136,18 @@ export class EsriMapComponent implements OnInit {
           symbol: markerParams[1]
         })
       );
+
+      let boton = new Locate({
+        view: view
+      });
+
+      boton.on("locate", (event)=>{
+          // console.log(event.position.coords.longitude + ','+ event.position.coords.latitude);
+          this.componentsComms.setCoords( String(event.position.coords.longitude + ','+ event.position.coords.latitude) );
+
+      });
+
+      view.ui.add(boton, "top-left");
 
       return view;
 

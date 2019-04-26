@@ -13,6 +13,10 @@ export class ComponentsCommsService {
   private hoursSource = new BehaviorSubject([]);
   hours = this.hoursSource.asObservable();
 
+  // Coordenadas especialista
+  private coordsSource = new BehaviorSubject('');
+  coords = this.coordsSource.asObservable();
+
   // Dice si usar back button
   setBackStatus( data: boolean ) {
     this.backSource.next(data);
@@ -44,4 +48,8 @@ export class ComponentsCommsService {
     localStorage.setItem('hours', JSON.stringify(data));
   }
 
+  /* Funciones coordenadas */
+  setCoords ( data ) {
+    this.coordsSource.next(data);
+  }
 }

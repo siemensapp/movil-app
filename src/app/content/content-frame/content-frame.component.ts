@@ -14,6 +14,8 @@ export class ContentFrameComponent implements OnInit {
   constructor(private router: Router, private componentComms: ComponentsCommsService, private location: Location) {}
   private openSource = new BehaviorSubject(false);
   open = this.openSource.asObservable();
+  private coordsSource = new BehaviorSubject(false);
+  coords = this.coordsSource.asObservable();
   openedbefore = false;
 
   ngOnInit() {
