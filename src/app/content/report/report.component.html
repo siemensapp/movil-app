@@ -33,14 +33,36 @@
       </div>
     </div>
   <div class="subtitleReport">Hoja de Tiempo</div>
+
+    <table>
+      <thead>
+          <tr>
+            <th rowspan="2">Fecha</th>
+            <th colspan="3">Horas Trabajadas</th>
+            <th colspan="4">Clase de Trabajo</th>
+          </tr>
+          <tr>
+            <th>Desde</th>
+            <th>Hasta</th>
+            <th>Descuento</th>
+            <th>Servicio en Sitio</th>
+            <th>Entrenamiento</th>
+            <th>T. de Viaje</th>
+            <th>T. de Espera</th>
+          </tr>
+      </thead>
+      <tbody>
+
+      </tbody>
+    </table>
     
-    <div class="hoursList" *ngIf="hours.length">
+    <!-- <div class="hoursList" *ngIf="hours.length">
       <div *ngFor="let records of hours">
         <div class="hoursRecord">
           Registro dia : {{records.fecha}}
         </div>
       </div>
-    </div>
+    </div> -->
 
     <a [routerLink]="['/home/hours']" class="addLink" ><i class="fas fa-plus"></i> Añadir nueva fecha</a>
   <div class="subtitleReport">Datos Tècnicos</div>
@@ -125,7 +147,7 @@
       <canvas id="campoResponsableP" height="250" width="900" style="touch-action: none"></canvas>
       <a (click)="mostrar('campoCliente', 'borrarCliente')"><i class="fas fa-plus"></i> Añadir Firma Recibido Cliente</a><button style='visibility: hidden; width: 20%' id='borrarCliente'>Borrar</button>
       <canvas id="campoCliente" height="250" width="900" style="touch-action: none"></canvas>  
-      <button (click)='crearReporte()'>Enviar Reporte</button>
+      <button (click)='crearReporte()' class="sendBtn">Enviar Reporte</button>
 </div>
 
 

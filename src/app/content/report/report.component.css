@@ -2,17 +2,17 @@
     display: flex;
     flex-direction: column;
     width: 100%;
-    padding: 20px;
 }
 
 input, textarea {
     outline: none;
     border: none;
     width: 90%;
-    margin: 20px 5px;
+    margin: 20px 5%;
     background-color: inherit;
     transition: border-bottom ease-in-out;
     font-size: 1.2rem;
+    position: relative;
 }
 
 .titleReport {
@@ -46,7 +46,7 @@ input, textarea {
 /*******************/
 .styledInput {
     position: relative;
-    width: 100%;
+    width: 95%;    
 }
 
 /* input */
@@ -61,7 +61,7 @@ input, textarea {
 
 .styledInput input ~ label {
     position: absolute;
-    left: 5px;
+    left: 5%;
     top: 15px;
     z-index: -1;
     transition: 0.2s;
@@ -71,12 +71,12 @@ input, textarea {
 .styledInput input:focus ~ label {
     color: #0077FF;
     transform: translateY(-15px);
-    font-size: 1rem;
+    font-size: 0.9rem;
 }
 
 .styledInput input:not(:placeholder-shown) ~ label{
     transform: translateY(-15px);
-    font-size: 1rem;
+    font-size: 0.9rem;
 }
 
 /* textarea */
@@ -144,4 +144,19 @@ input, textarea {
     border-radius: 10px;
 }
 
+.sendBtn {
+    width: 400px;
+    margin: auto;
+}
 
+
+table {
+    margin: auto;
+    width: 90%;
+}
+
+
+thead {
+    background-color: #0077FF;
+    font-size: 0.9rem;
+}

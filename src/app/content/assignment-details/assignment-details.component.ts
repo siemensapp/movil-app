@@ -39,10 +39,10 @@ export class AssignmentDetailsComponent implements OnInit {
   }
 
 
-  constructor(private componentsComms: ComponentsCommsService, private router: Router, private httpRequests: HttpRequestsService) { }
+  constructor(private componentsComms: ComponentsCommsService, private httpRequests: HttpRequestsService) { }
 
   ngOnInit() {
-    this.data = JSON.parse(localStorage.getItem('dataAssignment'));
+    this.data = this.componentsComms.getDataAssignment();
     console.log(this.data);
     this.mapCenter = [ parseFloat(this.data['CoordenadasSitio'].split(",")[0]), parseFloat(this.data['CoordenadasSitio'].split(",")[1]) ];
     this.siteMarker = [ parseFloat(this.data['CoordenadasSitio'].split(",")[0]), parseFloat(this.data['CoordenadasSitio'].split(",")[1]) ];
