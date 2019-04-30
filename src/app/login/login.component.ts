@@ -22,8 +22,13 @@ export class LoginComponent implements OnInit {
       //Swal.close();
       if (!result.hasOwnProperty('token')) Swal.fire({type: "error", title: "Error", text: String(result)});
       else {
+        console.log(result["Foto"]);
         // Saves user number
+        localStorage.setItem('Foto', result['Foto']);
+        localStorage.setItem('NombreE', result['NombreE']);
+        localStorage.setItem('token', result['token']);
         localStorage.setItem('user', user);
+
         Swal.fire({type: "success", title: "Exito", text: 'Inicio de sesiòn exitoso.'})
           .then(() => { this.router.navigate(['home/list']) });
       }

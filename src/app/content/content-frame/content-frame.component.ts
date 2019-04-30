@@ -18,8 +18,12 @@ export class ContentFrameComponent implements OnInit {
   coords = this.coordsSource.asObservable();
   openedbefore = false;
 
+  Foto = "";
+  NombreE = "";
+
   ngOnInit() {
-    
+    this.Foto = localStorage.getItem('Foto');
+    this.NombreE = localStorage.getItem("NombreE");   
     this.componentComms.back.subscribe( result => {
       if (result) {
         document.getElementById("openMenuBtn").innerHTML = "<i class='fas fa-arrow-left'></i>";        
@@ -62,7 +66,10 @@ export class ContentFrameComponent implements OnInit {
   }
 
   logout() {
-    localStorage.setItem('user', null);
+    localStorage.removeItem('user');
+    localStorage.removeItem('Foto');
+    localStorage.removeItem('NombreE');
+    localStorage.removeItem('token');
     setTimeout(()=> {
       document.body.style.backgroundColor = "white";
       this.router.navigate(["login"]);
