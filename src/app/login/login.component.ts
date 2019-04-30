@@ -24,7 +24,7 @@ export class LoginComponent implements OnInit {
       else {
         // Saves user number
         localStorage.setItem('user', user);
-        Swal.fire({type: "success", title: "Exito", text: JSON.stringify(result)})
+        Swal.fire({type: "success", title: "Exito", text: 'Inicio de sesiòn exitoso.'})
           .then(() => { this.router.navigate(['home/list']) });
       }
     })

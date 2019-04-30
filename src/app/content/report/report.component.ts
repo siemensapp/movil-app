@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { ComponentsCommsService } from '../../components-comms.service';
 import { HttpRequestsService } from 'src/app/http-requests.service';
-import {url} from '../../../assets/js/variables'
+import { Router } from '@angular/router';
+import  Swal  from 'sweetalert2';
+import {url} from '../../../assets/js/variables';
 
 @Component({
   selector: 'app-report',
@@ -9,18 +11,19 @@ import {url} from '../../../assets/js/variables'
   styleUrls: ['./report.component.css']
 })
 export class ReportComponent implements OnInit {
-
+  private allInputs = [ 'nombreCliente', 'nombreContacto', "nombreColaborador", "nombreProyecto", 'nombreMarca', 'denominacionInterna', 'numeroProducto', 'numeroSerial', 'caracteristicasTecnicas', 'estadoInicial'];
   private textAreas = [ 'descripcionAlcance', 'actividadesRealizadas', 'conclusionesRecomendaciones', 'repuestosSugeridos', 'actividadesPendientes' ];
   //private textAreas = [ 'descripcionAlcance' ];
   hours = [];
   assignment;
 
-  constructor(private componentComms: ComponentsCommsService, private httpRequest: HttpRequestsService) { }
+  constructor(private componentComms: ComponentsCommsService, private httpRequest: HttpRequestsService, private router: Router) { }
 
   ngOnInit() {
     this.componentComms.setBackStatus(true);
     this.hours = this.componentComms.getHours()['hours'];
-    this.resizeTextArea();
+    this.resizeAndSetTextArea();
+    this.saveAndSetInputValues();
     this.assignment = this.componentComms.getDataAssignment()['IdAsignacion'];
   }
 
@@ -104,9 +107,17 @@ export class ReportComponent implements OnInit {
     }
   }
 
-  resizeTextArea() {
+  resizeAndSetTextArea() {
     for (let id of this.textAreas) {
-      let item = document.getElementById(id);
+      let item = <HTMLTextAreaElement>document.getElementById(id);
+
+      if ( localStorage.getItem(id) !== null ) {
+        item.value = localStorage.getItem(id);
+      }
+
+      item.addEventListener('blur', () => {
+        localStorage.setItem(id, String(item.value));
+      });
       item.addEventListener('keydown', () => {
         if (item.scrollTop != 0) {
           item.style.height = item.scrollHeight + "px";
@@ -115,18 +126,31 @@ export class ReportComponent implements OnInit {
     }
   }
 
+  saveAndSetInputValues() {
+    for (let id of this.allInputs) {
+      let item = <HTMLInputElement>document.getElementById(id);
+      if ( localStorage.getItem(id) !== null ) {
+        item.value = localStorage.getItem(id);
+      }
+
+      item.addEventListener('blur', () => {
+        localStorage.setItem(id, String(item.value));
+      })
+    }
+  }
+
   crearReporte(){
-    var nombreCliente = <HTMLInputElement> document.getElementsByName('nombreCliente')[0];
+    var nombreCliente = <HTMLInputElement> document.getElementById('nombreCliente');
     var NombreCliente = nombreCliente.value;
 
-    var nombreContacto = <HTMLInputElement> document.getElementsByName('nombreContacto')[0];
+    var nombreContacto = <HTMLInputElement> document.getElementById('nombreContacto');
     var NombreContacto = nombreContacto.value;
 
     
-    var nombreColaborador = <HTMLInputElement> document.getElementsByName('nombreColaborador')[0];
+    var nombreColaborador = <HTMLInputElement> document.getElementById('nombreColaborador');
     var NombreColaborador = nombreColaborador.value;
 
-    var nombreProyecto = <HTMLInputElement> document.getElementsByName('nombreProyecto')[0];
+    var nombreProyecto = <HTMLInputElement> document.getElementById('nombreProyecto');
     var NombreProyecto = nombreProyecto.value;
   
     var descripcionAlcance = <HTMLTextAreaElement> document.getElementById('descripcionAlcance');
@@ -134,22 +158,22 @@ export class ReportComponent implements OnInit {
 
     var hojaTiempo = this.hours;
 
-    var marca = <HTMLInputElement> document.getElementsByName('nombreMarca')[0];
+    var marca = <HTMLInputElement> document.getElementById('nombreMarca');
     var Marca = marca.value;
 
-    var denominacionInterna = <HTMLInputElement> document.getElementsByName('denominacionInterna')[0];
+    var denominacionInterna = <HTMLInputElement> document.getElementById('denominacionInterna');
     var DenominacionInterna = denominacionInterna.value;
 
-    var numeroProducto = <HTMLInputElement> document.getElementsByName('numeroProducto')[0];
+    var numeroProducto = <HTMLInputElement> document.getElementById('numeroProducto');
     var NumeroProducto = numeroProducto.value;
 
-    var numeroSerial = <HTMLInputElement> document.getElementsByName('numeroSerial')[0];
+    var numeroSerial = <HTMLInputElement> document.getElementById('numeroSerial');
     var NumeroSerial = numeroSerial.value;
 
-    var caracteristicasTecnicas = <HTMLInputElement> document.getElementsByName('caracteristicasTecnicas')[0];
+    var caracteristicasTecnicas = <HTMLInputElement> document.getElementById('caracteristicasTecnicas');
     var CaracteristicasTecnicas = caracteristicasTecnicas.value;
 
-    var estadoInicial = <HTMLInputElement> document.getElementsByName('estadoInicial')[0];
+    var estadoInicial = <HTMLInputElement> document.getElementById('estadoInicial');
     var EstadoInicial = estadoInicial.value;
 
     var actividadesRealizadas = <HTMLTextAreaElement> document.getElementById('actividadesRealizadas');
@@ -206,8 +230,15 @@ export class ReportComponent implements OnInit {
         'FirmaCliente' : imagencampoCli,
         'IdAsignacion' : this.assignment
     }
-
-    this.httpRequest.postData(url + '/api/saveGeneralReport', JSON.stringify(datos));
+    Swal.showLoading();
+    this.httpRequest.postData(url + '/api/saveGeneralReport', JSON.stringify(datos)). then( result => {
+      if (result == "false") Swal.fire({type: "error", title: "Error", text: "Error en subir reporte"});
+      else {
+        // Saves user number
+        Swal.fire({type: "success", title: "Exito", text: 'Reporte enviado'})
+          .then(() => { this.router.navigate(['home/details']) });
+      }
+    });
   }
 
 

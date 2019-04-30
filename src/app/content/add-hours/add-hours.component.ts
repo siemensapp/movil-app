@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ComponentsCommsService } from '../../components-comms.service';
-
+import { Router } from '@angular/router';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-add-hours',
@@ -8,7 +9,7 @@ import { ComponentsCommsService } from '../../components-comms.service';
   styleUrls: ['./add-hours.component.css']
 })
 export class AddHoursComponent implements OnInit {
-  constructor(private componentComms: ComponentsCommsService) { }
+  constructor(private componentComms: ComponentsCommsService, private router:Router) { }
 
   ngOnInit() {
     this.componentComms.setBackStatus(true);
@@ -38,7 +39,9 @@ export class AddHoursComponent implements OnInit {
     }
     hours['hours'].push(record);
     this.componentComms.setHours(hours);
-    console.log(this.componentComms.getHours());
+    Swal.fire({type: "success", title: "Exito", text: 'Hora guardada'})
+          .then(() => { this.router.navigate(['home/report']) });
+    
   }
 
 
