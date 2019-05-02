@@ -19,7 +19,9 @@ export class ReportComponent implements OnInit {
   constructor(private componentComms: ComponentsCommsService, private httpRequest: HttpRequestsService, private router: Router) { }
 
   ngOnInit() {
+    // localStorage.removeItem('hours');
     this.componentComms.setBackStatus(true);
+    localStorage.removeItem('dateToChange');
     this.hours = this.componentComms.getHours();
     this.resizeAndSetTextArea();
     this.saveAndSetInputValues();
@@ -28,7 +30,9 @@ export class ReportComponent implements OnInit {
 
   addHours( date ) {
     localStorage.setItem('dateToChange', date);
-    this.router.navigate(['home/hours']);
+    setTimeout(() => {
+      this.router.navigate(['home/hours']);
+    }, 1500);
   }
 
   mostrar(campo: string, borrar:string){

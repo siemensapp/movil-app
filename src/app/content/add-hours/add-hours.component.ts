@@ -21,14 +21,14 @@ export class AddHoursComponent implements OnInit {
   }
 
   formatDate( date ) {
+    console.log(date);
     let auxDate = new Date(date);
-    return String(auxDate.getMonth() + "/" + (auxDate.getDate() + 1) + "/" + auxDate.getFullYear());
+    return String(auxDate.getFullYear() + "-" + ( (auxDate.getMonth() < 10)? "0" + auxDate.getMonth(): auxDate.getMonth ) + "-" + ( (auxDate.getDate() < 10)? "0" + auxDate.getDate(): auxDate.getDate() ));
   }
 
   addOrModifyHours() {
     if( this.dateToChange ) {
-      var dateData = this.componentComms.getHours()[this.dateToChange];
-      // (<HTMLInputElement>document.getElementById("fecha")).value = dateData['fecha'];      
+      var dateData = this.componentComms.getHours()[this.dateToChange];    
       (<HTMLInputElement>document.getElementById("desde")).value = dateData['desde'];
       (<HTMLInputElement>document.getElementById("hasta")).value = dateData['hasta'];
       (<HTMLInputElement>document.getElementById("descuento")).value = dateData['descuento'];
@@ -40,7 +40,7 @@ export class AddHoursComponent implements OnInit {
   }
 
   saveHours() {
-    let fecha = (this.dateToChange) ? this.dateToChange : (<HTMLInputElement>document.getElementById("fecha")).value;
+    let fecha = (this.dateToChange) ? this.dateToChange : this.formatDate((<HTMLInputElement>document.getElementById("fecha")).value);
     let desde = (<HTMLInputElement>document.getElementById("desde")).value;
     let hasta = (<HTMLInputElement>document.getElementById("hasta")).value;
     let descuento = (<HTMLInputElement>document.getElementById("descuento")).value;
