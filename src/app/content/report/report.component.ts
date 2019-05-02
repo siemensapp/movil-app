@@ -79,7 +79,7 @@ export class ReportComponent implements OnInit {
     });
 
     document.getElementById(borrar).addEventListener('mousedown', function(e){
-      context.clearRect(0,0,900,250);
+      context.clearRect(0,0,500,250);
       clickX = [];
       clickY = [];
       clickDrag = [];
@@ -101,17 +101,27 @@ export class ReportComponent implements OnInit {
     });
 
     if(canvas.style.visibility == 'visible'){
-      canvas.style.visibility = 'hidden';
+      canvas.style.transition = "height 1s";      
       canvas.style.height = '0px';
-      document.getElementById(borrar).style.visibility = 'hidden';
+      let sign = document.getElementById(borrar);      
+      sign.style.visibility = 'hidden';
+      setTimeout(() => {
+        sign.previousElementSibling.querySelector('.fas').classList.remove('fa-minus');
+        sign.previousElementSibling.querySelector('.fas').classList.add('fa-plus');
+        canvas.style.visibility = 'hidden';
+      }, 1000);
             
     }
     else{
-    canvas.style.visibility = 'visible';
-    canvas.style.height = '250px';
-    canvas.style.width = '900px';
-    document.getElementById(borrar).style.visibility = 'visible';
-            
+      canvas.style.transition = "height 1s";
+      canvas.style.visibility = 'visible';
+      canvas.style.height = '250px';
+      canvas.style.width = '500px';
+      canvas.style.margin = "auto";
+      let sign = document.getElementById(borrar);
+      sign.style.visibility = 'visible';
+      sign.previousElementSibling.querySelector('.fas').classList.remove('fa-plus');
+      sign.previousElementSibling.querySelector('.fas').classList.add('fa-minus');
     }
   }
 
@@ -126,11 +136,9 @@ export class ReportComponent implements OnInit {
       item.addEventListener('blur', () => {
         localStorage.setItem(id, String(item.value));
       });
-      item.addEventListener('keydown', () => {
-        if (item.scrollTop != 0) {
-          item.style.height = item.scrollHeight + "px";
-        };
-      })
+      for (let event of ['keydown', 'change', 'paste', 'cut', 'drop', 'onkeydown', 'onchange', 'onpaste', 'oncut', 'ondrop']) {
+        item.addEventListener(event, () => { if(item.scrollTop != 0) item.style.height = item.scrollHeight + 10 +"px"; })
+      }      
     }
   }
 
