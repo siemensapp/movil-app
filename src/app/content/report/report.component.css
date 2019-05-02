@@ -171,4 +171,10 @@ tbody td {
     padding: 5px 2px;
 }
 
+.botonBorrado {
+    visibility: hidden;
+    width: 500px;
+    margin: 10px auto;    
+}
+
 

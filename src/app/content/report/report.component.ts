@@ -30,9 +30,7 @@ export class ReportComponent implements OnInit {
 
   addHours( date ) {
     localStorage.setItem('dateToChange', date);
-    setTimeout(() => {
-      this.router.navigate(['home/hours']);
-    }, 1500);
+    this.router.navigate(['home/hours']);
   }
 
   mostrar(campo: string, borrar:string){
