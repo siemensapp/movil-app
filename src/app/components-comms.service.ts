@@ -41,11 +41,44 @@ export class ComponentsCommsService {
 
   /* Funciones horas */
   getHours() {
-    return JSON.parse(localStorage.getItem('hours'));
+    //localStorage.removeItem('hours');
+    let hours = localStorage.getItem('hours');    
+    if (hours) {
+      //console.log(JSON.parse(hours));
+      return JSON.parse(hours);
+    } else {
+      let date1 = this.getDataAssignment()['FechaInicio'];
+      let date2 = this.getDataAssignment()['FechaFin'];
+      return this.setHoursDict(date1, date2);
+    }
   }
 
-  setHours( data ) {
-    localStorage.setItem('hours', JSON.stringify(data));
+  setHoursDict( date1, date2 ) {
+    const Date1 = new Date(date1);
+    const Date2 = new Date(date2);
+    const diffDate = Math.abs( Date2.getTime() - Date1.getTime() );
+    const diffDays = Math.ceil( diffDate / (1000 * 60 * 60 * 24 ) );
+
+    let hoursDict = {};
+    console.log("Date 1:", date1);
+    console.log("Date 2:", date2);
+
+    for(let i=0; i < diffDays; i+=1) {
+      let curDate = Date1.toISOString().split("T")[0];
+      hoursDict[ curDate ] = {
+        fecha: curDate,
+        desde: "",
+        hasta: "",
+        descuento: "",
+        servicioSitio: "",
+        entrenamiento: "",
+        tiempoViaje: "",
+        tiempoEspera: ""
+      }
+      Date1.setDate(Date1.getDate() + 1);
+    }
+    localStorage.setItem('hours', JSON.stringify(hoursDict));
+    return hoursDict;
   }
 
   /* Funciones coordenadas */

@@ -13,18 +13,22 @@ import {url} from '../../../assets/js/variables';
 export class ReportComponent implements OnInit {
   private allInputs = [ 'nombreCliente', 'nombreContacto', "nombreColaborador", "nombreProyecto", 'nombreMarca', 'denominacionInterna', 'numeroProducto', 'numeroSerial', 'caracteristicasTecnicas', 'estadoInicial'];
   private textAreas = [ 'descripcionAlcance', 'actividadesRealizadas', 'conclusionesRecomendaciones', 'repuestosSugeridos', 'actividadesPendientes' ];
-  //private textAreas = [ 'descripcionAlcance' ];
-  hours = [];
+  hours;
   assignment;
 
   constructor(private componentComms: ComponentsCommsService, private httpRequest: HttpRequestsService, private router: Router) { }
 
   ngOnInit() {
     this.componentComms.setBackStatus(true);
-    this.hours = this.componentComms.getHours()['hours'];
+    this.hours = this.componentComms.getHours();
     this.resizeAndSetTextArea();
     this.saveAndSetInputValues();
     this.assignment = this.componentComms.getDataAssignment()['IdAsignacion'];
+  }
+
+  addHours( date ) {
+    localStorage.setItem('dateToChange', date);
+    this.router.navigate(['home/hours']);
   }
 
   mostrar(campo: string, borrar:string){

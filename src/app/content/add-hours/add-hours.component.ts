@@ -11,12 +11,36 @@ import Swal from 'sweetalert2';
 export class AddHoursComponent implements OnInit {
   constructor(private componentComms: ComponentsCommsService, private router:Router) { }
 
+  dateToChange = null;
+
   ngOnInit() {
+    this.dateToChange = localStorage.getItem('dateToChange'); 
+    console.log(this.dateToChange);
     this.componentComms.setBackStatus(true);
+    this.addOrModifyHours();
+  }
+
+  formatDate( date ) {
+    let auxDate = new Date(date);
+    return String(auxDate.getMonth() + "/" + (auxDate.getDate() + 1) + "/" + auxDate.getFullYear());
+  }
+
+  addOrModifyHours() {
+    if( this.dateToChange ) {
+      var dateData = this.componentComms.getHours()[this.dateToChange];
+      // (<HTMLInputElement>document.getElementById("fecha")).value = dateData['fecha'];      
+      (<HTMLInputElement>document.getElementById("desde")).value = dateData['desde'];
+      (<HTMLInputElement>document.getElementById("hasta")).value = dateData['hasta'];
+      (<HTMLInputElement>document.getElementById("descuento")).value = dateData['descuento'];
+      (<HTMLInputElement>document.getElementById("servicioSitio")).value = dateData['servicioSitio'];
+      (<HTMLInputElement>document.getElementById("entrenamiento")).value = dateData['entrenamiento'];
+      (<HTMLInputElement>document.getElementById("tiempoViaje")).value = dateData['tiempoViaje'];
+      (<HTMLInputElement>document.getElementById("tiempoEspera")).value = dateData['tiempoEspera'];
+    }
   }
 
   saveHours() {
-    let fecha = (<HTMLInputElement>document.getElementById("fecha")).value;
+    let fecha = (this.dateToChange) ? this.dateToChange : (<HTMLInputElement>document.getElementById("fecha")).value;
     let desde = (<HTMLInputElement>document.getElementById("desde")).value;
     let hasta = (<HTMLInputElement>document.getElementById("hasta")).value;
     let descuento = (<HTMLInputElement>document.getElementById("descuento")).value;
@@ -25,9 +49,9 @@ export class AddHoursComponent implements OnInit {
     let tiempoViaje = (<HTMLInputElement>document.getElementById("tiempoViaje")).value;
     let tiempoEspera = (<HTMLInputElement>document.getElementById("tiempoEspera")).value;
 
-    let hours = (localStorage.getItem('hours')) ? JSON.parse(localStorage.getItem('hours')) : {hours: []};
+    let hours = JSON.parse(localStorage.getItem('hours'));
 
-    let record = {
+    hours[fecha] = {
       fecha: fecha,
       desde: desde,
       hasta: hasta,
@@ -37,10 +61,15 @@ export class AddHoursComponent implements OnInit {
       tiempoViaje: tiempoViaje,
       tiempoEspera: tiempoEspera
     }
-    hours['hours'].push(record);
-    this.componentComms.setHours(hours);
+    console.log(hours);
+
+    localStorage.setItem('hours', JSON.stringify(hours));
+
     Swal.fire({type: "success", title: "Exito", text: 'Hora guardada'})
-          .then(() => { this.router.navigate(['home/report']) });
+          .then(() => { 
+            this.router.navigate(['home/report']);
+            localStorage.removeItem('dateToChange');
+          });
     
   }
 
