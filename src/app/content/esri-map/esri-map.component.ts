@@ -102,10 +102,9 @@ export class EsriMapComponent implements OnInit {
     try {
 
       // Load the modules for the ArcGIS API for JavaScript
-      const [EsriMap, EsriMapView, PictureMarkerSymbol, Graphic, Locate] = await loadModules([
+      const [EsriMap, EsriMapView, Graphic, Locate] = await loadModules([
         'esri/Map',
         'esri/views/MapView',
-        'esri/symbols/PictureMarkerSymbol',
         'esri/Graphic',
         "esri/widgets/Locate"
       ]);
@@ -142,7 +141,7 @@ export class EsriMapComponent implements OnInit {
       });
 
       boton.on("locate", (event)=>{
-          // console.log(event.position.coords.longitude + ','+ event.position.coords.latitude);
+          console.log(event.position.coords.longitude + ','+ event.position.coords.latitude);
           this.componentsComms.setCoords( String(event.position.coords.longitude + ','+ event.position.coords.latitude) );
 
       });

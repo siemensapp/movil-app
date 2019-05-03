@@ -2,20 +2,20 @@
   <div class="titleReport">Reporte general de servicio</div>
   <div class="oneField">
     <div class="styledInput">
-      <input type="text" id="nombreCliente" placeholder=" "><br>
+      <input type="text" id="nombreCliente" placeholder=" " value="{{assignmentData['NombreCliente']}}"><br>
       <label>Nombre Cliente</label>
     </div>
   </div>
   <div class="oneField">
       <div class="styledInput">
-        <input type="text" id="nombreContacto" placeholder=" "><br>
+        <input type="text" id="nombreContacto" placeholder=" " value="{{assignmentData['NombreContacto']}}"><br>
         <label>Nombre Contacto</label>
       </div>
     <br>
   </div>
   <div class="oneField">
     <div class="styledInput">
-      <input type="text" id="nombreColaborador" placeholder=" "><br>
+      <input type="text" id="nombreColaborador" placeholder=" " value="{{localStorage.getItem('NombreE')}}"><br>
       <label>Nombre Colaborador</label>
     </div>
   </div>
@@ -69,7 +69,7 @@
   <div class="subtitleReport">Datos Tècnicos</div>
     <div class="oneField">
         <div class="styledInput">
-          <input type="text" id="nombreMarca" placeholder=" "><br>
+          <input type="text" id="nombreMarca" placeholder=" " value="SIEMENS"><br>
           <label>Marca</label>
         </div>
       <br>

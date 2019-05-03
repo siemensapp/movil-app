@@ -15,18 +15,21 @@ export class ReportComponent implements OnInit {
   private textAreas = [ 'descripcionAlcance', 'actividadesRealizadas', 'conclusionesRecomendaciones', 'repuestosSugeridos', 'actividadesPendientes' ];
   hours;
   assignment;
+  assignmentData;
 
   constructor(private componentComms: ComponentsCommsService, private httpRequest: HttpRequestsService, private router: Router) { }
 
   ngOnInit() {
     //localStorage.removeItem('hours');
+    this.assignmentData = this.componentComms.getDataAssignment();
+    console.log(this.assignmentData);
     this.componentComms.setBackStatus(true);
     localStorage.removeItem('dateToChange');
     this.hours = this.componentComms.getHours();
     console.log(this.hours);
     this.resizeAndSetTextArea();
     this.saveAndSetInputValues();
-    this.assignment = this.componentComms.getDataAssignment()['IdAsignacion'];
+    this.assignment = this.assignmentData['IdAsignacion'];
   }
 
   addHours( date ) {

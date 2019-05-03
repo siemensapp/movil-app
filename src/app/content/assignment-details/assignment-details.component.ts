@@ -120,7 +120,7 @@ export class AssignmentDetailsComponent implements OnInit {
       'tiempoInicio' : '',
       'tiempoFin' : timeStampFinal,
       'IdAsignacion' : this.data['IdAsignacion'],
-      'StatusAsignaicon' : 2
+      'StatusAsignacion' : 2
   }
   this.httpRequests.postData(url + '/api/updateTimeStamps', JSON.stringify(datos));
     document.getElementById('endAssignment').style.visibility = 'hidden';
