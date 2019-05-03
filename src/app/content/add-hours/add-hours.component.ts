@@ -21,9 +21,8 @@ export class AddHoursComponent implements OnInit {
   }
 
   formatDate( date ) {
-    console.log(date);
     let auxDate = new Date(date);
-    return String(auxDate.getFullYear() + "-" + ( (auxDate.getMonth() < 10)? "0" + auxDate.getMonth(): auxDate.getMonth ) + "-" + ( (auxDate.getDate() < 10)? "0" + auxDate.getDate(): auxDate.getDate() ));
+    return String(auxDate.getFullYear() + "-" + ( (auxDate.getMonth() + 1 < 10)? "0" + (auxDate.getMonth() + 1) : (auxDate.getMonth() + 1) ) + "-" + ( (auxDate.getDate() < 10)? "0" + auxDate.getDate(): auxDate.getDate() ));
   }
 
   addOrModifyHours() {
@@ -40,7 +39,7 @@ export class AddHoursComponent implements OnInit {
   }
 
   saveHours() {
-    let fecha = (this.dateToChange) ? this.dateToChange : this.formatDate((<HTMLInputElement>document.getElementById("fecha")).value);
+    let fecha = (this.dateToChange !== null) ? this.dateToChange : this.formatDate((<HTMLInputElement>document.getElementById("fecha")).value);
     let desde = (<HTMLInputElement>document.getElementById("desde")).value;
     let hasta = (<HTMLInputElement>document.getElementById("hasta")).value;
     let descuento = (<HTMLInputElement>document.getElementById("descuento")).value;
@@ -49,8 +48,8 @@ export class AddHoursComponent implements OnInit {
     let tiempoViaje = (<HTMLInputElement>document.getElementById("tiempoViaje")).value;
     let tiempoEspera = (<HTMLInputElement>document.getElementById("tiempoEspera")).value;
 
-    let hours = JSON.parse(localStorage.getItem('hours'));
-
+    let hours = (localStorage.getItem('hours') !== null) ? JSON.parse(localStorage.getItem('hours')) : {};
+    console.log("hours 1:", hours);
     hours[fecha] = {
       fecha: fecha,
       desde: desde,
@@ -61,10 +60,10 @@ export class AddHoursComponent implements OnInit {
       tiempoViaje: tiempoViaje,
       tiempoEspera: tiempoEspera
     }
-    console.log(hours);
+    
 
     localStorage.setItem('hours', JSON.stringify(hours));
-
+    console.log("hours 2:", hours);
     Swal.fire({type: "success", title: "Exito", text: 'Hora guardada'})
           .then(() => { 
             this.router.navigate(['home/report']);

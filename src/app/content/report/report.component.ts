@@ -19,10 +19,11 @@ export class ReportComponent implements OnInit {
   constructor(private componentComms: ComponentsCommsService, private httpRequest: HttpRequestsService, private router: Router) { }
 
   ngOnInit() {
-    // localStorage.removeItem('hours');
+    //localStorage.removeItem('hours');
     this.componentComms.setBackStatus(true);
     localStorage.removeItem('dateToChange');
     this.hours = this.componentComms.getHours();
+    console.log(this.hours);
     this.resizeAndSetTextArea();
     this.saveAndSetInputValues();
     this.assignment = this.componentComms.getDataAssignment()['IdAsignacion'];
