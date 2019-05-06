@@ -43,26 +43,19 @@ input {
 }
 
 #saveBtn {
-  width: 50px;
-  height: 50px;
-  border-radius: 50%;
-  position: absolute;
-  background-color: #006486;
-  color: white;
-  font-size: 1.5rem;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-
-  bottom: 0px;
-  right: 20px;
-  box-shadow: 0px 2px 5px gray;
-  
-  transition: all 0.2s;
+    text-transform: uppercase;  
+    border-radius: 5px;
+    background-color: #006486;
+    color: white;
+    font-size: 1.5rem;
+    box-shadow: 0px 2px 5px gray;    
+    transition: all 0.2s;
+    text-align: center;
+    padding: 3px 0;
 }
 
 #saveBtn:hover {
-    box-shadow: 0px 3px 5px black;
+    box-shadow: 0px 3px 5px gray;
 }
 
 
