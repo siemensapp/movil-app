@@ -1,10 +1,14 @@
-<div class="row">
+<!-- <div class="row">
   <div class="title">
     Fecha
   </div>
   <div class="inputTime">
       <div class="hoursList" *ngIf="dateToChange; then static else input" ></div>    
   </div>
+</div> -->
+
+<div class="dateStripe">
+  <div class="hoursList" *ngIf="dateToChange; then static else input" ></div>    
 </div>
 
 <div class="subtitleReport">Horas Trabajadas</div>
@@ -14,7 +18,7 @@
     Desde
   </div>
   <div class="inputTime">
-    <input [ngxTimepicker]="pickerDesde" placeholder="Hora" [format]="24" id="desde">
+    <input [ngxTimepicker]="pickerDesde" placeholder="Formato 24h" [format]="24" id="desde">
     <ngx-material-timepicker #pickerDesde></ngx-material-timepicker>
   </div>
 </div>
@@ -24,7 +28,7 @@
     Hasta
   </div>
   <div class="inputTime">
-    <input [ngxTimepicker]="pickerHasta" placeholder="Hora" [format]="24" id="hasta">
+    <input [ngxTimepicker]="pickerHasta" placeholder="Formato 24h" [format]="24" id="hasta">
     <ngx-material-timepicker #pickerHasta></ngx-material-timepicker>
   </div>
 </div>
@@ -34,7 +38,7 @@
     Descuento
   </div>
   <div class="inputTime">
-    <input [ngxTimepicker]="pickerDescuento" placeholder="Hora" [format]="24" id="descuento">
+    <input [ngxTimepicker]="pickerDescuento" placeholder="Formato 24h" [format]="24" id="descuento">
     <ngx-material-timepicker #pickerDescuento></ngx-material-timepicker>
   </div>
 </div>
@@ -45,7 +49,7 @@
     Servicio en Sitio
   </div>
   <div class="inputTime">
-    <input [ngxTimepicker]="pickerServicioSitio" placeholder="Hora" [format]="24" id="servicioSitio">
+    <input [ngxTimepicker]="pickerServicioSitio" placeholder="Formato 24h" [format]="24" id="servicioSitio">
     <ngx-material-timepicker #pickerServicioSitio></ngx-material-timepicker>
   </div>
 </div>
@@ -55,7 +59,7 @@
     Entrenamiento
   </div>
   <div class="inputTime">
-    <input [ngxTimepicker]="pickerEntrenamiento" placeholder="Duraciòn" [format]="24" id="entrenamiento">
+    <input [ngxTimepicker]="pickerEntrenamiento" placeholder="Formato 24h" [format]="24" id="entrenamiento">
     <ngx-material-timepicker #pickerEntrenamiento></ngx-material-timepicker>
   </div>
 </div>
@@ -65,7 +69,7 @@
     Tiempo de Viaje
   </div>
   <div class="inputTime">
-    <input [ngxTimepicker]="pickerTiempoViaje" placeholder="Duraciòn" [format]="24" id="tiempoViaje">
+    <input [ngxTimepicker]="pickerTiempoViaje" placeholder="Formato 24h" [format]="24" id="tiempoViaje">
     <ngx-material-timepicker #pickerTiempoViaje></ngx-material-timepicker>
   </div>
 </div>
@@ -75,18 +79,13 @@
     Tiempo de Espera
   </div>
   <div class="inputTime">
-    <input [ngxTimepicker]="pickerTiempoEspera" placeholder="Duraciòn" [format]="24" id="tiempoEspera">
+    <input [ngxTimepicker]="pickerTiempoEspera" placeholder="Formato 24h" [format]="24" id="tiempoEspera">
     <ngx-material-timepicker #pickerTiempoEspera></ngx-material-timepicker>
   </div>
 </div>
 
 
-<div class="row">
-  <div></div>
-  <div>
-    <div id="saveBtn" (click)="saveHours()">GUARDAR</div>
-  </div>
-</div>
+<div id="saveBtn" (click)="saveHours()">GUARDAR</div>
 
 <ng-template #static>
   <div class="staticDate">
@@ -94,6 +93,6 @@
   </div>
 </ng-template>
 <ng-template #input>
-  <input placeholder="Fecha" [owlDateTime]="dt3" [owlDateTimeTrigger]="dt3" id="fecha">
+  <input placeholder="Selecciona una fecha ..." [owlDateTime]="dt3" [owlDateTimeTrigger]="dt3" id="fecha">
   <owl-date-time [pickerMode]="'dialog'" [pickerType]="'calendar'" #dt3></owl-date-time>
 </ng-template>

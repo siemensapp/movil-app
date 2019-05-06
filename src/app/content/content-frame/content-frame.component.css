@@ -83,7 +83,7 @@ body {
   transition: background-color 0.5s;
 }
 
-.navbar {
+#navbar {
   background-color: inherit;
   /* border: 1px solid #757575; */
   width: 100%;

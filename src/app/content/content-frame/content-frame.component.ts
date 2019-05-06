@@ -65,6 +65,23 @@ export class ContentFrameComponent implements OnInit {
     this.openSource.next(false);
   }
 
+  checkNavbarColors() {
+    var navbar = document.getElementById('navbar');
+    var btn = document.getElementById('openMenuBtn');
+    var url = window.location.href;
+    if (url.includes("hours")) {
+      console.log("includes")
+      navbar.style.backgroundColor = "#006486";
+      btn.style.backgroundColor = "#006486";
+      btn.style.color = 'white';
+    } else {
+      console.log("doesnt includes")
+      navbar.style.backgroundColor = "inherit";
+      btn.style.backgroundColor = "inherit";
+      btn.style.color = 'black';
+    }
+  }
+
   logout() {
     localStorage.removeItem('user');
     localStorage.removeItem('Foto');

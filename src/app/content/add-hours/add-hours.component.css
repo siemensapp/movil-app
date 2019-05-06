@@ -1,3 +1,15 @@
+.dateStripe {
+    width: 100% - 1px;
+    margin: 0 auto 15px auto;
+    min-height: 100px;
+    background-color: #006486;
+    border-bottom-left-radius: 50px;
+    border-bottom-right-radius: 50px;
+    position: relative;
+    display: flex;
+    box-shadow: 0px 2px 5px gray;
+}
+
 .row {
     display: flex;
     justify-content: space-around;
@@ -8,7 +20,10 @@
     font-weight: 400;
     width: 50%;
     text-align: end;
+    justify-content: flex-end;
     margin-bottom: 30px;
+    font-size: 1.2rem;
+    vertical-align: bottom;
 }
 
 .inputTime {
@@ -32,14 +47,28 @@ input {
 
 
 .subtitleReport {
-    font-size: 1.2rem;
+    font-size: 1.3rem;
     font-weight: 600;
+    margin: 10px 0 25px 0;
+    padding-left: 5%; 
 }
 
 .staticDate {
-    width: 50%;
     text-align: center;
-    color: #757575;
+    color: white;
+    margin: auto;
+    font-size: 3rem;
+    align-items: center;
+}
+
+#fecha {
+    font-size: 2.4rem;
+    text-align: center;
+    border-bottom: 1px solid rgba(#006486, 0.5);
+}
+
+#fecha::placeholder {
+    color: white;
 }
 
 #saveBtn {
@@ -47,16 +76,53 @@ input {
     border-radius: 5px;
     background-color: #006486;
     color: white;
-    font-size: 1.5rem;
+    font-size: 1.2rem;
+    max-width: 25%;
+    margin: 20px auto;
     box-shadow: 0px 2px 5px gray;    
     transition: all 0.2s;
     text-align: center;
-    padding: 3px 0;
+    padding: 3px 5px;
 }
 
 #saveBtn:hover {
     box-shadow: 0px 3px 5px gray;
 }
 
+/*******************/
+.inputTime {
+    position: relative;
+    width: 95%;    
+}
 
+/* input */
+.inputTime input {
+    border-bottom: 1px solid #757575;
+    font-size: 1.2rem;
+    text-align: center;
+}
+
+.inputTime input:focus {
+    border-bottom: 2px solid #0077FF;
+}
+
+.inputTime input ~ label {
+    position: absolute;
+    left: 20%;
+    top: 15px;
+    z-index: -1;
+    transition: 0.2s;
+    color: #757575;
+}
+
+.inputTime input:focus ~ label {
+    color: #0077FF;
+    transform: translateY(-30px);
+    font-size: 0.9rem;
+}
+
+.inputTime input:not(:placeholder-shown) ~ label{
+    transform: translateY(-30px);
+    font-size: 0.9rem;
+}
 
