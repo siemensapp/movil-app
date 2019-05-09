@@ -18,7 +18,7 @@ export class LoginComponent implements OnInit {
     var password = (<HTMLInputElement>document.getElementById("password")).value;
     var data = JSON.stringify({user: user, password: password});
     Swal.showLoading();
-    this.httpClient.postData( url + '/api/login', data).then( result => {
+    this.httpClient.postData( url + '/api/loginApp', data).then( result => {
       //Swal.close();
       if (!result.hasOwnProperty('token')) Swal.fire({type: "error", title: "Error", text: String(result)});
       else {

@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { Routes, RouterModule } from '@angular/router';
+import { Routes, RouterModule, CanActivate } from '@angular/router';
 
 import { AssignmentListComponent } from './assignment-list/assignment-list.component';
 import { ContentFrameComponent } from './content-frame/content-frame.component';
@@ -7,12 +7,14 @@ import { AssignmentDetailsComponent } from './assignment-details/assignment-deta
 import { ReportComponent } from './report/report.component';
 import { AddHoursComponent } from './add-hours/add-hours.component';
 
+import { AuthGuardService as AuthGuard } from '../authServices/auth-guard.service';
+
 const routes: Routes = [
     {path: 'home', component: ContentFrameComponent, children: [
-            { path: 'list', component: AssignmentListComponent},
-            { path: 'details', component: AssignmentDetailsComponent},
-            { path: 'report', component: ReportComponent },
-            { path: 'hours', component:  AddHoursComponent}
+            { path: 'list', component: AssignmentListComponent, canActivate: [AuthGuard]},
+            { path: 'details', component: AssignmentDetailsComponent, canActivate: [AuthGuard]},
+            { path: 'report', component: ReportComponent, canActivate: [AuthGuard] },
+            { path: 'hours', component:  AddHoursComponent, canActivate: [AuthGuard]}
         ]
     }
 ];

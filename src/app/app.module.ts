@@ -5,6 +5,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { LoginComponent } from './login/login.component';
 import { ContentModule } from './content/content.module';
+import { JwtModule } from '@auth0/angular-jwt';
 
 @NgModule({
   declarations: [
@@ -12,6 +13,7 @@ import { ContentModule } from './content/content.module';
     LoginComponent
   ],
   imports: [
+    JwtModule,
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
