@@ -32,6 +32,10 @@ export class ReportComponent implements OnInit {
     this.assignment = this.assignmentData['IdAsignacion'];
   }
 
+  getNameE() {
+    return this.componentComms.getNameE();
+  }
+
   addHours( date ) {
     localStorage.setItem('dateToChange', date);
     this.router.navigate(['home/hours']);

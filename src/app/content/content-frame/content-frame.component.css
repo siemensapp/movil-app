@@ -60,6 +60,7 @@
 
 .side-menu-options a {
   display: block;
+  white-space: nowrap;
   text-decoration: none;
   height: 32px;
   line-height: 32px;
