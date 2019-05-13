@@ -11,6 +11,11 @@ import { OwlDateTimeModule, OwlNativeDateTimeModule } from 'ng-pick-datetime';
 import { NgxMaterialTimepickerModule } from 'ngx-material-timepicker';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { JwtModule } from '@auth0/angular-jwt';
+import { HttpClientModule  } from '@angular/common/http';
+import { ServiceWorkerModule } from '@angular/service-worker';
+import { environment } from 'src/environments/environment.prod';
+import { PushNotificationService } from '../pushService/push-notification.service';
+
 
 export function tokenGetter() {
   return localStorage.getItem('access_token');
@@ -30,7 +35,12 @@ export function tokenGetter() {
     OwlDateTimeModule,
     OwlNativeDateTimeModule,
     NgxMaterialTimepickerModule,
-    BrowserAnimationsModule
-  ]
+    BrowserAnimationsModule,
+    HttpClientModule,
+    ServiceWorkerModule.register('../ngsw-config.json', {
+      enabled: environment.production
+    })
+  ],
+  providers: [PushNotificationService]
 })
 export class ContentModule { }
