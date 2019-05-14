@@ -6,6 +6,7 @@ import { Subject } from 'rxjs';
 import { url } from '../../../assets/js/variables';
 import { SwPush } from '@angular/service-worker';
 import { PushNotificationService } from '../../pushService/push-notification.service';
+import { AnimationGroupPlayer } from '@angular/animations/src/players/animation_group_player';
 
 
 @Component({
@@ -28,6 +29,16 @@ export class AssignmentListComponent implements OnInit {
     this.getData();
   }
 
+  indicatorColor(num) {
+    switch(num) {
+      case 0:
+        return 'gray';
+      case 1:
+        return '#006486';
+      case 2: 
+        return 'green';
+    }
+  }
 
   // Funcion para verificar si navegador puede usar service-workers
   notificationsCheck() {

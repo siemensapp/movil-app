@@ -1,24 +1,26 @@
 <!-- side-menu-component -->
-<div id="side-menu-background">
-  <div id="side-menu-body">
-    <div class="side-menu-img">
-      <i class="fas fa-times closeBtn" (click)="closeMenu()"></i>
-      <img src="data:image/png;base64,{{Foto}}">
-      <div class="picture-name">{{NombreE}}</div>
-      <div class="picture-desc">Field service</div>
+<div id="obscuring">
+  <div id="side-menu-background">
+    <div id="side-menu-body">
+      <div class="side-menu-img">
+        <i class="fas fa-times closeBtn" (click)="closeMenu()"></i>
+        <img src="data:image/png;base64,{{Foto}}">
+        <div class="picture-name">{{NombreE}}</div>
+        <div class="picture-desc">Field service</div>
+      </div>
+      <div class="side-menu-options">
+        <a><i class="fas fa-cog"></i><span class="option-text">Configuración</span></a>
+        <a (click)="logout()"><i class="fas fa-sign-out-alt"></i><span class="option-text">Cerrar sesión</span></a>
+      </div>
     </div>
-    <div class="side-menu-options">
-      <a><i class="fas fa-cog"></i><span class="option-text">Configuración</span></a>
-      <a (click)="logout()"><i class="fas fa-sign-out-alt"></i><span class="option-text">Cerrar sesión</span></a>
-    </div>
+  
   </div>
-
-</div>
-<!-- home-component -->
-<div id="navbar">
-  <button id="openMenuBtn" (click)="menuFunction()"><i class="fas fa-bars"></i></button>
-</div>
-
-<div class="content">
-  <router-outlet></router-outlet>
+  <!-- home-component -->
+  <div id="navbar">
+    <button id="openMenuBtn" (click)="menuFunction()"><i class="fas fa-bars"></i></button>
+  </div>
+  
+  <div class="content">
+    <router-outlet></router-outlet>
+  </div>
 </div>

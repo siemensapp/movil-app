@@ -7,6 +7,7 @@
 
     <div *ngFor="let tasks of results">
       <div (click)="goToDetails(tasks)" class="taskPreview">
+        <div class="indicator" [ngStyle]="{'background-color': indicatorColor(tasks.StatusAsignacion)}"></div>
         {{tasks.Descripcion}}<br>
         {{tasks.NombreSitio}}<br>
         {{tasks.FechaInicio.split("T")[0]}} 

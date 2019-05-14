@@ -23,18 +23,19 @@
     width: 100%;
 }
 
-.taskPreview {
-    padding: 20px;
+.taskPreview {    
     width: 100%;
-    background-color: inherit;
-    background-image: linear-gradient(to right, white 50%, gray 50%);
-    background-size: 200% 100%;
+    background-color: inherit;    
+    position: relative;
     transition: 0.3s;        
+    line-height: 20px;
 }
-.taskPreview:hover {
-    background-color: gray;
-    color: white;
-    background-position: -100% 0;
+
+.indicator {
+  width: 5%;
+  height: 60px;
+  float: left;
+  margin-right: 20px;
 }
 
 @media (max-width: 500px) {
@@ -50,8 +51,8 @@
   }
   .taskPreview {
     width: 60vw;
-    border-radius: 25px;
-    border: 1px solid #757575;
+    margin: 5px 0;
+    border: 1px solid rgba(0, 0, 0, 0.2);
   }
 }
 
