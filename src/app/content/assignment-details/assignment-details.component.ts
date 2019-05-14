@@ -81,12 +81,13 @@ export class AssignmentDetailsComponent implements OnInit {
 
   empezarAsignacion(){
     var timeStampHoy = new Date().toLocaleString();
+    console.log(timeStampHoy)
     var fechaHoy;
     if(parseInt(timeStampHoy.split(" ")[0].split("/")[1])<10){
-      fechaHoy = timeStampHoy.split(" ")[0].split("/")[2]+'-0'+timeStampHoy.split(" ")[0].split("/")[1]+'-'+timeStampHoy.split(" ")[0].split("/")[0];
+      fechaHoy = (timeStampHoy.split(" ")[0].split("/")[2]).split(",")[0]+'-0'+timeStampHoy.split(" ")[0].split("/")[1]+'-'+timeStampHoy.split(" ")[0].split("/")[0];
     }
     else{
-      fechaHoy = timeStampHoy.split(" ")[0].split("/")[2]+'-'+timeStampHoy.split(" ")[0].split("/")[1]+'-'+timeStampHoy.split(" ")[0].split("/")[0];
+      fechaHoy = (timeStampHoy.split(" ")[0].split("/")[2]).split(",")[0]+'-'+timeStampHoy.split(" ")[0].split("/")[1]+'-'+timeStampHoy.split(" ")[0].split("/")[0];
     }
     var horaHoy = new Date().toLocaleTimeString();
     var timeStampInicio = fechaHoy+' '+horaHoy;

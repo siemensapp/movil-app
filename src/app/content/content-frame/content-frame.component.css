@@ -118,3 +118,10 @@ body {
   position: relative;
   height: auto;
 }
+
+#obscuring {
+  position: absolute;
+  width: 100%;
+  transition: background-color 0.3s;
+  height: 100%;
+}
