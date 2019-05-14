@@ -25,7 +25,7 @@ export class LoginComponent implements OnInit {
         // Saves user number
         localStorage.setItem('Foto', result['Foto']);
         localStorage.setItem('NombreE', result['NombreE']);
-        localStorage.setItem('token', result['token']);
+        localStorage.setItem('tokenApp', result['token']);
         localStorage.setItem('user', user);
 
         Swal.fire({type: "success", title: "Exito", text: 'Inicio de sesiòn exitoso.'})
