@@ -11,8 +11,8 @@ export class PushNotificationService {
 
   sendSubscription( subscription: PushSubscription) {
     console.log(subscription);
-    console.log(url + '/api/subscription');
-    return this.http.postData( url + '/api/subscription', JSON.stringify(subscription));
+    console.log(url + '/api/subscriptionApp');
+    return this.http.postData( url + '/api/subscriptionApp', JSON.stringify(subscription));
   }
 
 }

@@ -80,18 +80,25 @@ export class AssignmentDetailsComponent implements OnInit {
   } 
 
   empezarAsignacion(){
-    var timeStampHoy = new Date().toLocaleString();
-    console.log(timeStampHoy)
-    var fechaHoy;
-    if(parseInt(timeStampHoy.split(" ")[0].split("/")[0])<10){
-      fechaHoy = (timeStampHoy.split(" ")[0].split("/")[2]).split(",")[0] + '-0' + timeStampHoy.split(" ")[0].split("/")[0] + '-' + timeStampHoy.split(" ")[0].split("/")[1];
-    }
-    else{
-      fechaHoy = (timeStampHoy.split(" ")[0].split("/")[2]).split(",")[0] + '-' + timeStampHoy.split(" ")[0].split("/")[0] + '-' + timeStampHoy.split(" ")[0].split("/")[1];
-    }
-    var horaHoy = new Date().toLocaleTimeString();
-    var timeStampInicio = fechaHoy+' '+horaHoy;
+    var timeStampHoy = new Date();
+    console.log(timeStampHoy);
+    // if(parseInt(timeStampHoy.split(" ")[0].split("/")[0])<10){
+    //   fechaHoy = (timeStampHoy.split(" ")[0].split("/")[2]).split(",")[0] + '-0' + timeStampHoy.split(" ")[0].split("/")[0] + '-' + timeStampHoy.split(" ")[0].split("/")[1];
+    // }
+    // else{
+    //   fechaHoy = (timeStampHoy.split(" ")[0].split("/")[2]).split(",")[0] + '-' + timeStampHoy.split(" ")[0].split("/")[0] + '-' + timeStampHoy.split(" ")[0].split("/")[1];
+    // }
+    let date = timeStampHoy.getDate();
+    let month = timeStampHoy.getMonth() + 1;
+    let year = timeStampHoy.getFullYear();
+    
+    let realDate = (date < 10 ) ? String('0' + date) : String (date);
+    let realMonth = (month < 10) ? String( '0' + month ) : String(month);
+    let realTime = String(timeStampHoy.getHours()) + ':' + String(timeStampHoy.getMinutes()) + ':' + String(timeStampHoy.getSeconds());
+
+    let timeStampInicio = String(year) + '-' + realMonth + '-' + realDate + " " + realTime;
     console.log(timeStampInicio);
+    
     var datos = {
         'tiempoInicio' : timeStampInicio,
         'tiempoFin' : '',
