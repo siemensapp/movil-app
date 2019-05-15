@@ -225,6 +225,13 @@ export class ReportComponent implements OnInit {
 
     var campoCli = <HTMLCanvasElement> document.getElementById('campoCliente');
     var imagencampoCli = campoCli.toDataURL();
+    var timeStampCreacion = new Date();
+    let date = timeStampCreacion.getDate();
+    let month = timeStampCreacion.getMonth() + 1;
+    let year = timeStampCreacion.getFullYear();
+    let realDate = (date < 10 ) ? String('0' + date) : String (date);
+    let realMonth = (month < 10) ? String( '0' + month ) : String(month);
+    let FechaCreacion = String(year) + '-' + realMonth + '-' + realDate;
 
 
 
@@ -250,7 +257,8 @@ export class ReportComponent implements OnInit {
         'FirmaComerciante' : imagencampoCo,
         'FirmaResponsableP' : imagencampoRP,
         'FirmaCliente' : imagencampoCli,
-        'IdAsignacion' : this.assignment
+        'IdAsignacion' : this.assignment,
+        'FechaEnvio' : FechaCreacion
     }
     Swal.showLoading();
     this.httpRequest.postData(url + '/api/saveGeneralReport', JSON.stringify(datos)). then( result => {
