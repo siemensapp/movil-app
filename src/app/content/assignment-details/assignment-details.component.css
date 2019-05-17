@@ -161,6 +161,7 @@
   background-color: whitesmoke;
   border: 2px ridge gray;
   visibility: hidden;
+  border-radius: 20px;
 
 }
 
@@ -169,9 +170,10 @@
   display: block;
   width: 50%;
   height: 0vh;
-  background-color: lightgreen;
+  background-color: #006486;
   border: 2px ridge gray;
   visibility: hidden;
+  border-radius: 20px;
 }
 
 #finishedAssignment{

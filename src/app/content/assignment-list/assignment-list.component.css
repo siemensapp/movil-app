@@ -8,6 +8,57 @@
     margin: 10px auto 15px auto;
 }
 
+.asignadas{
+  width: 100%;
+  height: 280px;
+  overflow-y: scroll;
+}
+
+.tagAsignadas{
+  width: 100%;
+  background-color: lightgray;
+  height: 30px;
+  font-size: 25px;
+  font-weight: bold;
+  border-top-right-radius: 30px;
+  border-bottom-left-radius: 30px;
+  text-align: center;
+}
+
+.empezadas{
+  width: 100%;
+  height: 280px;
+  overflow-y: scroll;
+}
+
+.tagEmpezadas{
+  width: 100%;
+  background-color: lightgray;
+  height: 30px;
+  font-size: 25px;
+  font-weight: bold;
+  border-top-right-radius: 30px;
+  border-bottom-left-radius: 30px;
+  text-align: center;
+}
+
+.terminadas{
+  width: 100%;
+  height: 280px;
+  overflow-y: scroll;
+}
+
+.tagTerminadas{
+  width: 100%;
+  background-color: lightgray;
+  height: 30px;
+  font-size: 25px;
+  font-weight: bold;
+  border-top-right-radius: 30px;
+  border-bottom-left-radius: 30px;
+  text-align: center;
+}
+
 .main-content {
     display: flex;
 }
@@ -52,7 +103,6 @@
   .taskPreview {
     width: 60vw;
     margin: 5px 0;
-    border: 1px solid rgba(0, 0, 0, 0.2);
   }
 }
 

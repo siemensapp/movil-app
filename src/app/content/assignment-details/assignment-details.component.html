@@ -3,40 +3,41 @@
     (mapLoadedEvent)="mapLoadedEvent($event)" id="mapa">
   </app-esri-map>
   <div class="dropdown">
-  <div id="acceptBtn" (click)="writeReport()"><i class="fas fa-plus"></i></div>
-  
-        <div id="reportsMenu" class="dropdown-content">
-        <a [routerLink]="['/home/report']">Crear Reporte Horas</a>
-        <a>Crear Reporte Gastos</a>
-      </div>
+    <div id="acceptBtn" (click)="writeReport()"><i class="fas fa-plus"></i></div>
+
+    <div id="reportsMenu" class="dropdown-content">
+      <a [routerLink]="['/home/report']">Crear Reporte Horas</a>
+      <a>Crear Reporte Gastos</a>
     </div>
+  </div>
 </div>
 
 <div id="details">
-    <div id="nombreSitio">{{data.NombreSitio}}</div><br>
-    <div id="descFechas">
-      <div id="descripcion">Descripcion<br>
-        <div id="contenidoDescripcion">{{data.Descripcion}}</div>
-        <div id="infoContacto">
-            <div id="contactoT">Contacto</div>
-            <div id="contacto">{{data.NombreContacto}}
-              <a href="tel:{{data.NombreContacto}}"></a><button class="callBtn"><i class="fas fa-phone"></i></button>
-            </div>
-          </div>
-      </div>
-      <div id="fechas">
-        <div id="barra">
-        </div>
-        <div id="valorFechas">
-          <div class='tituloF'>Desde</div>
-          {{parseDate(data.FechaInicio.split("T")[0], data.FechaFin.split("T")[0]).split('-')[0]}}<br><br>
-          <div class='tituloF'>Hasta</div>
-          {{parseDate(data.FechaInicio.split("T")[0], data.FechaFin.split("T")[0]).split('-')[1]}}
+  <div id="nombreSitio">{{data.NombreSitio}}</div><br>
+  <div id="descFechas">
+    <div id="descripcion">Descripcion<br>
+      <div id="contenidoDescripcion">{{data.Descripcion}}</div>
+      <div id="infoContacto">
+        <div id="contactoT">Contacto</div>
+        <div id="contacto">{{data.NombreContacto}}
+          <a href="tel:{{data.NombreContacto}}"></a><button class="callBtn"><i class="fas fa-phone"></i></button>
         </div>
       </div>
     </div>
-    <hr>
+    <div id="fechas">
+      <div id="barra">
+      </div>
+      <div id="valorFechas">
+        <div class='tituloF'>Desde</div>
+        {{parseDate(data.FechaInicio.split("T")[0], data.FechaFin.split("T")[0]).split('-')[0]}}<br><br>
+        <div class='tituloF'>Hasta</div>
+        {{parseDate(data.FechaInicio.split("T")[0], data.FechaFin.split("T")[0]).split('-')[1]}}
+      </div>
+    </div>
+  </div>
+  <hr>
     <button id="startAssignment" (click)="empezarAsignacion()">EMPEZAR SERVICIO</button>
     <button id="endAssignment" (click)="terminarAsignacion()">TERMINAR SERVICIO</button>
-    <label id="finishedAssignment"><i class="fas fa-flag-checkered"></i> SERVICIO TERMINADO<i class="fas fa-flag-checkered"></i></label>
-  </div>
+    <label id="finishedAssignment"><i class="fas fa-flag-checkered"></i> SERVICIO TERMINADO<i
+        class="fas fa-flag-checkered"></i></label>
+</div>

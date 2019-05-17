@@ -40,6 +40,48 @@ export class AssignmentListComponent implements OnInit {
     }
   }
 
+  assignedPosition(status){
+    if(status==0)
+      return 'block';
+    else
+      return 'none';
+  }
+
+  assignedBorder(status){
+    if(status==0)
+      return '1px solid rgba(0, 0, 0, 0.2)';
+    else
+      return 'none';
+  }
+
+  startedPosition(status){
+    if(status==1)
+      return 'block';
+    else
+      return 'none';
+  }
+
+  startedBorder(status){
+    if(status==1)
+      return '1px solid rgba(0, 0, 0, 0.2)';
+    else
+      return 'none';
+  }
+
+  endedPosition(status){
+    if(status==2)
+      return 'block';
+    else
+      return 'none';
+  }
+
+  endedBorder(status){
+    if(status==2)
+      return '1px solid rgba(0, 0, 0, 0.2)';
+    else
+      return 'none';
+  }
+
   // Funcion para verificar si navegador puede usar service-workers
   notificationsCheck() {
     if( this.swPush.isEnabled ) {
