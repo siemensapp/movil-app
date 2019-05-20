@@ -115,14 +115,13 @@
 
 #valorFechas{
   font-family: Verdana, Geneva, Tahoma, sans-serif;
-  margin-left: 2%;
+  margin-left: 6%;
   margin-top: 4%;
   font-size: 26px;
 }
 
 #contacto{
   display: flex;
-  justify-content: center;
   font-family: Verdana, Geneva, Tahoma, sans-serif;
   font-weight: normal;
   font-size: 14px;
@@ -171,15 +170,17 @@
   width: 50%;
   height: 0vh;
   background-color: #006486;
-  border: 2px ridge gray;
+  border: 2px ridge #006486;
   visibility: hidden;
   border-radius: 20px;
+  color: white;
+
 }
 
 #finishedAssignment{
-  margin-left: 22%;
   display: block;
-  width: 50%;
+  text-align: center;
+  width: 100%;
   height: 0vh;
   font-family: Verdana, Geneva, Tahoma, sans-serif;
   font-size: 24px;
