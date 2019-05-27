@@ -1,9 +1,10 @@
 
 import { Component, OnInit } from '@angular/core';
 import { ComponentsCommsService } from '../../components-comms.service';
-import { Router } from '@angular/router';
 import { HttpRequestsService } from 'src/app/http-requests.service';
 import { url } from '../../../assets/js/variables';
+import Swal from 'sweetalert2'; 
+import { Router } from '@angular/router';
 
 
 @Component({
@@ -38,27 +39,27 @@ export class AssignmentDetailsComponent implements OnInit {
     return ( dateOne.getFullYear() == dateTwo.getFullYear() ) ? sameYearDates: diffYearDates; 
   }
 
-  mostrarEstado(status: number){
-    if(status==0){
-      document.getElementById('startAssignment').style.visibility = 'visible';
-      document.getElementById('startAssignment').style.height = '5vh';
-    }
-    else if(status == 1){
-      document.getElementById('endAssignment').style.visibility = 'visible';
-      document.getElementById('endAssignment').style.height = '5vh';
-    }
-    else{
-      document.getElementById('finishedAssignment').style.visibility = 'visible';
-    }
-  }
+  // mostrarEstado(status: number){
+  //   if(status==0){
+  //     document.getElementById('startAssignment').style.visibility = 'visible';
+  //     document.getElementById('startAssignment').style.height = '5vh';
+  //   }
+  //   else if(status == 1){
+  //     document.getElementById('endAssignment').style.visibility = 'visible';
+  //     document.getElementById('endAssignment').style.height = '5vh';
+  //   }
+  //   else{
+  //     document.getElementById('finishedAssignment').style.visibility = 'visible';
+  //   }
+  // }
 
 
-  constructor(private componentsComms: ComponentsCommsService, private httpRequests: HttpRequestsService) { }
+  constructor(private componentsComms: ComponentsCommsService, private httpRequests: HttpRequestsService, private router: Router) { }
 
   ngOnInit() {
     this.data = this.componentsComms.getDataAssignment();
     console.log(this.data);
-    this.mostrarEstado(this.data['StatusAsignacion']);
+    // this.mostrarEstado(this.data['StatusAsignacion']);
     this.mapCenter = [ parseFloat(this.data['CoordenadasSitio'].split(",")[0]), parseFloat(this.data['CoordenadasSitio'].split(",")[1]) ];
     this.siteMarker = [ parseFloat(this.data['CoordenadasSitio'].split(",")[0]), parseFloat(this.data['CoordenadasSitio'].split(",")[1]) ];
     this.componentsComms.setBackStatus(true);
@@ -78,6 +79,14 @@ export class AssignmentDetailsComponent implements OnInit {
     document.getElementById("reportsMenu").
     classList.toggle("show");
   } 
+
+  aceptarServicio(){
+
+  }
+
+  rechazarServicio(){
+
+  }
 
   empezarAsignacion(){
     var timeStampHoy = new Date();
@@ -103,13 +112,23 @@ export class AssignmentDetailsComponent implements OnInit {
         'tiempoInicio' : timeStampInicio,
         'tiempoFin' : '',
         'IdAsignacion' : this.data['IdAsignacion'],
-        'StatusAsignacion' : 1
+        'StatusAsignacion' : 2
     }
-    this.httpRequests.postData(url + '/api/updateTimeStamps', JSON.stringify(datos));
-    document.getElementById('startAssignment').style.visibility = 'hidden';
-    document.getElementById('startAssignment').style.height = '0vh';
-    document.getElementById('endAssignment').style.visibility = 'visible';
-    document.getElementById('endAssignment').style.height = '5vh';
+    this.httpRequests.postData(url + '/api/updateTimeStamps', JSON.stringify(datos)).then((res) => {
+        if(res !== "Error en la base de datos"){
+          Swal.fire(
+           'Asignacion Empezada',
+           timeStampInicio,
+           'success');
+            this.router.navigate(['home/list']);
+        }
+        else{
+          Swal.fire(
+            'ERROR',
+            'No se pudo empezar la asignación',
+            'error');
+        }
+        });
   } 
 
   terminarAsignacion(){
@@ -123,17 +142,27 @@ export class AssignmentDetailsComponent implements OnInit {
     }
     var horaHoy = new Date().toLocaleTimeString();
     var timeStampFinal = fechaHoy+' '+horaHoy;
-    console.log(timeStampFinal);
     var datos = {
       'tiempoInicio' : '',
       'tiempoFin' : timeStampFinal,
       'IdAsignacion' : this.data['IdAsignacion'],
-      'StatusAsignacion' : 2
+      'StatusAsignacion' : 3
   }
-  this.httpRequests.postData(url + '/api/updateTimeStamps', JSON.stringify(datos));
-    document.getElementById('endAssignment').style.visibility = 'hidden';
-    document.getElementById('endAssignment').style.height = '0vh';
-    document.getElementById('finishedAssignment').style.visibility = 'visible';
+  this.httpRequests.postData(url + '/api/updateTimeStamps', JSON.stringify(datos)).then((res) => {
+    if(res !== "Error en la base de datos"){
+      Swal.fire(
+       'Asignacion Terminada',
+       timeStampFinal,
+       'success');
+        this.router.navigate(['home/list']);
+    }
+    else{
+      Swal.fire(
+        'ERROR',
+        'No se pudo terminar la asignación',
+        'error');
+    }
+    });;
   }
 
 }

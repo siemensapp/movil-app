@@ -36,8 +36,22 @@
     </div>
   </div>
   <hr>
+  <div id="ARTrabajo" *ngIf="data.StatusAsignacion==0; else empezar">
+    <button id="acceptAssignment" (click)="aceptarServicio()">ACEPTAR SERVICIO</button>
+    <button id="refuseAssignment" (click)="rechazarServicio()">RECHAZAR SERVICIO</button>
+  </div>
+  <ng-template #empezar>
+    <div *ngIf="data.StatusAsignacion==1; else terminar">
     <button id="startAssignment" (click)="empezarAsignacion()">EMPEZAR SERVICIO</button>
+  </div>
+  </ng-template>
+  <ng-template #terminar>
+    <div *ngIf="data.StatusAsignacion==2; else terminado">
     <button id="endAssignment" (click)="terminarAsignacion()">TERMINAR SERVICIO</button>
-    <label id="finishedAssignment"><i class="fas fa-flag-checkered" style="color: green"></i> SERVICIO TERMINADO<i
+  </div>
+  </ng-template>
+  <ng-template #terminado>
+    <label *ngIf="data.StatusAsignacion==3" id="finishedAssignment"><i class="fas fa-flag-checkered" style="color: green"></i> SERVICIO TERMINADO<i
         class="fas fa-flag-checkered" style="color: green"></i></label>
+  </ng-template>
 </div>

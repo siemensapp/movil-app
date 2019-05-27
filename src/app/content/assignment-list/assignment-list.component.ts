@@ -31,11 +31,11 @@ export class AssignmentListComponent implements OnInit {
 
   indicatorColor(num) {
     switch(num) {
-      case 0:
-        return 'gray';
       case 1:
+        return 'gray';
+      case 2:
         return '#006486';
-      case 2: 
+      case 3: 
         return 'green';
     }
   }
@@ -54,29 +54,43 @@ export class AssignmentListComponent implements OnInit {
       return 'none';
   }
 
-  startedPosition(status){
+  acceptedPosition(status){
     if(status==1)
       return 'block';
     else
       return 'none';
   }
 
-  startedBorder(status){
+  acceptedBorder(status){
     if(status==1)
       return '1px solid rgba(0, 0, 0, 0.2)';
     else
       return 'none';
   }
 
-  endedPosition(status){
+  startedPosition(status){
     if(status==2)
       return 'block';
     else
       return 'none';
   }
 
-  endedBorder(status){
+  startedBorder(status){
     if(status==2)
+      return '1px solid rgba(0, 0, 0, 0.2)';
+    else
+      return 'none';
+  }
+
+  endedPosition(status){
+    if(status==3)
+      return 'block';
+    else
+      return 'none';
+  }
+
+  endedBorder(status){
+    if(status==3)
       return '1px solid rgba(0, 0, 0, 0.2)';
     else
       return 'none';
@@ -104,6 +118,20 @@ export class AssignmentListComponent implements OnInit {
       console.log(result);
       this.loadingData.next(result);
     });     
+  }
+
+  showAssignments(evt, status) {
+    var i, tabcontent, tablinks;
+    tabcontent = document.getElementsByClassName("tabcontent");
+    for (i = 0; i < tabcontent.length; i++) {
+      tabcontent[i].style.display = "none";
+    }
+    tablinks = document.getElementsByClassName("tablinks");
+    for (i = 0; i < tablinks.length; i++) {
+      tablinks[i].className = tablinks[i].className.replace(" active", "");
+    }
+    document.getElementById(status).style.display = "block";
+    // evt.currentTarget.className == " active";
   }
 
   

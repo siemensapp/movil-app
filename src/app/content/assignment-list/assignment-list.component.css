@@ -8,21 +8,41 @@
     margin: 10px auto 15px auto;
 }
 
+.tab {
+  overflow: hidden;
+  border: 1px solid #ccc;
+  background-color: #f1f1f1;
+}
+
+.tab button {
+  background-color: inherit;
+  float: left;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  padding: 14px 16px;
+  transition: 0.3s;
+  font-size: 17px;
+}
+
+.tab button:hover {
+  background-color: #ddd;
+}
+
+.tab button.active {
+  background-color: #ccc;
+}
+
+.tabcontent {
+  display: none;
+  padding: 20px 12px;
+  border-top: none;
+}
+
 .asignadas{
   width: 100%;
   height: 280px;
   overflow-y: scroll;
-}
-
-.tagAsignadas{
-  width: 100%;
-  background-color: lightgray;
-  height: 30px;
-  font-size: 25px;
-  font-weight: bold;
-  border-top-right-radius: 30px;
-  border-bottom-left-radius: 30px;
-  text-align: center;
 }
 
 .empezadas{
@@ -31,32 +51,10 @@
   overflow-y: scroll;
 }
 
-.tagEmpezadas{
-  width: 100%;
-  background-color: lightgray;
-  height: 30px;
-  font-size: 25px;
-  font-weight: bold;
-  border-top-right-radius: 30px;
-  border-bottom-left-radius: 30px;
-  text-align: center;
-}
-
 .terminadas{
   width: 100%;
   height: 280px;
   overflow-y: scroll;
-}
-
-.tagTerminadas{
-  width: 100%;
-  background-color: lightgray;
-  height: 30px;
-  font-size: 25px;
-  font-weight: bold;
-  border-top-right-radius: 30px;
-  border-bottom-left-radius: 30px;
-  text-align: center;
 }
 
 .main-content {

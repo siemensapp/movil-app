@@ -151,39 +151,62 @@
   border-radius: 50%;
 }
 
+#ARTrabajo{
+  display: flex;
+  flex-direction: row;
+}
+
+#acceptAssignment{
+  margin-top: 5%;
+  margin-left: 15%;
+  display: block;
+  width: 30%;
+  height: 5vh;
+  background-color: lightblue;
+  border: 2px ridge gray;
+  border-radius: 5px;
+}
+
+#refuseAssignment{
+  margin-top: 5%;
+  margin-left: 10%;
+  display: block;
+  width: 30%;
+  height: 5vh;
+  background-color: white;
+  border: 2px ridge gray;
+  border-radius: 5px;
+}
+
 #startAssignment{
   margin-top: 5%;
   margin-left: 25%;
   display: block;
   width: 50%;
-  height: 0vh;
+  height: 5vh;
   background-color: whitesmoke;
   border: 2px ridge gray;
-  visibility: hidden;
   border-radius: 20px;
-
 }
 
 #endAssignment{
+  margin-top: 5%;
   margin-left: 25%;
   display: block;
   width: 50%;
-  height: 0vh;
+  height: 5vh;
   background-color: #006486;
   border: 2px ridge #006486;
-  visibility: hidden;
   border-radius: 20px;
   color: white;
-
 }
 
 #finishedAssignment{
+  margin-top: 5%;
   display: block;
   text-align: center;
   width: 100%;
-  height: 0vh;
+  height: 5vh;
   font-family: Verdana, Geneva, Tahoma, sans-serif;
   font-size: 24px;
-  visibility: hidden;
-
 }

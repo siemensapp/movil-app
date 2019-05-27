@@ -2,7 +2,7 @@
   Asignaciones
 </div>
 
-<div class="asignadas">
+<!-- <div class="asignadas">
   <div class="tagAsignadas">Asignadas</div>
   <div class="main-content" *ngIf="loadingData | async as results; else loading">
     <div *ngIf="results.length; else emptyResults">
@@ -72,8 +72,110 @@
 
     </div>
   </div>
+</div> -->
+
+
+<div class="tab">
+  <button class="tablinks" (click)="showAssignments(event, '0')">Asignadas</button>
+  <button class="tablinks" (click)="showAssignments(event, '1')">Aceptadas</button>
+  <button class="tablinks" (click)="showAssignments(event, '2')">Empezadas</button>
+  <button class="tablinks" (click)="showAssignments(event, '3')">Terminadas</button>
 </div>
 
+<div id="0" class="tabcontent">
+  <div class="main-content" *ngIf="loadingData | async as results; else loading">
+    <div *ngIf="results.length; else emptyResults">
+
+      <div *ngFor="let tasks of results">
+        <div (click)="goToDetails(tasks)" class="taskPreview"
+          [ngStyle]="{'border': assignedBorder(tasks.StatusAsignacion)}">
+          <div class="indicator"
+            [ngStyle]="{'display': assignedPosition(tasks.StatusAsignacion)}">
+          </div>
+          <div class="condicionMuestra" [ngStyle]="{'display': assignedPosition(tasks.StatusAsignacion)}">
+            {{tasks.Descripcion}}<br>
+            {{tasks.NombreSitio}}<br>
+            {{tasks.FechaInicio.split("T")[0]}}
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+  </div>
+</div>
+
+
+<div id="1" class="tabcontent">
+    <div class="main-content" *ngIf="loadingData | async as results; else loading">
+      <div *ngIf="results.length; else emptyResults">
+  
+        <div *ngFor="let tasks of results">
+          <div (click)="goToDetails(tasks)" class="taskPreview"
+            [ngStyle]="{'border': acceptedBorder(tasks.StatusAsignacion)}">
+            <div class="indicator"
+              [ngStyle]="{'background-color': indicatorColor(tasks.StatusAsignacion), 'display': acceptedPosition(tasks.StatusAsignacion)}">
+            </div>
+            <div class="condicionMuestra" [ngStyle]="{'display': acceptedPosition(tasks.StatusAsignacion)}">
+              {{tasks.Descripcion}}<br>
+              {{tasks.NombreSitio}}<br>
+              {{tasks.FechaInicio.split("T")[0]}}
+            </div>
+          </div>
+  
+        </div>
+  
+      </div>
+    </div>
+  </div>
+
+
+
+<div id="2" class="tabcontent">
+  <div class="main-content" *ngIf="loadingData | async as results; else loading">
+    <div *ngIf="results.length; else emptyResults">
+
+      <div *ngFor="let tasks of results">
+        <div (click)="goToDetails(tasks)" class="taskPreview"
+          [ngStyle]="{'border': startedBorder(tasks.StatusAsignacion)}">
+          <div class="indicator"
+            [ngStyle]="{'background-color': indicatorColor(tasks.StatusAsignacion), 'display': startedPosition(tasks.StatusAsignacion)}">
+          </div>
+          <div class="condicionMuestra" [ngStyle]="{'display': startedPosition(tasks.StatusAsignacion)}">
+            {{tasks.Descripcion}}<br>
+            {{tasks.NombreSitio}}<br>
+            {{tasks.FechaInicio.split("T")[0]}}
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<div id="3" class="tabcontent">
+  <div class="main-content" *ngIf="loadingData | async as results; else loading">
+    <div *ngIf="results.length; else emptyResults">
+
+      <div *ngFor="let tasks of results">
+        <div (click)="goToDetails(tasks)" class="taskPreview"
+          [ngStyle]="{'border': endedBorder(tasks.StatusAsignacion)}">
+          <div class="indicator"
+            [ngStyle]="{'background-color': indicatorColor(tasks.StatusAsignacion), 'display': endedPosition(tasks.StatusAsignacion)}">
+          </div>
+          <div class="condicionMuestra" [ngStyle]="{'display': endedPosition(tasks.StatusAsignacion)}">
+            {{tasks.Descripcion}}<br>
+            {{tasks.NombreSitio}}<br>
+            {{tasks.FechaInicio.split("T")[0]}}
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+  </div>
+</div>
 
 <ng-template #loading>
   <div class="lds-dual-ring"></div>
