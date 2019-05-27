@@ -81,7 +81,27 @@ export class AssignmentDetailsComponent implements OnInit {
   } 
 
   aceptarServicio(){
-
+    var datos = {
+      'tiempoInicio' : '',
+      'tiempoFin' : '',
+      'IdAsignacion' : this.data['IdAsignacion'],
+      'StatusAsignacion' : 1
+  }
+  this.httpRequests.postData(url + '/api/updateTimeStamps', JSON.stringify(datos)).then((res) => {
+      if(res !== "Error en la base de datos"){
+        Swal.fire(
+         'Asignacion Aceptada',
+         '',
+         'success');
+          this.router.navigate(['home/list']);
+      }
+      else{
+        Swal.fire(
+          'ERROR',
+          'No se pudo aceptar la asignación',
+          'error');
+      }
+  });
   }
 
   rechazarServicio(){
@@ -128,7 +148,7 @@ export class AssignmentDetailsComponent implements OnInit {
             'No se pudo empezar la asignación',
             'error');
         }
-        });
+    });
   } 
 
   terminarAsignacion(){

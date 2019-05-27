@@ -30,7 +30,7 @@
 }
 
 .tab button.active {
-  background-color: #ccc;
+  background-color: #009999;
 }
 
 .tabcontent {
@@ -59,6 +59,8 @@
 
 .main-content {
     display: flex;
+    height: 800px;
+    overflow-y: scroll;
 }
 
 .no-results-img {

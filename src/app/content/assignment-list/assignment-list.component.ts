@@ -27,6 +27,7 @@ export class AssignmentListComponent implements OnInit {
     this.notificationsCheck();
     this.componentsComms.setBackStatus(false);
     this.getData();
+    document.getElementById('0').style.display = 'block';
   }
 
   indicatorColor(num) {
@@ -128,10 +129,11 @@ export class AssignmentListComponent implements OnInit {
     }
     tablinks = document.getElementsByClassName("tablinks");
     for (i = 0; i < tablinks.length; i++) {
-      tablinks[i].className = tablinks[i].className.replace(" active", "");
+      tablinks[i].className = tablinks[i].className.replace("active", "");
     }
     document.getElementById(status).style.display = "block";
-    // evt.currentTarget.className == " active";
+    evt.currentTarget.className += " active";
+
   }
 
   
