@@ -120,7 +120,7 @@ export class AssignmentListComponent implements OnInit {
     });     
   }
 
-  showAssignments(evt, status) {
+  showAssignments(status) {
     var i, tabcontent, tablinks;
     tabcontent = document.getElementsByClassName("tabcontent");
     for (i = 0; i < tabcontent.length; i++) {
