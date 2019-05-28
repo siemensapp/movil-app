@@ -13,9 +13,9 @@ export class ComponentsCommsService {
   private hoursSource = new BehaviorSubject([]);
   hours = this.hoursSource.asObservable();
 
-  // Coordenadas especialista
-  private coordsSource = new BehaviorSubject('');
-  coords = this.coordsSource.asObservable();
+  //Boolean para tomar coordenadas cuando se empiece un servicio
+  private startSource = new BehaviorSubject('');
+  start = this.startSource.asObservable();
 
   // Dice si usar back button
   setBackStatus( data: boolean ) {
@@ -81,7 +81,8 @@ export class ComponentsCommsService {
   // }
 
   /* Funciones coordenadas */
-  setCoords ( data ) {
-    this.coordsSource.next(data);
+
+  getCurrentCords ( statusId ) {
+    this.startSource.next(statusId);
   }
 }

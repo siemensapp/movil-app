@@ -57,6 +57,7 @@ export class AssignmentDetailsComponent implements OnInit {
   constructor(private componentsComms: ComponentsCommsService, private httpRequests: HttpRequestsService, private router: Router) { }
 
   ngOnInit() {
+    this.componentsComms.getCurrentCords(false+'');
     this.data = this.componentsComms.getDataAssignment();
     console.log(this.data);
     // this.mostrarEstado(this.data['StatusAsignacion']);
@@ -64,15 +65,6 @@ export class AssignmentDetailsComponent implements OnInit {
     this.siteMarker = [ parseFloat(this.data['CoordenadasSitio'].split(",")[0]), parseFloat(this.data['CoordenadasSitio'].split(",")[1]) ];
     this.componentsComms.setBackStatus(true);
     this.hours = this.componentsComms.getHours();
-
-    this.componentsComms.coords.subscribe(coords => {
-      console.log("Recibido", coords);
-      var datos = {'Coords': coords,
-                   'IdAsignacion': this.data['IdAsignacion']
-                  }
-      this.httpRequests.postData(url + '/api/updateCoords', JSON.stringify(datos));
-    });
-
     window.onclick = function(event) {
       if (!(<HTMLDivElement>event.target).matches('#acceptBtn')) {
         var dropdowns = document.getElementsByClassName("dropdown-content");
@@ -121,6 +113,7 @@ export class AssignmentDetailsComponent implements OnInit {
   }
 
   empezarAsignacion(){
+    this.componentsComms.getCurrentCords(true+'-'+this.data['IdAsignacion']);
     var timeStampHoy = new Date();
     console.log(timeStampHoy);
     // if(parseInt(timeStampHoy.split(" ")[0].split("/")[0])<10){
@@ -151,7 +144,7 @@ export class AssignmentDetailsComponent implements OnInit {
           Swal.fire(
            'Asignacion Empezada',
            timeStampInicio,
-           'success');
+           'success')  
             this.router.navigate(['home/list']);
         }
         else{
@@ -164,6 +157,7 @@ export class AssignmentDetailsComponent implements OnInit {
   } 
 
   terminarAsignacion(){
+    this.componentsComms.getCurrentCords(true+'-'+ this.data['IdAsignacion']);
     var timeStampHoy = new Date().toLocaleString();
     var fechaHoy;
     if(parseInt(timeStampHoy.split(" ")[0].split("/")[1])<10){

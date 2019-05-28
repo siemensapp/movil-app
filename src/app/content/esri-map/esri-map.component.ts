@@ -11,19 +11,39 @@
   limitations under the License.
 */
 
-import { Component, OnInit, ViewChild, ElementRef, Input, Output, EventEmitter } from '@angular/core';
-import { loadModules } from 'esri-loader';
-import { ComponentsCommsService } from '../../components-comms.service';
+import {
+  Component,
+  OnInit,
+  ViewChild,
+  ElementRef,
+  Input,
+  Output,
+  EventEmitter,
+  OnDestroy
+} from '@angular/core';
+import {
+  loadModules
+} from 'esri-loader';
+import {
+  ComponentsCommsService
+} from '../../components-comms.service';
 import esri = __esri; // Esri TypeScript Types
+import {
+  HttpRequestsService
+} from 'src/app/http-requests.service';
+import {
+  url
+} from '../../../assets/js/variables';
+
 
 @Component({
   selector: 'app-esri-map',
   templateUrl: './esri-map.component.html',
   styleUrls: ['./esri-map.component.css']
 })
-export class EsriMapComponent implements OnInit {
+export class EsriMapComponent implements OnInit, OnDestroy {
 
-  @Output() mapLoadedEvent = new EventEmitter<boolean>();
+  @Output() mapLoadedEvent = new EventEmitter < boolean > ();
 
   // The <div> where we will place the map
   @ViewChild('mapViewNode') private mapViewEl: ElementRef;
@@ -35,11 +55,12 @@ export class EsriMapComponent implements OnInit {
    * _loaded provides map loaded status
    */
   private _zoom = 10;
-  private _center: Array<number> = [0.1278, 51.5074];
+  private _center: Array < number > = [0.1278, 51.5074];
   private _basemap = 'streets';
   private _loaded = false;
-  private _siteMarker: Array<number> = [0.1278, 51.5074];
-
+  private _siteMarker: Array < number > = [0.1278, 51.5074];
+  public subscripcionStatus;
+  datos;
 
   get mapLoaded(): boolean {
     return this._loaded;
@@ -55,11 +76,11 @@ export class EsriMapComponent implements OnInit {
   }
 
   @Input()
-  set center(center: Array<number>) {
+  set center(center: Array < number > ) {
     this._center = center;
   }
 
-  get center(): Array<number> {
+  get center(): Array < number > {
     return this._center;
   }
 
@@ -73,15 +94,16 @@ export class EsriMapComponent implements OnInit {
   }
 
   @Input()
-  set siteMarker(siteMarker: Array<number>) {
+  set siteMarker(siteMarker: Array < number > ) {
     this._siteMarker = siteMarker;
   }
 
-  get siteMarker(): Array<number> {
+  get siteMarker(): Array < number > {
     return this._siteMarker;
   }
 
-  constructor(private componentsComms: ComponentsCommsService) { }
+  constructor(private componentsComms: ComponentsCommsService, private httpRequests: HttpRequestsService) {}
+
 
   prepareSitePoint() {
     let pointMap = {
@@ -98,7 +120,12 @@ export class EsriMapComponent implements OnInit {
     return [pointMap, markerSymbol];
   }
 
+  setCoordenadasEspecialista(info){
+    this.httpRequests.postData(url + '/api/updateCoords', JSON.stringify(info));
+  }
+
   async initializeMap() {
+    
     try {
 
       // Load the modules for the ArcGIS API for JavaScript
@@ -140,13 +167,29 @@ export class EsriMapComponent implements OnInit {
         view: view
       });
 
-      boton.on("locate", (event)=>{
-          console.log(event.position.coords.longitude + ','+ event.position.coords.latitude);
-          this.componentsComms.setCoords( String(event.position.coords.longitude + ','+ event.position.coords.latitude) );
-
+      view.ui.add(boton, "top-left");
+      this.subscripcionStatus = this.componentsComms.start.subscribe(empezar => {
+        if (empezar.split("-")[0] == 'true') {
+          var locate = new Locate({
+            view: view
+          });
+          
+          view.when( () => {
+            locate.locate();
+            locate.on("locate", (event) => {
+              let lat=event.position.coords.latitude;
+              let long=event.position.coords.longitude;
+              let coords = String(long+","+lat);
+              this.datos = {'Coords': coords,
+                'IdAsignacion': parseInt(empezar.split("-")[1]) 
+              };
+              this.setCoordenadasEspecialista(this.datos);
+            })
+          });         
+        }
+      
       });
 
-      view.ui.add(boton, "top-left");
 
       return view;
 
@@ -171,6 +214,9 @@ export class EsriMapComponent implements OnInit {
     this.initializeMap().then((mapView) => {
       this.houseKeeping(mapView);
     });
+  }
+  ngOnDestroy() {
+    this.subscripcionStatus.unsubscribe();
   }
 
 }
