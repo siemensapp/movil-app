@@ -20,7 +20,6 @@ export class ReportComponent implements OnInit {
   constructor(private componentComms: ComponentsCommsService, private httpRequest: HttpRequestsService, private router: Router) { }
 
   ngOnInit() {
-    this.componentComms.testingIDB();
     //localStorage.removeItem('hours');
     this.assignmentData = this.componentComms.getDataAssignment();
     console.log(this.assignmentData);

@@ -5,6 +5,7 @@ import { HttpRequestsService } from 'src/app/http-requests.service';
 import { url } from '../../../assets/js/variables';
 import Swal from 'sweetalert2'; 
 import { Router } from '@angular/router';
+import { SaveIDBService } from '../../save-idb.service';
 
 
 @Component({
@@ -54,11 +55,13 @@ export class AssignmentDetailsComponent implements OnInit {
   // }
 
 
-  constructor(private componentsComms: ComponentsCommsService, private httpRequests: HttpRequestsService, private router: Router) { }
+  constructor(private componentsComms: ComponentsCommsService, private httpRequests: HttpRequestsService, private router: Router, private saveIDB: SaveIDBService) { }
 
   ngOnInit() {
+    this.saveIDB.saveReport({Consecutivo: 'Prueba insert', lol: 'lol', data: {name: 'solo es data'}});
+    console.log(this.saveIDB.getAllReports());
+    ///////
     this.data = this.componentsComms.getDataAssignment();
-    console.log(this.data);
     // this.mostrarEstado(this.data['StatusAsignacion']);
     this.mapCenter = [ parseFloat(this.data['CoordenadasSitio'].split(",")[0]), parseFloat(this.data['CoordenadasSitio'].split(",")[1]) ];
     this.siteMarker = [ parseFloat(this.data['CoordenadasSitio'].split(",")[0]), parseFloat(this.data['CoordenadasSitio'].split(",")[1]) ];
@@ -73,15 +76,47 @@ export class AssignmentDetailsComponent implements OnInit {
       this.httpRequests.postData(url + '/api/updateCoords', JSON.stringify(datos));
     });
 
+    window.onclick = function(event) {
+      if (!(<HTMLDivElement>event.target).matches('#acceptBtn')) {
+        var dropdowns = document.getElementsByClassName("dropdown-content");
+        var i;
+        for (i = 0; i < dropdowns.length; i++) {
+          var openDropdown = dropdowns[i];
+          if (openDropdown.classList.contains('show')) {
+            openDropdown.classList.remove('show');
+          }
+        }
+      }
+    }
+
   }
 
   writeReport(){
-    document.getElementById("reportsMenu").
-    classList.toggle("show");
+    document.getElementById("reportsMenu").classList.toggle("show");
   } 
 
   aceptarServicio(){
-
+    var datos = {
+      'tiempoInicio' : '',
+      'tiempoFin' : '',
+      'IdAsignacion' : this.data['IdAsignacion'],
+      'StatusAsignacion' : 1
+  }
+  this.httpRequests.postData(url + '/api/updateTimeStamps', JSON.stringify(datos)).then((res) => {
+      if(res !== "Error en la base de datos"){
+        Swal.fire(
+         'Asignacion Aceptada',
+         '',
+         'success');
+          this.router.navigate(['home/list']);
+      }
+      else{
+        Swal.fire(
+          'ERROR',
+          'No se pudo aceptar la asignación',
+          'error');
+      }
+  });
   }
 
   rechazarServicio(){
@@ -128,7 +163,7 @@ export class AssignmentDetailsComponent implements OnInit {
             'No se pudo empezar la asignación',
             'error');
         }
-        });
+    });
   } 
 
   terminarAsignacion(){
