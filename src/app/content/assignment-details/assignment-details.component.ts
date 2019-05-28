@@ -73,11 +73,23 @@ export class AssignmentDetailsComponent implements OnInit {
       this.httpRequests.postData(url + '/api/updateCoords', JSON.stringify(datos));
     });
 
+    window.onclick = function(event) {
+      if (!(<HTMLDivElement>event.target).matches('#acceptBtn')) {
+        var dropdowns = document.getElementsByClassName("dropdown-content");
+        var i;
+        for (i = 0; i < dropdowns.length; i++) {
+          var openDropdown = dropdowns[i];
+          if (openDropdown.classList.contains('show')) {
+            openDropdown.classList.remove('show');
+          }
+        }
+      }
+    }
+
   }
 
   writeReport(){
-    document.getElementById("reportsMenu").
-    classList.toggle("show");
+    document.getElementById("reportsMenu").classList.toggle("show");
   } 
 
   aceptarServicio(){

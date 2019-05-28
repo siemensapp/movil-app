@@ -31,6 +31,7 @@
 
 .tab button.active {
   background-color: #009999;
+  color: whitesmoke;
 }
 
 .tabcontent {
