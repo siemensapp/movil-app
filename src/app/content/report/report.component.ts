@@ -16,7 +16,6 @@ export class ReportComponent implements OnInit {
   hours;
   assignment;
   assignmentData;
-  imagenes;
 
   constructor(private componentComms: ComponentsCommsService, private httpRequest: HttpRequestsService, private router: Router) { }
 
@@ -31,20 +30,6 @@ export class ReportComponent implements OnInit {
     this.resizeAndSetTextArea();
     this.saveAndSetInputValues();
     this.assignment = this.assignmentData['IdAsignacion'];
-  }
-
-  changeFiles(event){
-    this.imagenes="";
-    var files = event.target.files; 
-    for (var i = 0; i < files.length; i++) {
-      var file = files[i];
-      var picReader = new FileReader();
-      picReader.addEventListener("load", (event:any) => {
-          var picFile = event.target;
-          this.imagenes = this.imagenes + String(picFile.result);
-      });
-      picReader.readAsDataURL(file);
-    }
   }
 
   getNameE() {
@@ -273,8 +258,7 @@ export class ReportComponent implements OnInit {
         'FirmaResponsableP' : imagencampoRP,
         'FirmaCliente' : imagencampoCli,
         'IdAsignacion' : this.assignment,
-        'FechaEnvio' : FechaCreacion,
-        'Adjuntos' : this.imagenes
+        'FechaEnvio' : FechaCreacion
     }
     Swal.showLoading();
     this.httpRequest.postData(url + '/api/saveGeneralReport', JSON.stringify(datos)). then( result => {
