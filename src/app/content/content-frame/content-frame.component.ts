@@ -1,6 +1,6 @@
 import {Component,OnInit} from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
-import { Router } from '@angular/router';
+import { Router, NavigationEnd } from '@angular/router';
 import {Location} from '@angular/common';
 import { ComponentsCommsService } from '../../components-comms.service';
 
@@ -11,7 +11,11 @@ import { ComponentsCommsService } from '../../components-comms.service';
 })
 export class ContentFrameComponent implements OnInit {
 
-  constructor(private router: Router, private componentComms: ComponentsCommsService, private location: Location) {}
+  constructor(private router: Router, private componentComms: ComponentsCommsService, private location: Location) {
+    this.subscribeRouteChanges();
+  }
+
+
   private openSource = new BehaviorSubject(false);
   open = this.openSource.asObservable();
   private coordsSource = new BehaviorSubject(false);
@@ -22,16 +26,17 @@ export class ContentFrameComponent implements OnInit {
   NombreE = "";
 
   ngOnInit() {
+
     this.Foto = localStorage.getItem('Foto');
     this.NombreE = localStorage.getItem("NombreE");   
-    this.componentComms.back.subscribe( result => {
-      if (result) {
-        document.getElementById("openMenuBtn").innerHTML = "<i class='fas fa-arrow-left'></i>";        
-      }
-      else {
-        document.getElementById("openMenuBtn").innerHTML = "<i class='fas fa-bars'></i>";        
-      }
-    })
+    // this.componentComms.back.subscribe( result => {
+    //   if (result) {
+    //     document.getElementById("navbar-title").innerHTML = "<i class='fas fa-arrow-left'></i>";        
+    //   }
+    //   else {
+    //     document.getElementById("navbar-title").innerHTML = "<i class='fas fa-bars'></i>";        
+    //   }
+    // })
 
     this.open.subscribe(data => {
       if (data) {
@@ -42,12 +47,12 @@ export class ContentFrameComponent implements OnInit {
         document.getElementById("side-menu-body").style.width = "400px";
         // document.getElementById("obscuring").style.zIndex = "60";
         document.getElementById("side-menu-body").style.zIndex = "50";
-        document.getElementById("openMenuBtn").style.transitionDelay = "0s";
+        // document.getElementById("navbar-title").style.transitionDelay = "0s";
         document.getElementById("obscuring").style.backgroundColor = "rgba(0, 0, 0, 0.7)";
         //document.body.style.backgroundColor = "rgba(0, 0, 0, 0.6)";
       } else {
         if (this.openedbefore) {
-          document.getElementById("openMenuBtn").style.transitionDelay = "0.3s";
+          // document.getElementById("navbar-title").style.transitionDelay = "0.3s";
         }
       }
     })
@@ -66,21 +71,33 @@ export class ContentFrameComponent implements OnInit {
     this.openSource.next(false);
   }
 
-  checkNavbarColors() {
-    var navbar = document.getElementById('navbar');
-    var btn = document.getElementById('openMenuBtn');
-    var url = window.location.href;
-    if (url.includes("hours")) {
-      console.log("includes")
-      navbar.style.backgroundColor = "#006486";
-      btn.style.backgroundColor = "#006486";
-      btn.style.color = 'white';
-    } else {
-      console.log("doesnt includes")
-      navbar.style.backgroundColor = "inherit";
-      btn.style.backgroundColor = "inherit";
-      btn.style.color = 'black';
+  dynamicNavbar( url ) {
+    // var navbar = document.getElementById('navbar');
+    var navbartitle = document.getElementById('navbar-title');
+    var navbarbutton = document.getElementById('navbar-button');
+    var title;
+    var buttonicon;
+
+    if (url.includes('list')) {
+      title = "Asignaciones";
+      buttonicon = "<i class='fas fa-bars'></i>"
     }
+    else if (url.includes('details')) {
+      title = "Detalles";
+      buttonicon = "<i class='fas fa-arrow-left'></i>"
+    }
+    else if (url.includes('report')) {
+      title = "Reporte general";
+      buttonicon = "<i class='fas fa-arrow-left'></i>"
+    }
+    navbartitle.innerHTML = title;
+    navbarbutton.innerHTML = buttonicon;
+  }
+
+  subscribeRouteChanges() {
+      this.router.events.subscribe((route) => {
+        if(route) this.dynamicNavbar(window.location.href);
+      })
   }
 
   logout() {

@@ -5,6 +5,10 @@ import { BehaviorSubject } from 'rxjs';
   providedIn: 'root'
 })
 export class ComponentsCommsService {
+  // Indexed DB
+  private indexedDB =  null;
+
+
   // Back button
   private backSource = new BehaviorSubject(false);
   back = this.backSource.asObservable();
@@ -17,6 +21,7 @@ export class ComponentsCommsService {
   private startSource = new BehaviorSubject('');
   start = this.startSource.asObservable();
 
+  
   // Dice si usar back button
   setBackStatus( data: boolean ) {
     this.backSource.next(data);

@@ -20,6 +20,7 @@ export class ReportComponent implements OnInit {
   constructor(private componentComms: ComponentsCommsService, private httpRequest: HttpRequestsService, private router: Router) { }
 
   ngOnInit() {
+    this.createUnloadListener();
     //localStorage.removeItem('hours');
     this.assignmentData = this.componentComms.getDataAssignment();
     console.log(this.assignmentData);
@@ -39,6 +40,13 @@ export class ReportComponent implements OnInit {
   addHours( date ) {
     localStorage.setItem('dateToChange', date);
     this.router.navigate(['home/hours']);
+  }
+
+  createUnloadListener() {
+    window.addEventListener('beforeunload', () => {
+      // event.returnValue = "Algo"      
+      Swal.fire('Vas a dejar la pagina', 'Seguro?', 'warning');
+    })
   }
 
   mostrar(campo: string, borrar:string){
@@ -233,8 +241,6 @@ export class ReportComponent implements OnInit {
     let realMonth = (month < 10) ? String( '0' + month ) : String(month);
     let FechaCreacion = String(year) + '-' + realMonth + '-' + realDate;
 
-
-
     var datos = {
         'NombreCliente' : NombreCliente,
         'NombreContacto' : NombreContacto,
@@ -260,6 +266,11 @@ export class ReportComponent implements OnInit {
         'IdAsignacion' : this.assignment,
         'FechaEnvio' : FechaCreacion
     }
+    return datos;
+  }
+
+  subirReporte() {
+    var datos = this.crearReporte();
     Swal.showLoading();
     this.httpRequest.postData(url + '/api/saveGeneralReport', JSON.stringify(datos)). then( result => {
       if (result == "false") Swal.fire({type: "error", title: "Error", text: "Error en subir reporte"});

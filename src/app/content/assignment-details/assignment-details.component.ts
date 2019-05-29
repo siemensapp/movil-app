@@ -5,6 +5,7 @@ import { HttpRequestsService } from 'src/app/http-requests.service';
 import { url } from '../../../assets/js/variables';
 import Swal from 'sweetalert2'; 
 import { Router } from '@angular/router';
+import { SaveIDBService } from '../../save-idb.service';
 
 
 @Component({
@@ -54,12 +55,13 @@ export class AssignmentDetailsComponent implements OnInit {
   // }
 
 
-  constructor(private componentsComms: ComponentsCommsService, private httpRequests: HttpRequestsService, private router: Router) { }
+  constructor(private componentsComms: ComponentsCommsService, private httpRequests: HttpRequestsService, private router: Router, private saveIDB: SaveIDBService) { }
 
   ngOnInit() {
     this.componentsComms.getCurrentCords(false+'');
+    console.log(this.saveIDB.getAllReports());
+    ///////
     this.data = this.componentsComms.getDataAssignment();
-    console.log(this.data);
     // this.mostrarEstado(this.data['StatusAsignacion']);
     this.mapCenter = [ parseFloat(this.data['CoordenadasSitio'].split(",")[0]), parseFloat(this.data['CoordenadasSitio'].split(",")[1]) ];
     this.siteMarker = [ parseFloat(this.data['CoordenadasSitio'].split(",")[0]), parseFloat(this.data['CoordenadasSitio'].split(",")[1]) ];

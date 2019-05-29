@@ -113,7 +113,7 @@ export class EsriMapComponent implements OnInit, OnDestroy {
     }
     let markerSymbol = {
       type: "picture-marker",
-      url: "src/assets/images/grayLocationIcon.png",
+      url: "https://arcgis.github.io/arcgis-samples-javascript/sample-data/cat3.png",
       width: '64px',
       height: '64px'
     }
