@@ -58,7 +58,6 @@ export class AssignmentDetailsComponent implements OnInit {
   constructor(private componentsComms: ComponentsCommsService, private httpRequests: HttpRequestsService, private router: Router, private saveIDB: SaveIDBService) { }
 
   ngOnInit() {
-    this.saveIDB.saveReport({Consecutivo: 'Prueba insert', lol: 'lol', data: {name: 'solo es data'}});
     console.log(this.saveIDB.getAllReports());
     ///////
     this.data = this.componentsComms.getDataAssignment();

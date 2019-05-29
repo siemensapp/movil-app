@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { OnlineStatusService } from './online-status.service';
 import Dexie from 'dexie';
 import Swal from 'sweetalert2';
 
@@ -9,8 +10,15 @@ export class SaveIDBService {
 
   private mobileDB;
 
-  constructor() {
+  constructor(private isOnline: OnlineStatusService) {
     this.createDatabase();
+  }
+
+  checkConnection() {
+    // this.isOnline.connectionChanged.subscribe(online => {
+    //   (online)? Swal.fire('Con Internet', 'Enviado', 'success'): Swal.fire('Sin Internet', 'Guardado en IndexedDB', 'warning');
+    // })
+    console.log(this.isOnline.isOnline);
   }
 
   createDatabase() {
@@ -39,6 +47,7 @@ export class SaveIDBService {
   }
 
   getAllReports() {
+    this.checkConnection();
     return this.mobileDB.reports.toArray();
   }
 

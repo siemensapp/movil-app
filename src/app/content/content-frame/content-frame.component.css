@@ -86,17 +86,23 @@ body {
 
 #navbar {
   background-color: inherit;
-  /* border: 1px solid #757575; */
-  width: 100%;
+  width: 100% - 1px;
+  display: flex;
+  align-items: center;
+  justify-items: flex-start;
+  padding: 10px 0;
+  font-size: 20px;
+  font-weight: bold;
   position: sticky;
   position: -webkit-sticky;
   z-index: 10;
   margin-top: 0;
   top: 0;
   left: 0;
+  box-shadow: -1px 0px 19px 5px rgba(117,117,117,1);
 }
 
-#openMenuBtn {
+#navbar-button {
   font-size: 32px;
   border: none;
   background-color: white;
@@ -105,11 +111,11 @@ body {
   display: block;
 }
 
-#openMenuBtn i {
+#navbar-button i {
   transition: 0s;
 }
 
-#openMenuBtn:focus {
+#navbar-button:focus {
   width: 0;
 }
 
