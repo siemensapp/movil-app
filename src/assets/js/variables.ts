@@ -1,1 +1,1 @@
-export var url:string = 'https://5fab8485.ngrok.io';
+export var url:string = 'https://a6e403f2.ngrok.io';

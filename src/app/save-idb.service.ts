@@ -14,13 +14,6 @@ export class SaveIDBService {
     this.createDatabase();
   }
 
-  checkConnection() {
-    // this.isOnline.connectionChanged.subscribe(online => {
-    //   (online)? Swal.fire('Con Internet', 'Enviado', 'success'): Swal.fire('Sin Internet', 'Guardado en IndexedDB', 'warning');
-    // })
-    console.log(this.isOnline.isOnline);
-  }
-
   createDatabase() {
     this.mobileDB = new Dexie('mobileDB');
     this.mobileDB.version(1).stores({
@@ -29,9 +22,10 @@ export class SaveIDBService {
   }
 
   saveReport( report ) {
+    Swal.showLoading()
     this.mobileDB.reports.put(report)
       .then(() => {
-        Swal.fire('Reporte añadido', 'Guardado en IndexedDB', 'success');
+        Swal.fire('Sin Internet', 'El reporte se guardo localmente, sera enviado cuando haya una conexión a Internet', 'warning');
       })
   }
 
@@ -47,21 +41,7 @@ export class SaveIDBService {
   }
 
   getAllReports() {
-    this.checkConnection();
     return this.mobileDB.reports.toArray();
   }
 
-
-
-//   testDB() {
-//     this.mobileDB.reports.add({Consecutivo: 'Carlos Slim', data: {name: 'Solo', lastname: 'probando'}})
-//       .then(() => {
-//         console.log('adding item to IDB ...');
-//         return this.mobileDB.reports.toArray();
-//       }).then( results => {
-//         console.log('Got results :', results);
-//       }).catch((e) => {
-//         alert('Error: ' + (e.stack || e));
-//       })
-//   }
 }

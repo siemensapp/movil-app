@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { ComponentsCommsService } from '../../components-comms.service';
 import { HttpRequestsService } from 'src/app/http-requests.service';
+import { OnlineStatusService } from '../../online-status.service';
+import { SaveIDBService } from '../../save-idb.service';
 import { Router } from '@angular/router';
 import  Swal  from 'sweetalert2';
 import {url} from '../../../assets/js/variables';
@@ -17,10 +19,11 @@ export class ReportComponent implements OnInit {
   assignment;
   assignmentData;
 
-  constructor(private componentComms: ComponentsCommsService, private httpRequest: HttpRequestsService, private router: Router) { }
+  constructor(private componentComms: ComponentsCommsService, private httpRequest: HttpRequestsService, private router: Router, private idb: SaveIDBService, private isOnline: OnlineStatusService) { }
 
   ngOnInit() {
     this.createUnloadListener();
+    console.log(this.idb.getAllReports());
     //localStorage.removeItem('hours');
     this.assignmentData = this.componentComms.getDataAssignment();
     console.log(this.assignmentData);
@@ -43,9 +46,11 @@ export class ReportComponent implements OnInit {
   }
 
   createUnloadListener() {
-    window.addEventListener('beforeunload', () => {
-      // event.returnValue = "Algo"      
-      Swal.fire('Vas a dejar la pagina', 'Seguro?', 'warning');
+    window.addEventListener('unload', () => {
+      // event.returnValue = "Algo"
+      this.idb.saveReport({Consecutivo:'Y ahora?' ,lol: 'loles'});
+      console.log('leaving ...')
+      return true;
     })
   }
 
@@ -242,6 +247,7 @@ export class ReportComponent implements OnInit {
     let FechaCreacion = String(year) + '-' + realMonth + '-' + realDate;
 
     var datos = {
+        'Consecutivo': this.nuevoConsecutivo(),
         'NombreCliente' : NombreCliente,
         'NombreContacto' : NombreContacto,
         'NombreColaborador' : NombreColaborador,
@@ -269,17 +275,46 @@ export class ReportComponent implements OnInit {
     return datos;
   }
 
+  nuevoConsecutivo() {
+    /**
+     * Consecutivo para guardar localmente antes de enviar
+     * 
+     * return IdEmpresa + IdTecnica + FechaInicio
+     */
+    let fechaCompleta = this.assignmentData['FechaInicio'].split("T")[0];
+    let idEmpresa = this.assignmentData['IdEmpresa'];
+    let tecnica = this.assignmentData['IdTecnica'];
+
+    let fechaAux = fechaCompleta.split("-");
+    let fecha = String(fechaAux[0] + fechaAux[1] + fechaAux[2]);
+
+
+    return String(idEmpresa + '-' + tecnica + '-' + fecha );
+  }
+
   subirReporte() {
-    var datos = this.crearReporte();
-    Swal.showLoading();
-    this.httpRequest.postData(url + '/api/saveGeneralReport', JSON.stringify(datos)). then( result => {
-      if (result == "false") Swal.fire({type: "error", title: "Error", text: "Error en subir reporte"});
-      else {
-        // Saves user number
-        Swal.fire({type: "success", title: "Exito", text: 'Reporte enviado'})
-          .then(() => { this.router.navigate(['home/details']) });
-      }
-    });
+    this.isOnline.connectionExists().then( online => {
+      let reporte = this.crearReporte();
+      (online)? this.enviarReporte(reporte) : this.guardarReporte(reporte);
+    })    
+  }
+
+  guardarReporte( reporte ){
+    this.idb.saveReport(reporte);
+    console.log('Reportes: \n', this.idb.getAllReports());
+  }
+
+  enviarReporte( reporte ) {
+    console.log('Online :)');
+    // Swal.showLoading();
+    // this.httpRequest.postData(url + '/api/saveGeneralReport', JSON.stringify(reporte)). then( result => {
+    //   if (result == "false") Swal.fire({type: "error", title: "Error", text: "Error en subir reporte"});
+    //   else {
+    //     // Saves user number
+    //     Swal.fire({type: "success", title: "Exito", text: 'Reporte enviado'})
+    //       .then(() => { this.router.navigate(['home/details']) });
+    //   }
+    // });
   }
 
 

@@ -29,45 +29,34 @@ export class ContentFrameComponent implements OnInit {
 
     this.Foto = localStorage.getItem('Foto');
     this.NombreE = localStorage.getItem("NombreE");   
-    // this.componentComms.back.subscribe( result => {
-    //   if (result) {
-    //     document.getElementById("navbar-title").innerHTML = "<i class='fas fa-arrow-left'></i>";        
-    //   }
-    //   else {
-    //     document.getElementById("navbar-title").innerHTML = "<i class='fas fa-bars'></i>";        
-    //   }
-    // })
 
     this.open.subscribe(data => {
       if (data) {
         if (!this.openedbefore) {
           this.openedbefore = true;
-        }
-        // document.getElementById("side-menu-background").style.width = "100%";
-        document.getElementById("side-menu-body").style.width = "400px";
-        // document.getElementById("obscuring").style.zIndex = "60";
-        document.getElementById("side-menu-body").style.zIndex = "50";
-        // document.getElementById("navbar-title").style.transitionDelay = "0s";
-        document.getElementById("obscuring").style.backgroundColor = "rgba(0, 0, 0, 0.7)";
-        //document.body.style.backgroundColor = "rgba(0, 0, 0, 0.6)";
-      } else {
-        if (this.openedbefore) {
-          // document.getElementById("navbar-title").style.transitionDelay = "0.3s";
-        }
-      }
+        }        
+        document.getElementById("side-menu-body").style.width = "400px";        
+        document.getElementById("side-menu-body").style.zIndex = "50";                
+        document.getElementById("obscuring").style.zIndex = "49";
+        document.getElementById("obscuring").style.display = "inline";
+      } 
     })
   }
 
   menuFunction() {
     if (this.componentComms.getBackStatus()) {
       this.location.back();
+      let url = window.location.href;
+      if (url.includes('details')) this.router.navigate(['home/list']);
+      else if (url.includes('report')) this.router.navigate(['home/details']);
+      else if (url.includes('hours')) this.router.navigate(['home/report']);
     } else this.openSource.next(true);
   }
 
   closeMenu() {
     document.getElementById("side-menu-background").style.width = "0";
     document.getElementById("side-menu-body").style.width = "0";
-    document.getElementById("obscuring").style.backgroundColor = "white";
+    document.getElementById("obscuring").style.display = "none";
     this.openSource.next(false);
   }
 
@@ -88,6 +77,10 @@ export class ContentFrameComponent implements OnInit {
     }
     else if (url.includes('report')) {
       title = "Reporte general";
+      buttonicon = "<i class='fas fa-arrow-left'></i>"
+    }
+    else if (url.includes('hours')) {
+      title = 'Hoja de horas';
       buttonicon = "<i class='fas fa-arrow-left'></i>"
     }
     navbartitle.innerHTML = title;

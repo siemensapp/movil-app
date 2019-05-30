@@ -1,28 +1,31 @@
 import { Injectable } from '@angular/core';
-import { Subject } from 'rxjs';
+import * as env from '../assets/js/variables';
 
 @Injectable({
   providedIn: 'root'
 })
 export class OnlineStatusService {
 
-  private onlineStatus = new Subject<boolean>();
+  constructor() {}
 
-  constructor() {
-    window.addEventListener('online', () => this.updateOnlineStatus());
-    window.addEventListener('offline', () => this.updateOnlineStatus());
+  connectionExists() {
+    return new Promise(resolve => {
+      var xhr = new XMLHttpRequest();
+      var file = env.url + '/api/workers'
+      var randomNum = Math.round(Math.random() * 10000);
+ 
+      xhr.open('HEAD', file + "?rand=" + randomNum, true);
+      xhr.send();
+     
+      xhr.addEventListener("readystatechange", processRequest, false);
+ 
+      function processRequest(e) {
+        if (xhr.readyState == 4) {
+          resolve((xhr.status >= 200 && xhr.status < 304)? true : false );
+        }
+      }
+    })  
   }
 
-  get connectionChanged() {
-    return this.onlineStatus.asObservable();
-  }
-
-  updateOnlineStatus() {
-    this.onlineStatus.next(window.navigator.onLine);
-  }
-
-  get isOnline() {
-    return !!window.navigator.onLine;
-  }
 
 }
