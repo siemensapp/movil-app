@@ -36,8 +36,8 @@
 }
 
 .tab button.active {
-  background-color: #005578;
-  color: whitesmoke;
+  background-color: #2387aa;
+  color: white;
 }
 
 .tabcontent {
@@ -88,6 +88,7 @@
     transition: 0.3s;        
     line-height: 20px;
     background-color: white;
+    box-shadow: 1px 3px 5px -2px rgba(0,0,0,0.75);
 }
 
 .indicator {

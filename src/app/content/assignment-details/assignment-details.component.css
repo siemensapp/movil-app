@@ -4,7 +4,7 @@
 }
 
 #details {
-  border: 2px ridge whitesmoke; 
+  border: none; 
   position: relative;
   bottom: 0%;
   width: 99.3%;  
@@ -17,7 +17,7 @@
   height: 60px;
   border-radius: 50%;
   position: absolute;
-  background-color: #879BAA;
+  background-color: #2387aa;
   color: white;
   font-size: 1.5rem;
   display: flex;
@@ -27,6 +27,7 @@
   right: 25px;
   transition: 0.6s;
   z-index: 1;
+  box-shadow: 1px 3px 5px -1px rgba(0,0,0,0.75);
 }
 
 
