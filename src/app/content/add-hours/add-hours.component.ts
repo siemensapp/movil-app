@@ -14,6 +14,7 @@ export class AddHoursComponent implements OnInit {
   dateToChange = null;
 
   ngOnInit() {
+    this.aparicionBoton();
     this.dateToChange = localStorage.getItem('dateToChange'); 
     console.log(this.dateToChange);
     this.componentComms.setBackStatus(true);
@@ -23,6 +24,14 @@ export class AddHoursComponent implements OnInit {
   formatDate( date ) {
     let auxDate = new Date(date);
     return String(auxDate.getFullYear() + "-" + ( (auxDate.getMonth() + 1 < 10)? "0" + (auxDate.getMonth() + 1) : (auxDate.getMonth() + 1) ) + "-" + ( (auxDate.getDate() < 10)? "0" + auxDate.getDate(): auxDate.getDate() ));
+  }
+
+  aparicionBoton(){
+    var originalSize = window.innerWidth + window.innerHeight;
+    var saveButton = document.getElementById("saveBtn");
+    window.addEventListener("resize", () => {
+      (window.innerHeight + window.innerWidth !== originalSize) ? saveButton.style.display = "none" : saveButton.style.display = "flex";
+    })
   }
 
   addOrModifyHours() {

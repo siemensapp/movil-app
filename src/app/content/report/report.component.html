@@ -32,9 +32,9 @@
       </div>
     </div>
   <div class="subtitleReport">Hoja de Tiempo</div>
-
-    <table>
-      <thead>
+    <div style="overflow-x: auto">
+      <table>
+      <thead>    
           <tr>
             <th rowspan="2">Fecha</th>
             <th colspan="3">Horas Trabajadas</th>
@@ -63,6 +63,7 @@
         </tr>
       </tbody>
     </table>
+  </div>
 
     <a [routerLink]="['/home/hours']" class="addLink" ><i class="fas fa-plus"></i> Añadir nueva fecha</a>
   <div class="subtitleReport">Datos Tècnicos</div>

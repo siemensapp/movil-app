@@ -35,7 +35,7 @@ export class ContentFrameComponent implements OnInit {
         if (!this.openedbefore) {
           this.openedbefore = true;
         }        
-        document.getElementById("side-menu-body").style.width = "400px";        
+        document.getElementById("side-menu-body").style.width = "250px";        
         document.getElementById("side-menu-body").style.zIndex = "50";                
         document.getElementById("obscuring").style.zIndex = "49";
         document.getElementById("obscuring").style.display = "inline";
@@ -61,7 +61,7 @@ export class ContentFrameComponent implements OnInit {
   }
 
   dynamicNavbar( url ) {
-    // var navbar = document.getElementById('navbar');
+    var navbar = document.getElementById('navbar');
     var navbartitle = document.getElementById('navbar-title');
     var navbarbutton = document.getElementById('navbar-button');
     var title;
@@ -82,6 +82,7 @@ export class ContentFrameComponent implements OnInit {
     else if (url.includes('hours')) {
       title = 'Hoja de horas';
       buttonicon = "<i class='fas fa-arrow-left'></i>"
+      navbar.style.boxShadow = "none";
     }
     navbartitle.innerHTML = title;
     navbarbutton.innerHTML = buttonicon;
