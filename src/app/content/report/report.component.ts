@@ -18,18 +18,26 @@ export class ReportComponent implements OnInit {
   hours;
   assignment;
   assignmentData;
+  reportData;
 
   constructor(private componentComms: ComponentsCommsService, private httpRequest: HttpRequestsService, private router: Router, private idb: SaveIDBService, private isOnline: OnlineStatusService) { }
 
   ngOnInit() {
-    this.createUnloadListener();
-    console.log(this.idb.getAllReports());
-    //localStorage.removeItem('hours');
     this.assignmentData = this.componentComms.getDataAssignment();
+    this.reportData = (localStorage.getItem(this.nuevoConsecutivo()) !== null)? JSON.parse(localStorage.getItem(this.nuevoConsecutivo())) : this.idb.getReport( this.nuevoConsecutivo() );
+    // this.idb.getReport( this.nuevoConsecutivo() ).then((data) => {
+    //   this.reportData = data[0];
+    //   console.log('Report', this.reportData);
+    //   this.hours = (this.reportData.hasOwnProperty('hours'))? this.reportData['hours'] : {};
+    //   this.resizeAndSetTextArea();
+    //   this.saveAndSetInputValues();
+    // });
+    
+    //localStorage.removeItem('hours');    
     console.log(this.assignmentData);
     this.componentComms.setBackStatus(true);
     localStorage.removeItem('dateToChange');
-    this.hours = this.componentComms.getHours();
+    this.hours = (this.reportData.hasOwnProperty('hours'))? this.reportData['hours'] : {};
     console.log(this.hours);
     this.resizeAndSetTextArea();
     this.saveAndSetInputValues();
@@ -45,14 +53,6 @@ export class ReportComponent implements OnInit {
     this.router.navigate(['home/hours']);
   }
 
-  createUnloadListener() {
-    window.addEventListener('unload', () => {
-      // event.returnValue = "Algo"
-      this.idb.saveReport({Consecutivo:'Y ahora?' ,lol: 'loles'});
-      console.log('leaving ...')
-      return true;
-    })
-  }
 
   mostrar(campo: string, borrar:string){
     var canvas = <HTMLCanvasElement> document.getElementById(campo);
@@ -148,8 +148,8 @@ export class ReportComponent implements OnInit {
     for (let id of this.textAreas) {
       let item = <HTMLTextAreaElement>document.getElementById(id);
 
-      if ( localStorage.getItem(id) !== null ) {
-        item.value = localStorage.getItem(id);
+      if ( this.reportData.hasOwnProperty(id) ) {
+        item.value = this.reportData[id];
       }
 
       item.addEventListener('blur', () => {
@@ -164,8 +164,8 @@ export class ReportComponent implements OnInit {
   saveAndSetInputValues() {
     for (let id of this.allInputs) {
       let item = <HTMLInputElement>document.getElementById(id);
-      if ( localStorage.getItem(id) !== null ) {
-        item.value = localStorage.getItem(id);
+      if ( this.reportData.hasOwnProperty(id) ) {
+        item.value = this.reportData[id];
       }
 
       item.addEventListener('blur', () => {

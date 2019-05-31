@@ -40,26 +40,11 @@ export class AssignmentDetailsComponent implements OnInit {
     return ( dateOne.getFullYear() == dateTwo.getFullYear() ) ? sameYearDates: diffYearDates; 
   }
 
-  // mostrarEstado(status: number){
-  //   if(status==0){
-  //     document.getElementById('startAssignment').style.visibility = 'visible';
-  //     document.getElementById('startAssignment').style.height = '5vh';
-  //   }
-  //   else if(status == 1){
-  //     document.getElementById('endAssignment').style.visibility = 'visible';
-  //     document.getElementById('endAssignment').style.height = '5vh';
-  //   }
-  //   else{
-  //     document.getElementById('finishedAssignment').style.visibility = 'visible';
-  //   }
-  // }
-
-
   constructor(private componentsComms: ComponentsCommsService, private httpRequests: HttpRequestsService, private router: Router, private saveIDB: SaveIDBService) { }
 
   ngOnInit() {
     this.componentsComms.getCurrentCords(false+'');
-    console.log(this.saveIDB.getAllReports());
+    this.saveIDB.createOrSaveReport();
     ///////
     this.data = this.componentsComms.getDataAssignment();
     // this.mostrarEstado(this.data['StatusAsignacion']);
