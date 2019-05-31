@@ -23,6 +23,7 @@ export class ReportComponent implements OnInit {
   constructor(private componentComms: ComponentsCommsService, private httpRequest: HttpRequestsService, private router: Router, private idb: SaveIDBService, private isOnline: OnlineStatusService) { }
 
   ngOnInit() {
+    this.aparicionBoton();
     this.assignmentData = this.componentComms.getDataAssignment();
     this.reportData = (localStorage.getItem(this.nuevoConsecutivo()) !== null)? JSON.parse(localStorage.getItem(this.nuevoConsecutivo())) : this.idb.getReport( this.nuevoConsecutivo() );
     // this.idb.getReport( this.nuevoConsecutivo() ).then((data) => {
@@ -51,6 +52,14 @@ export class ReportComponent implements OnInit {
   addHours( date ) {
     localStorage.setItem('dateToChange', date);
     this.router.navigate(['home/hours']);
+  }
+
+  aparicionBoton(){
+    var originalSize = window.innerWidth + window.innerHeight;
+    var sendButton = document.getElementById("sendBtn");
+    window.addEventListener("resize", () => {
+      (window.innerHeight + window.innerWidth !== originalSize) ? sendButton.style.display = "none" : sendButton.style.display = "flex";
+    })
   }
 
 

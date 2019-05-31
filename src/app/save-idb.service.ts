@@ -49,7 +49,7 @@ export class SaveIDBService {
       let report = this.createReport();
       console.log('Done updating')
       localStorage.setItem( this.nuevoConsecutivo(), JSON.stringify(report));
-      this.saveReport(report);
+      this.saveReportHidden(report);
       console.log('localStorage: ', localStorage.getItem(this.nuevoConsecutivo()));
       console.log('IndexedDB: ', this.getReport(this.nuevoConsecutivo()));
     } else {
@@ -75,6 +75,13 @@ export class SaveIDBService {
     this.mobileDB.reports.put(report)
       .then(() => {
         Swal.fire('Sin Internet', 'El reporte se guardo localmente, sera enviado cuando haya una conexión a Internet', 'warning');
+      })
+  }
+
+  saveReportHidden( report ) {
+    this.mobileDB.reports.put(report)
+      .then(() => {
+        console.log('saved report');
       })
   }
 

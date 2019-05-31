@@ -147,9 +147,9 @@
       <a (click)="mostrar('campoResponsableP', 'borrarResponsableP')"><i class="fas fa-plus"></i> Añadir Firma Responsable del Proyecto</a><button class="botonBorrado"  id='borrarResponsableP'>Borrar</button>
       <canvas id="campoResponsableP" height="250" width="500" style="touch-action: none"></canvas>
       <a (click)="mostrar('campoCliente', 'borrarCliente')"><i class="fas fa-plus"></i> Añadir Firma Recibido Cliente</a><button class="botonBorrado" id='borrarCliente'>Borrar</button>
-      <canvas id="campoCliente" height="250" width="500" style="touch-action: none"></canvas>  
-      <button (click)='subirReporte()' class="sendBtn">Enviar Reporte</button>
+      <canvas id="campoCliente" height="250" width="500" style="touch-action: none"></canvas>        
 </div>
+<div (click)='subirReporte()' id="sendBtn"><i class="fas fa-file-upload"></i></div>
 
 
 <!-- <ng-template #nothing>
