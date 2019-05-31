@@ -9,10 +9,15 @@
 }
 
 .tab {
-  margin-top: 10px;
   overflow: hidden;
   border: 1px solid #ccc;
   background-color: #dfe6ed;
+
+  position: sticky;
+  box-shadow: -1px 0px 19px 5px rgba(117,117,117,1);
+  top: 59px;
+  right:0;
+  z-index: 9;
 }
 
 .tablinks {

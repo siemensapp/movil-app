@@ -70,6 +70,7 @@ export class ContentFrameComponent implements OnInit {
     if (url.includes('list')) {
       title = "Asignaciones";
       buttonicon = "<i class='fas fa-bars'></i>"
+      navbar.style.boxShadow = "none";
     }
     else if (url.includes('details')) {
       title = "Detalles";
