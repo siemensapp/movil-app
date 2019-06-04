@@ -1,0 +1,106 @@
+{
+  "configVersion": 1,
+  "timestamp": 1559664942000,
+  "index": "movil-app/index.html",
+  "assetGroups": [
+    {
+      "name": "app",
+      "installMode": "prefetch",
+      "updateMode": "prefetch",
+      "urls": [
+        "movil-app/es2015-polyfills.c5dd28b362270c767b34.js",
+        "movil-app/favicon.ico",
+        "movil-app/index.html",
+        "movil-app/main.87706dc0a520cc3ecdbf.js",
+        "movil-app/polyfills.8bbb231b43165d65d357.js",
+        "movil-app/runtime.26209474bfa8dc87a77c.js",
+        "movil-app/styles.d19d780e4f8c03678dfb.css"
+      ],
+      "patterns": []
+    },
+    {
+      "name": "assets",
+      "installMode": "lazy",
+      "updateMode": "prefetch",
+      "urls": [
+        "movil-app/assets/icons/icon-128x128.png",
+        "movil-app/assets/icons/icon-144x144.png",
+        "movil-app/assets/icons/icon-152x152.png",
+        "movil-app/assets/icons/icon-192x192.png",
+        "movil-app/assets/icons/icon-384x384.png",
+        "movil-app/assets/icons/icon-512x512.png",
+        "movil-app/assets/icons/icon-72x72.png",
+        "movil-app/assets/icons/icon-96x96.png",
+        "movil-app/assets/images/grayLocationIcon.png",
+        "movil-app/assets/images/greenLocationIcon.png",
+        "movil-app/assets/images/icon.png",
+        "movil-app/assets/images/img-background.jpeg",
+        "movil-app/assets/images/img-background2.jpeg",
+        "movil-app/assets/images/img-background3.jpeg",
+        "movil-app/assets/images/img-background4.jpeg",
+        "movil-app/assets/images/img-background5.jpeg",
+        "movil-app/assets/images/no-results.png",
+        "movil-app/assets/images/no-results2.png",
+        "movil-app/assets/images/no-results3.png",
+        "movil-app/assets/images/siemens-en-colombia.jpeg",
+        "movil-app/assets/images/siemens-logo-lema.png",
+        "movil-app/assets/images/user.jpg",
+        "movil-app/assets/images/yellowLocationIcon.png",
+        "movil-app/assets/js/variables.ts"
+      ],
+      "patterns": []
+    }
+  ],
+  "dataGroups": [],
+  "hashTable": {
+    "movil-app/assets/icons/icon-128x128.png": "dae3b6ed49bdaf4327b92531d4b5b4a5d30c7532",
+    "movil-app/assets/icons/icon-144x144.png": "b0bd89982e08f9bd2b642928f5391915b74799a7",
+    "movil-app/assets/icons/icon-152x152.png": "7479a9477815dfd9668d60f8b3b2fba709b91310",
+    "movil-app/assets/icons/icon-192x192.png": "1abd80d431a237a853ce38147d8c63752f10933b",
+    "movil-app/assets/icons/icon-384x384.png": "329749cd6393768d3131ed6304c136b1ca05f2fd",
+    "movil-app/assets/icons/icon-512x512.png": "559d9c4318b45a1f2b10596bbb4c960fe521dbcc",
+    "movil-app/assets/icons/icon-72x72.png": "c457e56089a36952cd67156f9996bc4ce54a5ed9",
+    "movil-app/assets/icons/icon-96x96.png": "3914125a4b445bf111c5627875fc190f560daa41",
+    "movil-app/assets/images/grayLocationIcon.png": "0a4dcf69819599a9c1b37bc7c5264b0f8681e743",
+    "movil-app/assets/images/greenLocationIcon.png": "c9ebb3832da878053f6a1a30721f7fd6919862b0",
+    "movil-app/assets/images/icon.png": "923d2634d29c7c91e9b4621d089d154ec2837033",
+    "movil-app/assets/images/img-background.jpeg": "b36a1c9e810836be757a5735908e8b8f91992fc0",
+    "movil-app/assets/images/img-background2.jpeg": "7c7bc22f85b9cf9a35734e28d5e076ad5bfd9724",
+    "movil-app/assets/images/img-background3.jpeg": "5c3190f5a482d31c4d91f0b5e6d6e10aa7a30a95",
+    "movil-app/assets/images/img-background4.jpeg": "76431e05558c99c06f8e6fac1bf06c79e5b65591",
+    "movil-app/assets/images/img-background5.jpeg": "d93735e6155cdbf531b414f3c341d151da6a3f96",
+    "movil-app/assets/images/no-results.png": "d7d226e5fa65f325a91ce646b54905c458b1dc9d",
+    "movil-app/assets/images/no-results2.png": "38632d07e7b4a8f360e0c92c8d389c6a40778fb5",
+    "movil-app/assets/images/no-results3.png": "8c25322f3e16a9b122391803b6a35c88552d8d43",
+    "movil-app/assets/images/siemens-en-colombia.jpeg": "ddf90f3738bb38d983ae1070d51c3ae7aa559d50",
+    "movil-app/assets/images/siemens-logo-lema.png": "10766465c343400e005afaf84fba3eace1148e5e",
+    "movil-app/assets/images/user.jpg": "89dd68c9f63830db8f3d599c714874a1d244b1fd",
+    "movil-app/assets/images/yellowLocationIcon.png": "eac0c107d434c8e2098b5e548a83346cf7adb368",
+    "movil-app/assets/js/variables.ts": "831888b49a0f3f150484bfd46aa5f8d05cccdadb",
+    "movil-app/es2015-polyfills.c5dd28b362270c767b34.js": "b7a81c61d32b0b12737f0c13f45973ba391cd7f9",
+    "movil-app/favicon.ico": "84161b857f5c547e3699ddfbffc6d8d737542e01",
+    "movil-app/index.html": "fd48d43148cbc865019f134e29324a324d079258",
+    "movil-app/main.87706dc0a520cc3ecdbf.js": "5324d28f25dcc08e9f7615d4b42499c0d6977ec5",
+    "movil-app/polyfills.8bbb231b43165d65d357.js": "ffa449995bf2eba2ccd0a002417214f7eb75e7b5",
+    "movil-app/runtime.26209474bfa8dc87a77c.js": "b62956c2192bfe5516d6374e753773901ed50ec5",
+    "movil-app/styles.d19d780e4f8c03678dfb.css": "40e3fe7505c8446fd8a04438096f689c401ce027"
+  },
+  "navigationUrls": [
+    {
+      "positive": true,
+      "regex": "^\\/.*$"
+    },
+    {
+      "positive": false,
+      "regex": "^\\/(?:.+\\/)?[^/]*\\.[^/]*$"
+    },
+    {
+      "positive": false,
+      "regex": "^\\/(?:.+\\/)?[^/]*__[^/]*$"
+    },
+    {
+      "positive": false,
+      "regex": "^\\/(?:.+\\/)?[^/]*__[^/]*\\/.*$"
+    }
+  ]
+}

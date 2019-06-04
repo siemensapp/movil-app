@@ -24,6 +24,7 @@
     "@angular/service-worker": "~7.2.0",
     "@auth0/angular-jwt": "^2.1.0",
     "@types/arcgis-js-api": "^4.11.0",
+    "angular-cli-ghpages": "^0.5.3",
     "core-js": "^2.5.4",
     "dexie": "^2.0.4",
     "esri-loader": "^2.9.1",
