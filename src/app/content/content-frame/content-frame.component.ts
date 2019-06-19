@@ -3,6 +3,7 @@ import { BehaviorSubject } from 'rxjs';
 import { Router, NavigationEnd } from '@angular/router';
 import {Location} from '@angular/common';
 import { ComponentsCommsService } from '../../components-comms.service';
+import  Swal  from 'sweetalert2';
 
 @Component({
   selector: 'app-content-frame',
@@ -60,29 +61,61 @@ export class ContentFrameComponent implements OnInit {
     this.openSource.next(false);
   }
 
+  rightButtonFunction() {
+    var url = window.location.href;
+    if (url.includes('hours')) {
+      Swal.fire({
+        title: 'Eliminar fecha',
+        text: 'Si borras toda la fecha perderas todas sus horas asociadas.',
+        type: 'warning',
+        confirmButtonText: 'Eliminar',
+        showCancelButton: true,
+        cancelButtonColor: '#d33',
+        cancelButtonText: 'Cancelar'}).then(() => {
+          var hours = this.componentComms.getHours();
+          var date = localStorage.getItem('dateToChange');
+          console.log('hours: ', hours);
+          delete hours[date];
+          console.log('changed hours: ', hours );
+          this.componentComms.setHours(hours);
+          Swal.fire({type: "success", title: "Exito", text: 'Hora guardada'})
+          .then(() => { 
+            this.router.navigate(['home/report']);
+            localStorage.removeItem('dateToChange');
+          });  
+      })
+
+    }
+  }
+
   dynamicNavbar( url ) {
     var navbar = document.getElementById('navbar');
     var navbartitle = document.getElementById('navbar-title');
     var navbarbutton = document.getElementById('navbar-button');
+    var navbarbuttonright = document.getElementById('navbar-right-button');
     var title;
     var buttonicon;
 
     if (url.includes('list')) {
       title = "Asignaciones";
-      buttonicon = "<i class='fas fa-bars'></i>"
+      buttonicon = "<i class='fas fa-bars'></i>";
+      navbarbuttonright.style.display = "none";
       navbar.style.boxShadow = "none";
     }
     else if (url.includes('details')) {
       title = "Detalles";
       buttonicon = "<i class='fas fa-arrow-left'></i>"
+      navbarbuttonright.style.display = "none";
     }
     else if (url.includes('report')) {
       title = "Reporte general";
       buttonicon = "<i class='fas fa-arrow-left'></i>"
+      navbarbuttonright.style.display = "none";
     }
     else if (url.includes('hours')) {
       title = 'Hoja de horas';
       buttonicon = "<i class='fas fa-arrow-left'></i>"
+      navbarbuttonright.style.display = "inline";
       navbar.style.boxShadow = "none";
     }
     navbartitle.innerHTML = title;

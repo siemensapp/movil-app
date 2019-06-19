@@ -13,7 +13,7 @@ import {url} from '../../../assets/js/variables';
   styleUrls: ['./report.component.css']
 })
 export class ReportComponent implements OnInit {
-  private allInputs = [ 'nombreCliente', 'nombreContacto', "nombreColaborador", "nombreProyecto", 'nombreMarca', 'denominacionInterna', 'numeroProducto', 'numeroSerial', 'caracteristicasTecnicas', 'estadoInicial'];
+  private allInputs = [ 'NombreEmpresa', 'NombreContacto', "NombreE", "NombreProyecto", 'NombreMarca', 'DenominacionInterna', 'NumeroProducto', 'NumeroSerial', 'CaracteristicasTecnicas', 'EstadoInicial'];
   private textAreas = [ 'descripcionAlcance', 'actividadesRealizadas', 'conclusionesRecomendaciones', 'repuestosSugeridos', 'actividadesPendientes' ];
   hours;
   assignment;
@@ -23,9 +23,11 @@ export class ReportComponent implements OnInit {
   constructor(private componentComms: ComponentsCommsService, private httpRequest: HttpRequestsService, private router: Router, private idb: SaveIDBService, private isOnline: OnlineStatusService) { }
 
   ngOnInit() {
+    alert(document.referrer);
+    console.log()
     this.aparicionBoton();
     this.assignmentData = this.componentComms.getDataAssignment();
-    this.reportData = (localStorage.getItem(this.nuevoConsecutivo()) !== null)? JSON.parse(localStorage.getItem(this.nuevoConsecutivo())) : this.idb.getReport( this.nuevoConsecutivo() );
+    this.reportData = JSON.parse(localStorage.getItem(this.nuevoConsecutivo()));
     // this.idb.getReport( this.nuevoConsecutivo() ).then((data) => {
     //   this.reportData = data[0];
     //   console.log('Report', this.reportData);
@@ -38,7 +40,7 @@ export class ReportComponent implements OnInit {
     console.log(this.assignmentData);
     this.componentComms.setBackStatus(true);
     localStorage.removeItem('dateToChange');
-    this.hours = (this.reportData.hasOwnProperty('hours'))? this.reportData['hours'] : {};
+    //this.hours = (document.referrer.includes('report'))? this.componentComms.getHours() : this.reportData['hours'];
     console.log(this.hours);
     this.resizeAndSetTextArea();
     this.saveAndSetInputValues();
@@ -74,7 +76,7 @@ export class ReportComponent implements OnInit {
     function addClick(x, y, dragging)
     {
       clickX.push(x);
-      clickY.push(y-40);
+      clickY.push(y-55);
       clickDrag.push(dragging);
     }
 
@@ -173,9 +175,8 @@ export class ReportComponent implements OnInit {
   saveAndSetInputValues() {
     for (let id of this.allInputs) {
       let item = <HTMLInputElement>document.getElementById(id);
-      if ( this.reportData.hasOwnProperty(id) ) {
-        item.value = this.reportData[id];
-      }
+      item.value = ( this.reportData.hasOwnProperty(id) ) ? this.reportData[id]: (this.assignmentData[id] ? this.assignmentData[id] : "") ;
+      
 
       item.addEventListener('blur', () => {
         localStorage.setItem(id, String(item.value));
@@ -184,17 +185,17 @@ export class ReportComponent implements OnInit {
   }
 
   crearReporte(){
-    var nombreCliente = <HTMLInputElement> document.getElementById('nombreCliente');
+    var nombreCliente = <HTMLInputElement> document.getElementById('NombreEmpresa');
     var NombreCliente = nombreCliente.value;
 
-    var nombreContacto = <HTMLInputElement> document.getElementById('nombreContacto');
+    var nombreContacto = <HTMLInputElement> document.getElementById('NombreContacto');
     var NombreContacto = nombreContacto.value;
 
     
-    var nombreColaborador = <HTMLInputElement> document.getElementById('nombreColaborador');
+    var nombreColaborador = <HTMLInputElement> document.getElementById('NombreE');
     var NombreColaborador = nombreColaborador.value;
 
-    var nombreProyecto = <HTMLInputElement> document.getElementById('nombreProyecto');
+    var nombreProyecto = <HTMLInputElement> document.getElementById('NombreProyecto');
     var NombreProyecto = nombreProyecto.value;
   
     var descripcionAlcance = <HTMLTextAreaElement> document.getElementById('descripcionAlcance');
@@ -202,22 +203,22 @@ export class ReportComponent implements OnInit {
 
     var hojaTiempo = this.hours;
 
-    var marca = <HTMLInputElement> document.getElementById('nombreMarca');
+    var marca = <HTMLInputElement> document.getElementById('NombreMarca');
     var Marca = marca.value;
 
-    var denominacionInterna = <HTMLInputElement> document.getElementById('denominacionInterna');
+    var denominacionInterna = <HTMLInputElement> document.getElementById('DenominacionInterna');
     var DenominacionInterna = denominacionInterna.value;
 
-    var numeroProducto = <HTMLInputElement> document.getElementById('numeroProducto');
+    var numeroProducto = <HTMLInputElement> document.getElementById('NumeroProducto');
     var NumeroProducto = numeroProducto.value;
 
-    var numeroSerial = <HTMLInputElement> document.getElementById('numeroSerial');
+    var numeroSerial = <HTMLInputElement> document.getElementById('NumeroSerial');
     var NumeroSerial = numeroSerial.value;
 
-    var caracteristicasTecnicas = <HTMLInputElement> document.getElementById('caracteristicasTecnicas');
+    var caracteristicasTecnicas = <HTMLInputElement> document.getElementById('CaracteristicasTecnicas');
     var CaracteristicasTecnicas = caracteristicasTecnicas.value;
 
-    var estadoInicial = <HTMLInputElement> document.getElementById('estadoInicial');
+    var estadoInicial = <HTMLInputElement> document.getElementById('EstadoInicial');
     var EstadoInicial = estadoInicial.value;
 
     var actividadesRealizadas = <HTMLTextAreaElement> document.getElementById('actividadesRealizadas');
@@ -315,15 +316,15 @@ export class ReportComponent implements OnInit {
 
   enviarReporte( reporte ) {
     console.log('Online :)');
-    // Swal.showLoading();
-    // this.httpRequest.postData(url + '/api/saveGeneralReport', JSON.stringify(reporte)). then( result => {
-    //   if (result == "false") Swal.fire({type: "error", title: "Error", text: "Error en subir reporte"});
-    //   else {
-    //     // Saves user number
-    //     Swal.fire({type: "success", title: "Exito", text: 'Reporte enviado'})
-    //       .then(() => { this.router.navigate(['home/details']) });
-    //   }
-    // });
+    Swal.showLoading();
+    this.httpRequest.postData(url + '/api/saveGeneralReport', JSON.stringify(reporte)). then( result => {
+      if (result == "false") Swal.fire({type: "error", title: "Error", text: "Error en subir reporte"});
+      else {
+        // Saves user number
+        Swal.fire({type: "success", title: "Exito", text: 'Reporte enviado'})
+          .then(() => { this.router.navigate(['home/details']) });
+      }
+    });
   }
 
 

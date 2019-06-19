@@ -37,6 +37,7 @@ export class AddHoursComponent implements OnInit {
   addOrModifyHours() {
     if( this.dateToChange ) {
       var dateData = this.componentComms.getHours()[this.dateToChange];    
+      console.log('date data:', dateData);
       (<HTMLInputElement>document.getElementById("desde")).value = dateData['desde'];
       (<HTMLInputElement>document.getElementById("hasta")).value = dateData['hasta'];
       (<HTMLInputElement>document.getElementById("descuento")).value = dateData['descuento'];
@@ -70,8 +71,7 @@ export class AddHoursComponent implements OnInit {
       tiempoEspera: tiempoEspera
     }
     
-
-    localStorage.setItem('hours', JSON.stringify(hours));
+    this.componentComms.setHours(hours);
     console.log("hours 2:", hours);
     Swal.fire({type: "success", title: "Exito", text: 'Hora guardada'})
           .then(() => { 

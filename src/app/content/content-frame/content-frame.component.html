@@ -18,8 +18,11 @@
 </div>
 <!-- home-component -->
 <div id="navbar">
-  <button id="navbar-button" (click)="menuFunction()"><i class="fas fa-bars"></i></button>
-  <div id="navbar-title"></div>
+  <div style="display: flex; flex-direction: row">
+    <button id="navbar-button" (click)="menuFunction()"><i class="fas fa-bars"></i></button>
+    <div id="navbar-title"></div>
+  </div>
+  <button id="navbar-right-button" (click)="rightButtonFunction()"><i class="fas fa-trash"></i></button>
 </div>
 
 <div class="content">

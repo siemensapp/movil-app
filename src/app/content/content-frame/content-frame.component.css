@@ -93,9 +93,9 @@ body {
   width: 100% - 1px;
   display: flex;
   align-items: center;
-  justify-items: flex-start;
+  justify-content: space-between;
   padding: 10px 0;
-  font-size: 20px;
+  font-size: 28px;
   font-weight: bold;
   position: sticky;
   position: -webkit-sticky;
@@ -110,13 +110,21 @@ body {
 }
 
 #navbar-button {
-  font-size: 32px;
+  font-size: 20px;
   border: none;
   background-color: #ebf0f5;
   outline: none;
   transition: 0s;
   display: block;
   margin-left: 20px;
+}
+
+#navbar-right-button {
+  font-size: 20px;
+  border: none;
+  background-color: #ebf0f5;
+  outline: none;  
+  margin-right: 20px;
 }
 
 /* #navbar-button i {

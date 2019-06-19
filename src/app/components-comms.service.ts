@@ -48,6 +48,10 @@ export class ComponentsCommsService {
     return (hours !== null) ? JSON.parse(hours) : {};
   }
 
+  setHours(hours) {
+    localStorage.setItem('hours', JSON.stringify(hours));
+  }
+
   /* Funcion get nombre Especialista */
   getNameE() {
     return localStorage.getItem('NombreE');
