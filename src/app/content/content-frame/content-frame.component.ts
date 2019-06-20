@@ -1,9 +1,11 @@
 import {Component,OnInit} from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
-import { Router, NavigationEnd } from '@angular/router';
+import { Router, NavigationEnd, Event } from '@angular/router';
 import {Location} from '@angular/common';
 import { ComponentsCommsService } from '../../components-comms.service';
+import 'rxjs/add/operator/filter';
 import  Swal  from 'sweetalert2';
+import { endTimeRange } from '@angular/core/src/profile/wtf_impl';
 
 @Component({
   selector: 'app-content-frame',
@@ -14,6 +16,7 @@ export class ContentFrameComponent implements OnInit {
 
   constructor(private router: Router, private componentComms: ComponentsCommsService, private location: Location) {
     this.subscribeRouteChanges();
+    this.subscribeLastURL();
   }
 
 
@@ -25,6 +28,7 @@ export class ContentFrameComponent implements OnInit {
 
   Foto = "";
   NombreE = "";
+  lastURL = "";
 
   ngOnInit() {
 
@@ -46,7 +50,6 @@ export class ContentFrameComponent implements OnInit {
 
   menuFunction() {
     if (this.componentComms.getBackStatus()) {
-      this.location.back();
       let url = window.location.href;
       if (url.includes('details')) this.router.navigate(['home/list']);
       else if (url.includes('report')) this.router.navigate(['home/details']);
@@ -123,9 +126,20 @@ export class ContentFrameComponent implements OnInit {
   }
 
   subscribeRouteChanges() {
+      // Detecta cambios en la ruta para adaptar el estilo de navbar dinamicamente
       this.router.events.subscribe((route) => {
         if(route) this.dynamicNavbar(window.location.href);
       })
+  }
+
+  subscribeLastURL() {
+    this.router.events.subscribe((event:Event) => {
+      if(event instanceof NavigationEnd) {
+        console.log('lastURL :', this.lastURL)
+        localStorage.setItem('lastURL', this.lastURL);
+        this.lastURL = event.url;
+      }      
+    });
   }
 
   logout() {

@@ -12,11 +12,19 @@ export class AddHoursComponent implements OnInit {
   constructor(private componentComms: ComponentsCommsService, private router:Router) { }
 
   dateToChange = null;
+  dateForInput = null;
 
   ngOnInit() {
     this.aparicionBoton();
-    this.dateToChange = localStorage.getItem('dateToChange'); 
-    console.log(this.dateToChange);
+    this.dateToChange = localStorage.getItem('dateToChange');
+    /**
+     * Esta parte se hace para acomodar la fecha del input en caso de que tenga, siempre le resta uno a la fecha
+     */
+    let dateForInputAux = new Date(this.dateToChange);
+    dateForInputAux.setDate(dateForInputAux.getDate() + 1); 
+    this.dateForInput = dateForInputAux.toISOString().split("T")[0];
+
+    // Flujo normal
     this.componentComms.setBackStatus(true);
     this.addOrModifyHours();
   }
@@ -50,13 +58,13 @@ export class AddHoursComponent implements OnInit {
 
   saveHours() {
     let fecha = (this.dateToChange !== null) ? this.dateToChange : this.formatDate((<HTMLInputElement>document.getElementById("fecha")).value);
-    let desde = (<HTMLInputElement>document.getElementById("desde")).value;
-    let hasta = (<HTMLInputElement>document.getElementById("hasta")).value;
-    let descuento = (<HTMLInputElement>document.getElementById("descuento")).value;
-    let servicioSitio = (<HTMLInputElement>document.getElementById("servicioSitio")).value;
-    let entrenamiento = (<HTMLInputElement>document.getElementById("entrenamiento")).value;
-    let tiempoViaje = (<HTMLInputElement>document.getElementById("tiempoViaje")).value;
-    let tiempoEspera = (<HTMLInputElement>document.getElementById("tiempoEspera")).value;
+    let desde = ( (<HTMLInputElement>document.getElementById("desde")).value == "")? "00:00" : (<HTMLInputElement>document.getElementById("desde")).value;
+    let hasta = ( (<HTMLInputElement>document.getElementById("hasta")).value == "")? "00:00" : (<HTMLInputElement>document.getElementById("hasta")).value;
+    let descuento = ( (<HTMLInputElement>document.getElementById("descuento")).value == "")? "00:00" : (<HTMLInputElement>document.getElementById("descuento")).value;
+    let servicioSitio = ( (<HTMLInputElement>document.getElementById("servicioSitio")).value == "")? "00:00" : (<HTMLInputElement>document.getElementById("servicioSitio")).value;
+    let entrenamiento = ( (<HTMLInputElement>document.getElementById("entrenamiento")).value == "")? "00:00" : (<HTMLInputElement>document.getElementById("entrenamiento")).value;
+    let tiempoViaje = ( (<HTMLInputElement>document.getElementById("tiempoViaje")).value == "")? "00:00" : (<HTMLInputElement>document.getElementById("tiempoViaje")).value;
+    let tiempoEspera = ( (<HTMLInputElement>document.getElementById("tiempoEspera")).value == "")? "00:00" : (<HTMLInputElement>document.getElementById("tiempoEspera")).value;
 
     let hours = (localStorage.getItem('hours') !== null) ? JSON.parse(localStorage.getItem('hours')) : {};
     console.log("hours 1:", hours);

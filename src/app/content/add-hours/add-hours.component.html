@@ -88,7 +88,7 @@
 <div id="saveBtn" (click)="saveHours()" ><i class="far fa-save"></i></div>
 
 <ng-template #static>
-  <input placeholder="Selecciona una fecha ..." [owlDateTime]="dt3" [owlDateTimeTrigger]="dt3" id="fecha" class="input" value="{{dateToChange}}">
+  <input placeholder="Selecciona una fecha ..." [owlDateTime]="dt3" [owlDateTimeTrigger]="dt3" id="fecha" class="input" value="{{dateForInput}}">
   <owl-date-time [pickerMode]="'dialog'" [pickerType]="'calendar'" #dt3></owl-date-time>
 </ng-template>
 <ng-template #input>

@@ -10,7 +10,7 @@ import Swal from 'sweetalert2';
 export class SaveIDBService {
 
   private mobileDB;
-  private reportFields = [ 'nombreCliente', 'nombreContacto', "nombreColaborador", "nombreProyecto", 'nombreMarca', 'denominacionInterna', 'numeroProducto', 'numeroSerial', 'caracteristicasTecnicas', 'estadoInicial', 'descripcionAlcance', 'actividadesRealizadas', 'conclusionesRecomendaciones', 'repuestosSugeridos', 'actividadesPendientes' ];
+  private reportFields = [ 'NombreEmpresa', 'NombreContacto', "NombreE", "NombreProyecto", 'NombreMarca', 'DenominacionInterna', 'NumeroProducto', 'NumeroSerial', 'CaracteristicasTecnicas', 'EstadoInicial', 'descripcionAlcance', 'actividadesRealizadas', 'conclusionesRecomendaciones', 'repuestosSugeridos', 'actividadesPendientes' ];
 
   constructor(private isOnline: OnlineStatusService, private componentsComms: ComponentsCommsService) {
     this.createDatabase();
@@ -35,77 +35,43 @@ export class SaveIDBService {
     return String(idEmpresa + '-' + tecnica + '-' + fecha );
   }
 
-  createReport() {
-    var report = { Consecutivo: this.nuevoConsecutivo() };
-    for ( let i of this.reportFields ) report[i] = localStorage.getItem(i);
-    report['hours'] = this.componentsComms.getHours();
-    console.log('Created report - idbService: ', report);
-    return report;
-  }
-
   /**
-   * Si el reporte no esta en IndexedDB => lo crea ({}) y lo carga a local storage bajo nuevoConsecutivo()
-   * Si el reporte esta en IndexedDB => 
-   *        * Revisa si el reporte en local storage es diferente al de indexed db
-   *        * Actualiza registro en indexed DB
-   *        * Guarda registro
+   * Si viene de 'list'
+   *    => Carga reporte de IDB, si no existe, lo crea
+   *    => Monta reporte en LS
+   * Si viene de 'report'
+   *    => Guarda report en IDB
   */
   createOrSaveReport() {
-    this.getReport(this.nuevoConsecutivo()).then(result => {
-      var report;
-      if (result !== undefined) {
-        report = result;
-        var reportLS = localStorage.getItem(this.nuevoConsecutivo());
-        if (reportLS !== undefined) {
-          let isDifferent = false;
-
-          // Revisa diferencias entre LS y IDB
-          for (let key of Object.keys(reportLS)) {
-            if (report[key] !== reportLS[key] ) {
-              report[key] == reportLS[key];
-              if(!isDifferent) isDifferent = !isDifferent;
-            }
-          }
-
-          // Guarda reporte en IDB si halla diferencias
-          if(isDifferent) {
-            console.log('Diferencias detectadas ... actualizando')
-            this.saveReportHidden(report);
-          }
-          
+    var lastURL = localStorage.getItem('lastURL');
+    if(lastURL.includes("list")) {
+      console.log("list")
+      this.getReport(this.nuevoConsecutivo()).then(result => {
+        if (result !== undefined) {
+          // Guarda reporte actualizado en LS 
+          localStorage.setItem(this.nuevoConsecutivo(), JSON.stringify(result)); 
+          console.log("Reporte existe - cargando a LS")
+  
+        } else {  
+          console.log("report")
+          // Se crea nuevo reporte        
+          var report = { Consecutivo: this.nuevoConsecutivo(), hours: {}};
+          for( let x of this.reportFields) report[x] = "";
+  
+          // Local Storage
+          localStorage.setItem(this.nuevoConsecutivo(), JSON.stringify(report));
+  
+          // Indexed DB
+          this.saveReportHidden(report);
+          console.log('Reporte creado en IDB y LS: ', report);
         }
-        console.log('Reporte actualizado ')
-        // Guarda reporte actualizado en LS 
-        localStorage.setItem(this.nuevoConsecutivo(), JSON.stringify(report)); 
-
-      } else {
-
-        // Se crea nuevo reporte        
-        report = { Consecutivo: this.nuevoConsecutivo(), hours: this.componentsComms.getHours()};
-        for( let x of this.reportFields) report[x] = "";
-
-        // Local Storage
-        localStorage.setItem(this.nuevoConsecutivo(), JSON.stringify(report));
-
-        // Indexed DB
-        this.saveReportHidden(report);
-        console.log('Created report - idbService: ', report);
-      }
-    })
-    
-    // if( localStorage.getItem(this.nuevoConsecutivo()) !== null) {
-    //   console.log('Existent key: retrieving it ...')
-    //   let report = this.createReport();
-    //   console.log('Done updating')
-    //   localStorage.setItem( this.nuevoConsecutivo(), JSON.stringify(report));
-    //   this.saveReportHidden(report);
-    //   console.log('localStorage: ', localStorage.getItem(this.nuevoConsecutivo()));
-    //   console.log('IndexedDB: ', this.getReport(this.nuevoConsecutivo()));
-    // } else {
-    //   console.log('Key non-existen : Creating one ...')
-    //   localStorage.setItem(this.nuevoConsecutivo(), JSON.stringify({}));
-    //   console.log('localStorage: ', localStorage.getItem(this.nuevoConsecutivo()));
-    // }
+      })
+    } else if (lastURL.includes("report")) {
+      var report = JSON.parse(localStorage.getItem(this.nuevoConsecutivo()));
+      for( let x of this.reportFields) report[x] = localStorage.getItem(x);
+      console.log('report coming from report :', report);
+      this.saveReportHidden(report);
+    }
   }
 
 

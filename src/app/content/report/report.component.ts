@@ -22,25 +22,14 @@ export class ReportComponent implements OnInit {
 
   constructor(private componentComms: ComponentsCommsService, private httpRequest: HttpRequestsService, private router: Router, private idb: SaveIDBService, private isOnline: OnlineStatusService) { }
 
-  ngOnInit() {
-    alert(document.referrer);
-    console.log()
+  ngOnInit() {    
     this.aparicionBoton();
     this.assignmentData = this.componentComms.getDataAssignment();
     this.reportData = JSON.parse(localStorage.getItem(this.nuevoConsecutivo()));
-    // this.idb.getReport( this.nuevoConsecutivo() ).then((data) => {
-    //   this.reportData = data[0];
-    //   console.log('Report', this.reportData);
-    //   this.hours = (this.reportData.hasOwnProperty('hours'))? this.reportData['hours'] : {};
-    //   this.resizeAndSetTextArea();
-    //   this.saveAndSetInputValues();
-    // });
-    
-    //localStorage.removeItem('hours');    
     console.log(this.assignmentData);
     this.componentComms.setBackStatus(true);
     localStorage.removeItem('dateToChange');
-    //this.hours = (document.referrer.includes('report'))? this.componentComms.getHours() : this.reportData['hours'];
+    this.hours = (document.referrer.includes('report') )? this.componentComms.getHours() : this.reportData['hours'];
     console.log(this.hours);
     this.resizeAndSetTextArea();
     this.saveAndSetInputValues();

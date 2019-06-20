@@ -35,8 +35,8 @@ export class AssignmentDetailsComponent implements OnInit {
     const meses = ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'];
     const dateOne = new Date(date1);
     const dateTwo = new Date(date2);
-    let sameYearDates = String(meses[dateOne.getMonth()] + ' ' + dateOne.getDate() + ' - ' + meses[dateTwo.getMonth()] + ' ' + dateTwo.getDate());
-    let diffYearDates = String(meses[dateOne.getMonth()] + ' ' + dateOne.getDate() + ' ' + dateOne.getFullYear() + ' - ' + meses[dateTwo.getMonth()] + ' ' + dateTwo.getDate() + ' ' + dateTwo.getFullYear());
+    let sameYearDates = String(meses[dateOne.getMonth()] + ' ' + (dateOne.getDate()+1) + ' - ' + meses[dateTwo.getMonth()] + ' ' + (dateTwo.getDate()+1));
+    let diffYearDates = String(meses[dateOne.getMonth()] + ' ' + (dateOne.getDate()+1) + ' ' + dateOne.getFullYear() + ' - ' + meses[dateTwo.getMonth()] + ' ' + (dateTwo.getDate()+1) + ' ' + dateTwo.getFullYear());
     return ( dateOne.getFullYear() == dateTwo.getFullYear() ) ? sameYearDates: diffYearDates; 
   }
 
@@ -95,9 +95,9 @@ export class AssignmentDetailsComponent implements OnInit {
   });
   }
 
-  rechazarServicio(){
+  // rechazarServicio(){
 
-  }
+  // }
 
   empezarAsignacion(){
     this.componentsComms.getCurrentCords(true+'-'+this.data['IdAsignacion']);
