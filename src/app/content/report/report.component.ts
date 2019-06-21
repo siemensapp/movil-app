@@ -27,7 +27,7 @@ export class ReportComponent implements OnInit {
     this.aparicionBoton();
     this.assignmentData = this.componentComms.getDataAssignment();
     this.reportData = JSON.parse(localStorage.getItem(this.nuevoConsecutivo()));
-    console.log(this.assignmentData);
+    console.log('Report Data : ', this.reportData);
     this.componentComms.setBackStatus(true);
     localStorage.removeItem('dateToChange');
     this.hours = (localStorage.getItem('lastURL').includes('report') )? this.componentComms.getHours() : this.reportData['hours'];

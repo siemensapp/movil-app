@@ -22,13 +22,15 @@ export class AssignmentDetailsComponent implements OnInit {
   mapZoomLevel = 14;
   siteMarker = [-74.183888, 4.777068];
 
+  // Status asignacion
+  statusAsignacion;
+
   // Hour table
   hours = null;
 
   // See app.component.html
   mapLoadedEvent(status: boolean) {
     console.log('The map loaded: ' + status);
-
   }
 
   parseDate(date1, date2) {
@@ -45,15 +47,18 @@ export class AssignmentDetailsComponent implements OnInit {
   ngOnInit() {
     this.componentsComms.getCurrentCords(false+'');
     this.saveIDB.createOrSaveReport();
-    ///////
+    
+    // Carga los detalles de la asignacion 
     this.data = this.componentsComms.getDataAssignment();
-    // this.mostrarEstado(this.data['StatusAsignacion']);
+    // VALIDACION - Se necesita el status de la asignacion para habilitar boton 
+    this.enableButton();
+    
     this.mapCenter = [ parseFloat(this.data['CoordenadasSitio'].split(",")[0]), parseFloat(this.data['CoordenadasSitio'].split(",")[1]) ];
     this.siteMarker = [ parseFloat(this.data['CoordenadasSitio'].split(",")[0]), parseFloat(this.data['CoordenadasSitio'].split(",")[1]) ];
     this.componentsComms.setBackStatus(true);
     this.hours = this.componentsComms.getHours();
     window.onclick = function(event) {
-      if (!(<HTMLDivElement>event.target).matches('#acceptBtn')) {
+      if (!(<HTMLDivElement>event.target).matches('#plusBtn')) {
         var dropdowns = document.getElementsByClassName("dropdown-content");
         var i;
         for (i = 0; i < dropdowns.length; i++) {
@@ -72,43 +77,46 @@ export class AssignmentDetailsComponent implements OnInit {
   } 
 
   aceptarServicio(){
+    /**
+     * Cambia el estado de la asignacion localmente y envia los datos al back
+     * Habilita el boton para editar el reporte
+     */
+    this.data['StatusAsignacion'] = 1;
+    this.componentsComms.setDataAssignment(this.data);
     var datos = {
       'tiempoInicio' : '',
       'tiempoFin' : '',
       'IdAsignacion' : this.data['IdAsignacion'],
       'StatusAsignacion' : 1
-  }
-  this.httpRequests.postData(url + '/api/updateTimeStamps', JSON.stringify(datos)).then((res) => {
-      if(res !== "Error en la base de datos"){
-        Swal.fire(
-         'Asignacion Aceptada',
-         '',
-         'success');
-          this.router.navigate(['home/list']);
-      }
-      else{
-        Swal.fire(
-          'ERROR',
-          'No se pudo aceptar la asignación',
-          'error');
-      }
-  });
+    }
+    this.httpRequests.postData(url + '/api/updateTimeStamps', JSON.stringify(datos)).then((res) => {
+        if(res !== "Error en la base de datos"){
+
+          // Habilitación boton de creacion de reporte
+          this.enableButton();
+        }
+        else{
+          Swal.fire( 'ERROR','No se pudo aceptar la asignación', 'error');
+        }
+    });
   }
 
-  // rechazarServicio(){
-
-  // }
+  enableButton() {
+    var plusBtn = <HTMLElement>document.getElementById('plusBtn');
+    if (this.data['StatusAsignacion'] == 1 || this.data['StatusAsignacion'] == 2) {      
+      plusBtn.style.height = "60px";
+      plusBtn.style.width = "60px";
+      plusBtn.style.fontSize = "1.5rem";
+    } else if (this.data['StatusAsignacion'] == 3) {
+      plusBtn.style.height = "0";
+      plusBtn.style.width = "0";
+      plusBtn.style.fontSize = "0";
+    }
+  }
 
   empezarAsignacion(){
     this.componentsComms.getCurrentCords(true+'-'+this.data['IdAsignacion']);
     var timeStampHoy = new Date();
-    console.log(timeStampHoy);
-    // if(parseInt(timeStampHoy.split(" ")[0].split("/")[0])<10){
-    //   fechaHoy = (timeStampHoy.split(" ")[0].split("/")[2]).split(",")[0] + '-0' + timeStampHoy.split(" ")[0].split("/")[0] + '-' + timeStampHoy.split(" ")[0].split("/")[1];
-    // }
-    // else{
-    //   fechaHoy = (timeStampHoy.split(" ")[0].split("/")[2]).split(",")[0] + '-' + timeStampHoy.split(" ")[0].split("/")[0] + '-' + timeStampHoy.split(" ")[0].split("/")[1];
-    // }
     let date = timeStampHoy.getDate();
     let month = timeStampHoy.getMonth() + 1;
     let year = timeStampHoy.getFullYear();
@@ -118,8 +126,9 @@ export class AssignmentDetailsComponent implements OnInit {
     let realTime = String(timeStampHoy.getHours()) + ':' + String(timeStampHoy.getMinutes()) + ':' + String(timeStampHoy.getSeconds());
 
     let timeStampInicio = String(year) + '-' + realMonth + '-' + realDate + " " + realTime;
-    console.log(timeStampInicio);
     
+    this.data['StatusAsignacion'] = 2;
+    this.componentsComms.setDataAssignment(this.data);
     var datos = {
         'tiempoInicio' : timeStampInicio,
         'tiempoFin' : '',
@@ -128,11 +137,9 @@ export class AssignmentDetailsComponent implements OnInit {
     }
     this.httpRequests.postData(url + '/api/updateTimeStamps', JSON.stringify(datos)).then((res) => {
         if(res !== "Error en la base de datos"){
-          Swal.fire(
-           'Asignacion Empezada',
-           timeStampInicio,
-           'success')  
-            this.router.navigate(['home/list']);
+          Swal.fire('Asignacion Empezada', timeStampInicio, 'success')
+          this.enableButton();  
+          // this.router.navigate(['home/list']);
         }
         else{
           Swal.fire(
@@ -155,6 +162,9 @@ export class AssignmentDetailsComponent implements OnInit {
     }
     var horaHoy = new Date().toLocaleTimeString();
     var timeStampFinal = fechaHoy+' '+horaHoy;
+
+    this.data['StatusAsignacion'] = 3;
+    this.componentsComms.setDataAssignment(this.data);
     var datos = {
       'tiempoInicio' : '',
       'tiempoFin' : timeStampFinal,
@@ -163,11 +173,9 @@ export class AssignmentDetailsComponent implements OnInit {
   }
   this.httpRequests.postData(url + '/api/updateTimeStamps', JSON.stringify(datos)).then((res) => {
     if(res !== "Error en la base de datos"){
-      Swal.fire(
-       'Asignacion Terminada',
-       timeStampFinal,
-       'success');
-        this.router.navigate(['home/list']);
+      Swal.fire('Asignacion Terminada', timeStampFinal, 'success');
+       this.enableButton();
+        //this.router.navigate(['home/list']);
     }
     else{
       Swal.fire(
@@ -175,7 +183,7 @@ export class AssignmentDetailsComponent implements OnInit {
         'No se pudo terminar la asignación',
         'error');
     }
-    });;
+    });
   }
 
 }

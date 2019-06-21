@@ -3,7 +3,7 @@
     (mapLoadedEvent)="mapLoadedEvent($event)" id="mapa">
   </app-esri-map>
   <div class="dropdown">
-    <div id="acceptBtn" (click)="writeReport()"><i class="fas fa-plus"></i></div>
+    <div id="plusBtn" (click)="writeReport()"><i class="fas fa-plus"></i></div>
 
     <div id="reportsMenu" class="dropdown-content">
       <a [routerLink]="['/home/report']">Crear Reporte Horas</a>
