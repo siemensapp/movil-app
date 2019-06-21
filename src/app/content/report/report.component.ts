@@ -15,6 +15,7 @@ import {url} from '../../../assets/js/variables';
 export class ReportComponent implements OnInit {
   private allInputs = [ 'NombreEmpresa', 'NombreContacto', "NombreE", "NombreProyecto", 'NombreMarca', 'DenominacionInterna', 'NumeroProducto', 'NumeroSerial', 'CaracteristicasTecnicas', 'EstadoInicial'];
   private textAreas = [ 'descripcionAlcance', 'actividadesRealizadas', 'conclusionesRecomendaciones', 'repuestosSugeridos', 'actividadesPendientes' ];
+  private firmCanvas = [ 'campoEmisor', 'campoResponsableO', 'campoComerciante', 'campoResponsableP', 'campoCliente' ];
   hours;
   assignment;
   assignmentData;
@@ -33,6 +34,7 @@ export class ReportComponent implements OnInit {
     console.log(this.hours);
     this.resizeAndSetTextArea();
     this.saveAndSetInputValues();
+    this.SetCanvas();
     this.assignment = this.assignmentData['IdAsignacion'];
   }
 
@@ -54,7 +56,7 @@ export class ReportComponent implements OnInit {
   }
 
 
-  mostrar(campo: string, borrar:string){
+  mostrar(campo: string, borrar:string, guardar:string){
     var canvas = <HTMLCanvasElement> document.getElementById(campo);
     var context = canvas.getContext('2d'); 
     var clickX = new Array();
@@ -104,6 +106,12 @@ export class ReportComponent implements OnInit {
       clickDrag = [];
     });
 
+    // Listener to save firm
+    document.getElementById(guardar).addEventListener('mousedown', function(e){
+      let canvas = <HTMLCanvasElement>document.getElementById(campo);
+      localStorage.setItem(campo, canvas.toDataURL());
+    })
+
     canvas.addEventListener('touchmove', function(e){
       if(paint){
         addClick(e.changedTouches[0].pageX - this.offsetLeft, e.changedTouches[0].pageY - this.offsetTop, true);
@@ -122,11 +130,13 @@ export class ReportComponent implements OnInit {
     if(canvas.style.visibility == 'visible'){
       canvas.style.transition = "height 1s";      
       canvas.style.height = '0px';
-      let sign = document.getElementById(borrar);      
-      sign.style.visibility = 'hidden';
+      let signBorrar = document.getElementById(borrar);
+      let signGuardar = document.getElementById(guardar);      
+      signBorrar.style.visibility = 'hidden';
+      signGuardar.style.visibility = 'hidden';
       setTimeout(() => {
-        sign.previousElementSibling.querySelector('.fas').classList.remove('fa-minus');
-        sign.previousElementSibling.querySelector('.fas').classList.add('fa-plus');
+        signBorrar.previousElementSibling.querySelector('.fas').classList.remove('fa-minus');
+        signBorrar.previousElementSibling.querySelector('.fas').classList.add('fa-plus');
         canvas.style.visibility = 'hidden';
       }, 1000);
             
@@ -137,10 +147,12 @@ export class ReportComponent implements OnInit {
       canvas.style.height = '250px';
       canvas.style.width = '500px';
       canvas.style.margin = "auto";
-      let sign = document.getElementById(borrar);
-      sign.style.visibility = 'visible';
-      sign.previousElementSibling.querySelector('.fas').classList.remove('fa-plus');
-      sign.previousElementSibling.querySelector('.fas').classList.add('fa-minus');
+      let signBorrar = document.getElementById(borrar);
+      let signGuardar = document.getElementById(guardar);
+      signBorrar.style.visibility = 'visible';
+      signGuardar.style.visibility = 'visible';
+      signBorrar.previousElementSibling.querySelector('.fas').classList.remove('fa-plus');
+      signBorrar.previousElementSibling.querySelector('.fas').classList.add('fa-minus');
     }
   }
 
@@ -152,21 +164,48 @@ export class ReportComponent implements OnInit {
         item.value = this.reportData[id];
       }
 
+      //Event listener para guardar contenido del input al perder focus
       item.addEventListener('blur', () => {
         localStorage.setItem(id, String(item.value));
       });
+
+      // Event listener para acomodar tamaño del textarea, REVISAR
       for (let event of ['keydown', 'change', 'paste', 'cut', 'drop', 'onkeydown', 'onchange', 'onpaste', 'oncut', 'ondrop']) {
         item.addEventListener(event, () => { if(item.scrollTop != 0) item.style.height = item.scrollHeight + 10 +"px"; })
       }      
     }
   }
 
+  SetCanvas() {
+    for (let id of this.firmCanvas) {
+      let item = <HTMLCanvasElement>document.getElementById(id);
+
+      // Carga firma si ya existia anterirormente
+      if (this.reportData.hasOwnProperty(id)) {
+        let ctx = item.getContext("2d");
+        let image = new Image();
+        image.onload = () => {
+          ctx.drawImage(image, 0, 0);
+        }
+        image.src = this.reportData[id];
+      }
+
+    }
+  }
+
   saveAndSetInputValues() {
     for (let id of this.allInputs) {
       let item = <HTMLInputElement>document.getElementById(id);
+
+      /** Si el dato existe en el reporte, lo carga.
+       *  Si no, revisa si esta en datos de la asignacion
+       *    => Si es asi, lo carga
+       *    => Si no, crea una cadena vacia0
+       */      
+
       item.value = ( this.reportData.hasOwnProperty(id) ) ? this.reportData[id]: (this.assignmentData[id] ? this.assignmentData[id] : "") ;
       
-
+      // Event listener para guardar datos cuando el input pierde focus
       item.addEventListener('blur', () => {
         localStorage.setItem(id, String(item.value));
       })

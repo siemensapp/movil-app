@@ -10,7 +10,8 @@ import Swal from 'sweetalert2';
 export class SaveIDBService {
 
   private mobileDB;
-  private reportFields = [ 'NombreEmpresa', 'NombreContacto', "NombreE", "NombreProyecto", 'NombreMarca', 'DenominacionInterna', 'NumeroProducto', 'NumeroSerial', 'CaracteristicasTecnicas', 'EstadoInicial', 'descripcionAlcance', 'actividadesRealizadas', 'conclusionesRecomendaciones', 'repuestosSugeridos', 'actividadesPendientes' ];
+  private reportFields = [ 'NombreEmpresa', 'NombreContacto', "NombreE", "NombreProyecto", 'NombreMarca', 'DenominacionInterna', 'NumeroProducto', 'NumeroSerial', 'CaracteristicasTecnicas', 'EstadoInicial', 'descripcionAlcance', 'actividadesRealizadas', 'conclusionesRecomendaciones', 'repuestosSugeridos', 'actividadesPendientes', 'campoEmisor', 'campoResponsableO', 'campoComerciante', 'campoResponsableP', 'campoCliente' ];
+  private firmasFields = ['campoEmisor', 'campoResponsableO', 'campoComerciante', 'campoResponsableP', 'campoCliente'];
 
   constructor(private isOnline: OnlineStatusService, private componentsComms: ComponentsCommsService) {
     this.createDatabase();
@@ -35,19 +36,30 @@ export class SaveIDBService {
     return String(idEmpresa + '-' + tecnica + '-' + fecha );
   }
 
-  /**
-   * Si viene de 'list'
-   *    => Carga reporte de IDB, si no existe, lo crea
-   *    => Monta reporte en LS
-   * Si viene de 'report'
-   *    => Guarda report en IDB
-  */
+  
   createOrSaveReport() {
+    /**
+     * Si viene de 'list'
+     *    => Carga reporte de IDB, si no existe, lo crea
+     *    => Monta reporte en LS
+     * Si viene de 'report'
+     *    => Revisa campo firmas a ver si existen
+     *    Si existen
+     *      => los toma del reporte
+     *      => Si no, los crea ""
+     *    => Guarda report en IDB     
+    */
     var lastURL = localStorage.getItem('lastURL');
     if(lastURL.includes("list")) {
       console.log("list")
       this.getReport(this.nuevoConsecutivo()).then(result => {
         if (result !== undefined) {
+
+          // Revisa si tiene la propiedad de las firmas
+          for ( let x of this.firmasFields ) {
+            if (!result.hasOwnProperty(x)) result[x] = "";
+          } 
+
           // Guarda reporte actualizado en LS 
           localStorage.setItem(this.nuevoConsecutivo(), JSON.stringify(result)); 
           console.log("Reporte existe - cargando a LS")
