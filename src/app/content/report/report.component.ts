@@ -30,7 +30,7 @@ export class ReportComponent implements OnInit {
     console.log(this.assignmentData);
     this.componentComms.setBackStatus(true);
     localStorage.removeItem('dateToChange');
-    this.hours = (document.referrer.includes('report') )? this.componentComms.getHours() : this.reportData['hours'];
+    this.hours = (localStorage.getItem('lastURL').includes('report') )? this.componentComms.getHours() : this.reportData['hours'];
     console.log(this.hours);
     this.resizeAndSetTextArea();
     this.saveAndSetInputValues();
