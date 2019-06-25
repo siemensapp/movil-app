@@ -50,6 +50,7 @@ export class AssignmentDetailsComponent implements OnInit {
     
     // Carga los detalles de la asignacion 
     this.data = this.componentsComms.getDataAssignment();
+    console.log('Data assignment: ', this.data);
     // VALIDACION - Se necesita el status de la asignacion para habilitar boton 
     this.enableButton();
     

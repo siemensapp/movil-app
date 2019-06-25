@@ -205,7 +205,7 @@ export class ReportComponent implements OnInit {
           ctx.drawImage(image, 0, 0);
         }
         image.src = this.reportData[id];
-        if(this.reportData[id] !== "" && this.reportData[id] !== null) document.getElementById('checked' + id).style.visibility = "visible";
+        if(this.reportData[id] !== "" && this.reportData[id] !== null && this.reportData[id] !== 'null') document.getElementById('checked' + id).style.visibility = "visible";
       }
 
     }
@@ -221,7 +221,7 @@ export class ReportComponent implements OnInit {
        *    => Si no, crea una cadena vacia0
        */      
 
-      item.value = ( this.reportData.hasOwnProperty(id) ) ? this.reportData[id]: (this.assignmentData[id] ? this.assignmentData[id] : "") ;
+      item.value = ( this.assignmentData.hasOwnProperty(id) ) ? this.assignmentData[id]: this.reportData[id] ;
       if(id == "NombreMarca") item.value = "SIEMENS"
       
       // Event listener para guardar datos cuando el input pierde focus
