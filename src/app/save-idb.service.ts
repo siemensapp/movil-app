@@ -3,6 +3,7 @@ import { ComponentsCommsService } from './components-comms.service';
 import { OnlineStatusService } from './online-status.service';
 import Dexie from 'dexie';
 import Swal from 'sweetalert2';
+import { NgxMaterialTimepickerThemeDirective } from 'ngx-material-timepicker';
 
 @Injectable({
   providedIn: 'root'
@@ -55,17 +56,16 @@ export class SaveIDBService {
       this.getReport(this.nuevoConsecutivo()).then(result => {
         if (result !== undefined) {
 
-          // Revisa si tiene la propiedad de las firmas
-          for ( let x of this.firmasFields ) {
-            if (!result.hasOwnProperty(x)) result[x] = "";
-          } 
-
           // Guarda reporte actualizado en LS 
           localStorage.setItem(this.nuevoConsecutivo(), JSON.stringify(result)); 
-          console.log("Reporte existe - cargando a LS")
-  
+          console.log("Reporte existe - cargando a LS: ", result)
+          
+          // Carga de firmas a LS
+          console.log('Carga de firmas a LS')
+          for(let x of this.firmasFields) localStorage.setItem(x, result[x]);
+
         } else {  
-          console.log("report")
+
           // Se crea nuevo reporte        
           var report = { Consecutivo: this.nuevoConsecutivo(), hours: {}};
           for( let x of this.reportFields) report[x] = "";
@@ -76,12 +76,26 @@ export class SaveIDBService {
           // Indexed DB
           this.saveReportHidden(report);
           console.log('Reporte creado en IDB y LS: ', report);
+
+          // Carga de firmas a LS
+          console.log('Carga de firmas a LS')
+          for(let x of this.firmasFields) localStorage.setItem(x, report[x]);
         }
       })
     } else if (lastURL.includes("report")) {
       var report = JSON.parse(localStorage.getItem(this.nuevoConsecutivo()));
+
+      // Actualiza el reporte con los nuevos cambios
       for( let x of this.reportFields) report[x] = localStorage.getItem(x);
+      
+      // Carga las horas actualizadas en el reporte
+      report['hours'] = this.componentsComms.getHours();
       console.log('report coming from report :', report);
+
+      // Lo carga en caso de entrar y volver a salir del reporte a los detalles
+      localStorage.setItem(this.nuevoConsecutivo(), JSON.stringify(report));
+
+      // Lo guarda en IDB
       this.saveReportHidden(report);
     }
   }

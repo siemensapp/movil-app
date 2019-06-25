@@ -45,7 +45,8 @@ export class ComponentsCommsService {
   getHours() {
     //localStorage.removeItem('hours');
     let hours = localStorage.getItem('hours');    
-    return (hours !== null) ? JSON.parse(hours) : {};
+    // return (hours !== null) ? JSON.parse(hours) : {};
+    return JSON.parse(hours);
   }
 
   setHours(hours) {

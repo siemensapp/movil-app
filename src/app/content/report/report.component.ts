@@ -23,14 +23,28 @@ export class ReportComponent implements OnInit {
 
   constructor(private componentComms: ComponentsCommsService, private httpRequest: HttpRequestsService, private router: Router, private idb: SaveIDBService, private isOnline: OnlineStatusService) { }
 
-  ngOnInit() {    
+  ngOnInit() {
+    
+    // // Elimina posibles firmas residuales, para solo trabajar con las del reporte
+    // for(let x of this.firmCanvas)localStorage.removeItem(x);
+    
     this.aparicionBoton();
     this.assignmentData = this.componentComms.getDataAssignment();
     this.reportData = JSON.parse(localStorage.getItem(this.nuevoConsecutivo()));
     console.log('Report Data : ', this.reportData);
     this.componentComms.setBackStatus(true);
     localStorage.removeItem('dateToChange');
-    this.hours = (localStorage.getItem('lastURL').includes('report') )? this.componentComms.getHours() : this.reportData['hours'];
+
+    // Se cargan las horas
+    if( localStorage.getItem('lastURL').includes('hours') ) {
+      this.hours = this.componentComms.getHours()
+    } else {
+      this.hours = this.reportData['hours'];
+      // Carga las horas a localStorage si vienen de hours
+      localStorage.setItem('hours', JSON.stringify(this.hours));
+    }
+    
+
     console.log(this.hours);
     this.resizeAndSetTextArea();
     this.saveAndSetInputValues();
@@ -54,7 +68,6 @@ export class ReportComponent implements OnInit {
       (window.innerHeight + window.innerWidth !== originalSize) ? sendButton.style.display = "none" : sendButton.style.display = "flex";
     })
   }
-
 
   mostrar(campo: string, borrar:string, guardar:string){
     var canvas = <HTMLCanvasElement> document.getElementById(campo);
@@ -99,17 +112,21 @@ export class ReportComponent implements OnInit {
       redraw();
     });
 
+    // Listener to erase firm
     document.getElementById(borrar).addEventListener('mousedown', function(e){
       context.clearRect(0,0,500,250);
       clickX = [];
       clickY = [];
       clickDrag = [];
+      localStorage.removeItem(campo);
+      document.getElementById('checked' + campo).style.visibility = "hidden";
     });
 
     // Listener to save firm
     document.getElementById(guardar).addEventListener('mousedown', function(e){
       let canvas = <HTMLCanvasElement>document.getElementById(campo);
       localStorage.setItem(campo, canvas.toDataURL());
+      document.getElementById('checked' + campo).style.visibility = "visible";
     })
 
     canvas.addEventListener('touchmove', function(e){
@@ -188,6 +205,7 @@ export class ReportComponent implements OnInit {
           ctx.drawImage(image, 0, 0);
         }
         image.src = this.reportData[id];
+        if(this.reportData[id] !== "" && this.reportData[id] !== null) document.getElementById('checked' + id).style.visibility = "visible";
       }
 
     }
@@ -204,6 +222,7 @@ export class ReportComponent implements OnInit {
        */      
 
       item.value = ( this.reportData.hasOwnProperty(id) ) ? this.reportData[id]: (this.assignmentData[id] ? this.assignmentData[id] : "") ;
+      if(id == "NombreMarca") item.value = "SIEMENS"
       
       // Event listener para guardar datos cuando el input pierde focus
       item.addEventListener('blur', () => {

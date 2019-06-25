@@ -138,32 +138,38 @@
       </div>
     </div>
   <div class="subtitleReport">Firmas</div>
-      <a (click)="mostrar('campoEmisor', 'borrarEmisor', 'guardarEmisor')"><i class="fas fa-plus"></i> Añadir Firma borrarEmisor
-        <span *ngIf="this.reportData['campoEmisor'] && this.reportData['campoEmisor'] !== null && this.reportData['campoEmisor'] !== ''"><i style="color:green " class="fas fa-check-circle"></i></span>
+      <a (click)="mostrar('campoEmisor', 'borrarEmisor', 'guardarEmisor')"><i class="fas fa-plus"></i> Añadir Firma Emisor
+        <!-- <span *ngIf="this.reportData['campoEmisor'] && this.reportData['campoEmisor'] !== null && this.reportData['campoEmisor'] !== ''"><i style="color:green " class="fas fa-check-circle"></i></span> -->
+        <span id="checkedcampoEmisor" style="visibility: hidden"><i style="color:green " class="fas fa-check-circle"></i></span>
+
       </a>
         <button class="botonBorrado" id='borrarEmisor'>Borrar</button>
         <button class="botonGuardado" id='guardarEmisor'>Guardar</button>
       <canvas id="campoEmisor" height="250" width="500" style="touch-action: none"></canvas>
       <a (click)="mostrar('campoResponsableO', 'borrarResponsableO', 'guardarResponsableO')"><i class="fas fa-plus"></i> Añadir Firma Responsable de Obra
-        <span *ngIf="this.reportData['campoResponsableO'] && this.reportData['campoResponsableO'] !== null && this.reportData['campoResponsableO'] !== ''"><i style="color:green " class="fas fa-check-circle"></i></span>
+        <!-- <span *ngIf="this.reportData['campoResponsableO'] && this.reportData['campoResponsableO'] !== null && this.reportData['campoResponsableO'] !== ''"><i style="color:green " class="fas fa-check-circle"></i></span> -->
+        <span id="checkedcampoResponsableO" style="visibility: hidden"><i style="color:green " class="fas fa-check-circle"></i></span>
       </a>
         <button class="botonBorrado"  id='borrarResponsableO'>Borrar</button>
         <button class="botonGuardado"  id='guardarResponsableO'>Guardar</button>
       <canvas id="campoResponsableO" height="250" width="500" style="touch-action: none"></canvas>
       <a (click)="mostrar('campoComerciante', 'borrarComerciante', 'guardarComerciante')"><i class="fas fa-plus"></i> Añadir Firma Comerciante/Financiero
-        <span *ngIf="this.reportData['campoComerciante'] && this.reportData['campoComerciante'] !== null && this.reportData['campoComerciante'] !== ''"><i style="color:green " class="fas fa-check-circle"></i></span>
+        <!-- <span *ngIf="this.reportData['campoComerciante'] && this.reportData['campoComerciante'] !== null && this.reportData['campoComerciante'] !== ''"><i style="color:green " class="fas fa-check-circle"></i></span> -->
+        <span id="checkedcampoComerciante" style="visibility: hidden"><i style="color:green " class="fas fa-check-circle"></i></span>
       </a>
         <button class="botonBorrado"  id='borrarComerciante'>Borrar</button>
         <button class="botonGuardado"  id='guardarComerciante'>Guardar</button>
       <canvas id="campoComerciante" height="250" width="500" style="touch-action: none"></canvas>
       <a (click)="mostrar('campoResponsableP', 'borrarResponsableP', 'guardarResponsableP')"><i class="fas fa-plus"></i> Añadir Firma Responsable del Proyecto
-        <span *ngIf="this.reportData['campoResponsableP'] && this.reportData['campoResponsableP'] !== null && this.reportData['campoResponsableP'] !== ''"><i style="color:green " class="fas fa-check-circle"></i></span>
+        <!-- <span *ngIf="this.reportData['campoResponsableP'] && this.reportData['campoResponsableP'] !== null && this.reportData['campoResponsableP'] !== ''"><i style="color:green " class="fas fa-check-circle"></i></span> -->
+        <span id="checkedcampoResponsableP" style="visibility: hidden"><i style="color:green " class="fas fa-check-circle"></i></span>
       </a>
         <button class="botonBorrado"  id='borrarResponsableP'>Borrar</button>
         <button class="botonGuardado"  id='guardarResponsableP'>Guardar</button>
       <canvas id="campoResponsableP" height="250" width="500" style="touch-action: none"></canvas>
       <a (click)="mostrar('campoCliente', 'borrarCliente', 'guardarCliente')"><i class="fas fa-plus"></i> Añadir Firma Recibido Cliente
-        <span *ngIf="this.reportData['campoCliente'] && this.reportData['campoCliente'] !== null && this.reportData['campoCliente'] !== ''"><i style="color:green " class="fas fa-check-circle"></i></span>
+        <!-- <span *ngIf="this.reportData['campoCliente'] && this.reportData['campoCliente'] !== null && this.reportData['campoCliente'] !== ''"><i style="color:green " class="fas fa-check-circle"></i></span> -->
+        <span id="checkedcampoCliente" style="visibility: hidden"><i style="color:green " class="fas fa-check-circle"></i></span>
       </a>
         <button class="botonBorrado" id='borrarCliente'>Borrar</button>
         <button class="botonGuardado" id='guardarCliente'>Guardar</button>

@@ -26,7 +26,7 @@ export class AssignmentDetailsComponent implements OnInit {
   statusAsignacion;
 
   // Hour table
-  hours = null;
+  // hours = null;
 
   // See app.component.html
   mapLoadedEvent(status: boolean) {
@@ -56,7 +56,7 @@ export class AssignmentDetailsComponent implements OnInit {
     this.mapCenter = [ parseFloat(this.data['CoordenadasSitio'].split(",")[0]), parseFloat(this.data['CoordenadasSitio'].split(",")[1]) ];
     this.siteMarker = [ parseFloat(this.data['CoordenadasSitio'].split(",")[0]), parseFloat(this.data['CoordenadasSitio'].split(",")[1]) ];
     this.componentsComms.setBackStatus(true);
-    this.hours = this.componentsComms.getHours();
+    // this.hours = this.componentsComms.getHours();
     window.onclick = function(event) {
       if (!(<HTMLDivElement>event.target).matches('#plusBtn')) {
         var dropdowns = document.getElementsByClassName("dropdown-content");

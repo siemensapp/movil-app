@@ -66,7 +66,7 @@ export class AddHoursComponent implements OnInit {
     let tiempoViaje = ( (<HTMLInputElement>document.getElementById("tiempoViaje")).value == "")? "00:00" : (<HTMLInputElement>document.getElementById("tiempoViaje")).value;
     let tiempoEspera = ( (<HTMLInputElement>document.getElementById("tiempoEspera")).value == "")? "00:00" : (<HTMLInputElement>document.getElementById("tiempoEspera")).value;
 
-    let hours = (localStorage.getItem('hours') !== null) ? JSON.parse(localStorage.getItem('hours')) : {};
+    let hours = this.componentComms.getHours();
     console.log("hours 1:", hours);
     hours[fecha] = {
       fecha: fecha,
