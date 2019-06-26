@@ -42,6 +42,26 @@ export class AddHoursComponent implements OnInit {
     })
   }
 
+  diferenciaEntreTiempos( tiempo1, tiempo2) {
+    // Diferencia entre Desde y Hasta
+    let auxDiffDesde = new Date();
+    let auxDiffHasta = new Date();
+
+    auxDiffDesde.setHours( parseInt(tiempo1.split(':')[0]) )
+    auxDiffDesde.setMinutes( parseInt(tiempo1.split(':')[1]) )
+
+    auxDiffHasta.setHours( parseInt(tiempo2.split(':')[0]) )
+    auxDiffHasta.setMinutes( parseInt(tiempo2.split(':')[1]) )
+
+    let diff = Math.abs(auxDiffHasta.getTime() - auxDiffDesde.getTime());
+    let hh = Math.floor(diff / 1000 / 60 / 60);
+    diff -= hh * 1000 * 60 * 60;
+    let mm = Math.floor( diff / 1000 / 60);
+
+    let diffString = String( (hh < 10 ? '0' + hh : hh) + ':' + (mm < 10 ? '0' + mm : mm) );
+    return diffString;
+  }
+
   addOrModifyHours() {
     if( this.dateToChange ) {
       var dateData = this.componentComms.getHours()[this.dateToChange];    
@@ -66,26 +86,67 @@ export class AddHoursComponent implements OnInit {
     let tiempoViaje = ( (<HTMLInputElement>document.getElementById("tiempoViaje")).value == "")? "00:00" : (<HTMLInputElement>document.getElementById("tiempoViaje")).value;
     let tiempoEspera = ( (<HTMLInputElement>document.getElementById("tiempoEspera")).value == "")? "00:00" : (<HTMLInputElement>document.getElementById("tiempoEspera")).value;
 
-    let hours = this.componentComms.getHours();
-    console.log("hours 1:", hours);
-    hours[fecha] = {
-      fecha: fecha,
-      desde: desde,
-      hasta: hasta,
-      descuento: descuento,
-      servicioSitio: servicioSitio,
-      entrenamiento: entrenamiento,
-      tiempoViaje: tiempoViaje,
-      tiempoEspera: tiempoEspera
+
+    /**
+     *  VALIDACIONES
+     * 
+     *  Para ser guardado debe:
+     *  => Haber una fecha
+     *  => Desde < Hasta
+     *  => Descuento < Desde - Hasta
+     */
+
+    // Hay fecha ?
+    if (fecha === 'NaN-NaN-NaN') {
+      Swal.fire({
+        type: 'warning',
+        title: 'Debes ingresar una fecha !',
+        text: "Toca en 'Selecciona una fecha'"
+      })
     }
+    // Desde < Hasta 
+    else if ( desde > hasta) {
+      Swal.fire({
+        type: 'warning',
+        title: 'Rango de horas invalido',
+        text: "El tiempo 'desde' debe ser menor que el tiempo 'hasta'"
+      })
+    }
+    // Descuento < Hasta - Desde
+    else if ( descuento > this.diferenciaEntreTiempos(desde, hasta) ) {
+      Swal.fire({
+        type: 'warning',
+        title: 'Descuento invalido',
+        text: "El tiempo 'descuento' debe ser menor que el tiempo entre 'hasta' y 'desde'"
+      })
+    } else {
+      let hours = this.componentComms.getHours();
+      console.log("hours 1:", hours);
+      hours[fecha] = {
+        fecha: fecha,
+        desde: desde,
+        hasta: hasta,
+        descuento: descuento,
+        servicioSitio: servicioSitio,
+        entrenamiento: entrenamiento,
+        tiempoViaje: tiempoViaje,
+        tiempoEspera: tiempoEspera
+      }
+      
+      this.componentComms.setHours(hours);
+      console.log("hours 2:", hours);
+      Swal.fire({type: "success", title: "Exito", text: 'Hora guardada'})
+            .then(() => { 
+              this.router.navigate(['home/report']);
+              localStorage.removeItem('dateToChange');
+            });
+    }
+   
     
-    this.componentComms.setHours(hours);
-    console.log("hours 2:", hours);
-    Swal.fire({type: "success", title: "Exito", text: 'Hora guardada'})
-          .then(() => { 
-            this.router.navigate(['home/report']);
-            localStorage.removeItem('dateToChange');
-          });
+
+    
+
+  
     
   }
 
