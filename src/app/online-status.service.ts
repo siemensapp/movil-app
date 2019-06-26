@@ -11,7 +11,7 @@ export class OnlineStatusService {
   connectionExists() {
     return new Promise(resolve => {
       var xhr = new XMLHttpRequest();
-      var file = env.url + '/api/workers'
+      var file = env.url + '/api/allWorkers'
       var randomNum = Math.round(Math.random() * 10000);
  
       xhr.open('HEAD', file + "?rand=" + randomNum, true);

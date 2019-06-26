@@ -201,6 +201,39 @@ tbody td {
     margin: 10px auto;
 }
 
+/* input button */
+
+#camara {
+    width: 0.1px;
+	height: 0.1px;
+	opacity: 0;
+	overflow: hidden;
+	position: absolute;
+	z-index: -1;
+}
+
+#camara + label {
+    font-size: 1.25em;
+    font-weight: 700;
+    color: white;
+    background-color: rgb(206, 0, 0);
+    display: inline-block;
+    text-align: center;
+    padding: 5px 0;
+    width: 200px;
+    margin: auto;
+    border-radius: 5px;
+}
+
+#camara:focus + label,
+#camara + label:hover {
+    background-color: rgb(146, 3, 3);
+}
+
+#camara + label > i {
+    margin-right: 10px;
+}
+
 @media (min-width: 501px) {
     table {
         margin: auto;

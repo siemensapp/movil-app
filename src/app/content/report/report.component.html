@@ -173,7 +173,10 @@
       </a>
         <button class="botonBorrado" id='borrarCliente'>Borrar</button>
         <button class="botonGuardado" id='guardarCliente'>Guardar</button>
-      <canvas id="campoCliente" height="250" width="500" style="touch-action: none"></canvas>        
+      <canvas id="campoCliente" height="250" width="500" style="touch-action: none"></canvas>
+      
+      <input id="camara" type="file" capture="camera" multiple="multiple" (change)="changeFiles($event)" accept="image/*">
+      <label for="camara" id="label-camara"><i class="fas fa-paperclip"></i>Elige archivos</label>
 </div>
 <div (click)='subirReporte()' id="sendBtn"><i class="fas fa-file-upload"></i></div>
 

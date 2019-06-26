@@ -20,6 +20,7 @@ export class ReportComponent implements OnInit {
   assignment;
   assignmentData;
   reportData;
+  imagenes;
 
   constructor(private componentComms: ComponentsCommsService, private httpRequest: HttpRequestsService, private router: Router, private idb: SaveIDBService, private isOnline: OnlineStatusService) { }
 
@@ -231,6 +232,23 @@ export class ReportComponent implements OnInit {
     }
   }
 
+  // Para file input
+  changeFiles(event){
+    this.imagenes="";
+    var files = event.target.files; 
+    for (var i = 0; i < files.length; i++) {
+      var file = files[i];
+      var picReader = new FileReader();
+      picReader.addEventListener("load", (event:any) => {
+          var picFile = event.target;
+          this.imagenes = this.imagenes + String(picFile.result);
+      });
+      picReader.readAsDataURL(file);
+    }
+    let label = <HTMLLabelElement>document.getElementById('label-camara');
+    label.innerHTML = (files.length > 0)? '<i class="fas fa-paperclip"></i>  ' + files.length + ' archivos' : '<i class="fas fa-paperclip"></i> Elige archivos';
+  }
+
   crearReporte(){
     var nombreCliente = <HTMLInputElement> document.getElementById('NombreEmpresa');
     var NombreCliente = nombreCliente.value;
@@ -327,7 +345,8 @@ export class ReportComponent implements OnInit {
         'FirmaResponsableP' : imagencampoRP,
         'FirmaCliente' : imagencampoCli,
         'IdAsignacion' : this.assignment,
-        'FechaEnvio' : FechaCreacion
+        'FechaEnvio' : FechaCreacion,
+        'Adjuntos' : this.imagenes
     }
     return datos;
   }
