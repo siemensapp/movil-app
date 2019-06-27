@@ -52,25 +52,40 @@ export class AssignmentDetailsComponent implements OnInit {
     this.data = this.componentsComms.getDataAssignment();
     console.log('Data assignment: ', this.data);
     // VALIDACION - Se necesita el status de la asignacion para habilitar boton 
-    this.enableButton();
+    ///this.enableButton();
     
     this.mapCenter = [ parseFloat(this.data['CoordenadasSitio'].split(",")[0]), parseFloat(this.data['CoordenadasSitio'].split(",")[1]) ];
     this.siteMarker = [ parseFloat(this.data['CoordenadasSitio'].split(",")[0]), parseFloat(this.data['CoordenadasSitio'].split(",")[1]) ];
     this.componentsComms.setBackStatus(true);
     // this.hours = this.componentsComms.getHours();
-    window.onclick = function(event) {
-      if (!(<HTMLDivElement>event.target).matches('#plusBtn')) {
-        var dropdowns = document.getElementsByClassName("dropdown-content");
-        var i;
-        for (i = 0; i < dropdowns.length; i++) {
-          var openDropdown = dropdowns[i];
-          if (openDropdown.classList.contains('show')) {
-            openDropdown.classList.remove('show');
-          }
-        }
-      }
-    }
+    // window.onclick = function(event) {
+    //   if (!(<HTMLDivElement>event.target).matches('#plusBtn')) {
+    //     var dropdowns = document.getElementsByClassName("dropdown-content");
+    //     var i;
+    //     for (i = 0; i < dropdowns.length; i++) {
+    //       var openDropdown = dropdowns[i];
+    //       if (openDropdown.classList.contains('show')) {
+    //         openDropdown.classList.remove('show');
+    //       }
+    //     }
+    //   }
+    // }
 
+  }
+
+  translatePCFSV( PCFSV ) {
+    switch (PCFSV) {
+      case 'P':
+        return 'Preventivo planeado';
+      case 'C':
+        return 'Correctivo planeado';
+      case 'F':
+        return 'Pruebas FAT';
+      case 'S':
+        return 'Puesta en servicio';
+      case 'V':
+        return 'Soporte ventas';
+    }
   }
 
   writeReport(){
@@ -100,6 +115,16 @@ export class AssignmentDetailsComponent implements OnInit {
           Swal.fire( 'ERROR','No se pudo aceptar la asignación', 'error');
         }
     });
+  }
+
+  showMap( show ) {
+    let details = <HTMLElement>document.getElementById('details');
+    let mapContainer = <HTMLElement>document.getElementById('map-container');
+    if ( show ) {
+      details.style.height = '0px';
+      // mapContainer.style.height = "30vh";
+    }
+
   }
 
   enableButton() {

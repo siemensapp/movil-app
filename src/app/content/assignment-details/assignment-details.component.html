@@ -1,19 +1,48 @@
+<div id="details">
+  <div id="nombreSitio">{{data.NombreEmpresa}}</div><br>
+  <div class="info-under-title">
+    <div style="opacity: 0.4;">
+        {{data.NombrePlanta}}<br>
+        {{parseDate(data.FechaInicio.split("T")[0], data.FechaFin.split("T")[0]).split('-')[0]}}
+        {{parseDate(data.FechaInicio.split("T")[0], data.FechaFin.split("T")[0]).split('-')[1]}}
+    </div>
+    <div style="display: flex; flex-direction: column; justify-items: right;">
+      <button class="accept-button">ACEPTAR</button>
+      <button class="decline-button">RECHAZAR</button>
+    </div>    
+  </div>
+  <div id="descripcion" class="underlined-title">Descripción<br></div>
+  <div class="contenido">{{data.Descripcion}}ghvjbkjbkjbnkjnljkblñkjbljkbjhbwedbñwqnh  wqd wqsd qwd ñiwqjd iqwjdoijidxjwoqijdoiwq jdoijqwoisdj iqwj o</div>
+  <div id="tipoTrabajo" class="info-under-title">Tipo : {{translatePCFSV(data.PCFSV)}}</div>
+  <div class="underlined-title">Contacto<br></div>
+  <div class="contenido">
+    {{data.NombreContacto}}<br>
+    {{data.EmailContacto}}<br>
+    {{data.TelefonoContacto}}
+  </div>
+  <div class="underlined-title">Ubicación<br></div>
+  <div class="contenido">
+    {{data.CiudadPlanta}}<br>
+    {{data.NombreSitio}}
+  </div>
+</div>
+
 <div id="map-container">
   <app-esri-map [center]="mapCenter" [basemap]="basemapType" [zoom]="mapZoomLevel" [siteMarker]="siteMarker"
     (mapLoadedEvent)="mapLoadedEvent($event)" id="mapa">
   </app-esri-map>
-  <div class="dropdown">
+  <!-- <div class="dropdown">
     <div id="plusBtn" (click)="writeReport()"><i class="fas fa-plus"></i></div>
 
     <div id="reportsMenu" class="dropdown-content">
       <a [routerLink]="['/home/report']">Crear Reporte Horas</a>
       <a>Crear Reporte Gastos</a>
     </div>
-  </div>
+  </div> -->
 </div>
 
-<div id="details">
-  <div id="nombreSitio">{{data.NombreSitio}}</div><br>
+
+<!-- <div id="nombreSitio">{{data.NombreSitio}}</div><br>
   <div id="descFechas">
     <div id="descripcion">Descripcion<br>
       <div id="contenidoDescripcion">{{data.Descripcion}}</div>
@@ -35,6 +64,7 @@
       </div>
     </div>
   </div>
+  <div class="showMapLink" (click)="showMap(true)" ><i class="fas fa-plus"></i> Ver ubicación en el mapa</div>
   <hr>
   <div id="ARTrabajo" *ngIf="data.StatusAsignacion==0; else empezar">
     <button id="acceptAssignment" (click)="aceptarServicio()">ACEPTAR SERVICIO</button>
@@ -53,5 +83,4 @@
   <ng-template #terminado>
     <label *ngIf="data.StatusAsignacion==3" id="finishedAssignment"><i class="fas fa-flag-checkered" style="color: green"></i> SERVICIO TERMINADO<i
         class="fas fa-flag-checkered" style="color: green"></i></label>
-  </ng-template>
-</div>
+  </ng-template> -->

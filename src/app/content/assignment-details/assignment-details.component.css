@@ -1,15 +1,22 @@
 #map-container {
-  height: 50vh;
+  height: 0;
   width: 100vw;
+  /* transition: height 1s ease-in; */
 }
 
 #details {
   border: none; 
-  position: relative;
-  bottom: 0%;
-  width: 99.3%;  
-  height: 45.3vh;
+  position: absolute;
+  top: 0;
+  width: 100%;
   background-color: white;
+  transition: height 1s ease-out;
+  margin-top: 10px;
+}
+
+#details div {
+  position: relative;
+  margin-left: 5px;
 }
 
 #plusBtn {
@@ -63,24 +70,34 @@
 
 #nombreSitio{
   font-family: Verdana, Geneva, Tahoma, sans-serif;
-  font-size: 40px;
+  font-size: 20px;
   font-weight: bold;
   text-align: left;
+  position: relative;
 }
 
 #descripcion{
-  font-family: Verdana, Geneva, Tahoma, sans-serif;
-  font-size: 20px;
-  font-weight: bold;
-  margin-left: 2%;
+  
 }
 
-#contenidoDescripcion{
-  margin-top: 1%;
+.underlined-title {
   font-family: Verdana, Geneva, Tahoma, sans-serif;
   font-size: 18px;
-  margin-bottom: 15%;
+  font-weight: bold;
   position: relative;
+  border-bottom: #2387aa 3px solid;
+  margin-left: 15px !important;
+  width: auto;
+}
+
+.contenido{
+  margin-left: 25px !important;
+  margin-bottom: 10px;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+  font-size: 16px;  
+  position: relative;
+  word-break: break-all;
+  padding-right: 20px;
 }
 
 #descFechas{
@@ -104,6 +121,9 @@
   text-align: left;
   font-size: 14px;
   font-weight: normal;
+  word-break: break-all;
+  margin-top: 10px;
+  padding-right: 20px;
 }
 
 #barra{
@@ -118,11 +138,33 @@
   flex-direction: row;
 }
 
-#valorFechas{
+.info-under-title{
   font-family: Verdana, Geneva, Tahoma, sans-serif;
-  margin-left: 6%;
-  margin-top: 4%;
-  font-size: 26px;
+  display: flex;
+  flex-direction: row;
+  font-size: 14px; 
+  height: auto;
+  margin-bottom: 10px;
+}
+
+.info-under-title button {
+  color: white;
+  text-transform: uppercase;
+  border: none;
+  opacity: 0.9;
+}
+
+.info-under-title .accept-button {
+  background-color: green;
+}
+
+.info-under-title .decline-button {
+  background-color: red;
+}
+
+#tipoTrabajo {
+  margin: 10px 0 10px 20px !important;
+  opacity: 0.4;
 }
 
 #contacto{
@@ -214,4 +256,12 @@
   height: 5vh;
   font-family: Verdana, Geneva, Tahoma, sans-serif;
   font-size: 24px;
+}
+
+/* Añadir link */
+.showMapLink {
+  text-decoration: none;
+  color: #0077FF;
+  margin: auto;
+  
 }
