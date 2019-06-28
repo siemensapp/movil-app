@@ -6,6 +6,7 @@ import { url } from '../../../assets/js/variables';
 import Swal from 'sweetalert2'; 
 import { Router } from '@angular/router';
 import { SaveIDBService } from '../../save-idb.service';
+import { map } from 'rxjs-compat/operator/map';
 
 
 @Component({
@@ -25,8 +26,30 @@ export class AssignmentDetailsComponent implements OnInit {
   // Status asignacion
   statusAsignacion;
 
-  // Hour table
-  // hours = null;
+  mapOpen;
+  mapOpenedBefore = false;
+
+  constructor(private componentsComms: ComponentsCommsService, private httpRequests: HttpRequestsService, private router: Router, private saveIDB: SaveIDBService) { }
+
+  ngOnInit() {
+    // Suscribir a boton derecho de navbar
+    this.componentsComms.rightNavBtn.subscribe(mapOpen => {
+      this.mapOpen = mapOpen;
+      this.showMap(this.mapOpen);
+      console.log('is map open :', this.mapOpen);
+    });
+
+    this.componentsComms.getCurrentCords(false + '');
+    this.saveIDB.createOrSaveReport();
+    
+    // Carga los detalles de la asignacion 
+    this.data = this.componentsComms.getDataAssignment();
+    console.log('Data assignment: ', this.data);
+    // VALIDACION - Se necesita el status de la asignacion para habilitar boton     
+    this.mapCenter = [ parseFloat(this.data['CoordenadasSitio'].split(",")[0]), parseFloat(this.data['CoordenadasSitio'].split(",")[1]) ];
+    this.siteMarker = [ parseFloat(this.data['CoordenadasSitio'].split(",")[0]), parseFloat(this.data['CoordenadasSitio'].split(",")[1]) ];
+    this.componentsComms.setBackStatus(true);
+  }
 
   // See app.component.html
   mapLoadedEvent(status: boolean) {
@@ -34,7 +57,7 @@ export class AssignmentDetailsComponent implements OnInit {
   }
 
   parseDate(date1, date2) {
-    const meses = ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'];
+    const meses = ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sept', 'Oct', 'Nov', 'Dic'];
     const dateOne = new Date(date1);
     const dateTwo = new Date(date2);
     let sameYearDates = String(meses[dateOne.getMonth()] + ' ' + (dateOne.getDate()+1) + ' - ' + meses[dateTwo.getMonth()] + ' ' + (dateTwo.getDate()+1));
@@ -42,36 +65,6 @@ export class AssignmentDetailsComponent implements OnInit {
     return ( dateOne.getFullYear() == dateTwo.getFullYear() ) ? sameYearDates: diffYearDates; 
   }
 
-  constructor(private componentsComms: ComponentsCommsService, private httpRequests: HttpRequestsService, private router: Router, private saveIDB: SaveIDBService) { }
-
-  ngOnInit() {
-    this.componentsComms.getCurrentCords(false+'');
-    this.saveIDB.createOrSaveReport();
-    
-    // Carga los detalles de la asignacion 
-    this.data = this.componentsComms.getDataAssignment();
-    console.log('Data assignment: ', this.data);
-    // VALIDACION - Se necesita el status de la asignacion para habilitar boton 
-    ///this.enableButton();
-    
-    this.mapCenter = [ parseFloat(this.data['CoordenadasSitio'].split(",")[0]), parseFloat(this.data['CoordenadasSitio'].split(",")[1]) ];
-    this.siteMarker = [ parseFloat(this.data['CoordenadasSitio'].split(",")[0]), parseFloat(this.data['CoordenadasSitio'].split(",")[1]) ];
-    this.componentsComms.setBackStatus(true);
-    // this.hours = this.componentsComms.getHours();
-    // window.onclick = function(event) {
-    //   if (!(<HTMLDivElement>event.target).matches('#plusBtn')) {
-    //     var dropdowns = document.getElementsByClassName("dropdown-content");
-    //     var i;
-    //     for (i = 0; i < dropdowns.length; i++) {
-    //       var openDropdown = dropdowns[i];
-    //       if (openDropdown.classList.contains('show')) {
-    //         openDropdown.classList.remove('show');
-    //       }
-    //     }
-    //   }
-    // }
-
-  }
 
   translatePCFSV( PCFSV ) {
     switch (PCFSV) {
@@ -108,8 +101,7 @@ export class AssignmentDetailsComponent implements OnInit {
     this.httpRequests.postData(url + '/api/updateTimeStamps', JSON.stringify(datos)).then((res) => {
         if(res !== "Error en la base de datos"){
 
-          // Habilitación boton de creacion de reporte
-          this.enableButton();
+          Swal.fire('Servicio aceptado', '', 'success');
         }
         else{
           Swal.fire( 'ERROR','No se pudo aceptar la asignación', 'error');
@@ -120,24 +112,12 @@ export class AssignmentDetailsComponent implements OnInit {
   showMap( show ) {
     let details = <HTMLElement>document.getElementById('details');
     let mapContainer = <HTMLElement>document.getElementById('map-container');
-    if ( show ) {
-      details.style.height = '0px';
-      // mapContainer.style.height = "30vh";
+    if ( show ) {      
+      mapContainer.style.transform = "translatex(100vw)";
+    } else {
+      mapContainer.style.transform = "translatex(-100vw)";
     }
 
-  }
-
-  enableButton() {
-    var plusBtn = <HTMLElement>document.getElementById('plusBtn');
-    if (this.data['StatusAsignacion'] == 1 || this.data['StatusAsignacion'] == 2) {      
-      plusBtn.style.height = "60px";
-      plusBtn.style.width = "60px";
-      plusBtn.style.fontSize = "1.5rem";
-    } else if (this.data['StatusAsignacion'] == 3) {
-      plusBtn.style.height = "0";
-      plusBtn.style.width = "0";
-      plusBtn.style.fontSize = "0";
-    }
   }
 
   empezarAsignacion(){
@@ -164,14 +144,9 @@ export class AssignmentDetailsComponent implements OnInit {
     this.httpRequests.postData(url + '/api/updateTimeStamps', JSON.stringify(datos)).then((res) => {
         if(res !== "Error en la base de datos"){
           Swal.fire('Asignacion Empezada', timeStampInicio, 'success')
-          this.enableButton();  
-          // this.router.navigate(['home/list']);
         }
         else{
-          Swal.fire(
-            'ERROR',
-            'No se pudo empezar la asignación',
-            'error');
+          Swal.fire('ERROR', 'No se pudo empezar la asignación','error');
         }
     });
   } 
@@ -200,14 +175,9 @@ export class AssignmentDetailsComponent implements OnInit {
   this.httpRequests.postData(url + '/api/updateTimeStamps', JSON.stringify(datos)).then((res) => {
     if(res !== "Error en la base de datos"){
       Swal.fire('Asignacion Terminada', timeStampFinal, 'success');
-       this.enableButton();
-        //this.router.navigate(['home/list']);
     }
     else{
-      Swal.fire(
-        'ERROR',
-        'No se pudo terminar la asignación',
-        'error');
+      Swal.fire('ERROR','No se pudo terminar la asignación','error');
     }
     });
   }

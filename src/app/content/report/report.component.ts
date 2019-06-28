@@ -15,7 +15,7 @@ import {url} from '../../../assets/js/variables';
 export class ReportComponent implements OnInit {
   private allInputs = [ 'NombreEmpresa', 'NombreContacto', "NombreE", "NombreProyecto", 'NombreMarca', 'DenominacionInterna', 'NumeroProducto', 'NumeroSerial', 'CaracteristicasTecnicas', 'EstadoInicial'];
   private textAreas = [ 'descripcionAlcance', 'actividadesRealizadas', 'conclusionesRecomendaciones', 'repuestosSugeridos', 'actividadesPendientes' ];
-  private firmCanvas = [ 'campoEmisor', 'campoResponsableO', 'campoComerciante', 'campoResponsableP', 'campoCliente' ];
+  private firmCanvas = [ 'campoEmisor', 'campoCliente' ];
   hours;
   assignment;
   assignmentData;

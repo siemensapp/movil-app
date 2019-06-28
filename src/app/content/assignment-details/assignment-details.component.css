@@ -1,17 +1,25 @@
 #map-container {
-  height: 0;
+  height: 100vh;
   width: 100vw;
-  /* transition: height 1s ease-in; */
+  position: absolute;
+  left: -100vw;
+  z-index: 1;
+  transition-duration: 0.5s ;
 }
 
 #details {
+  display: flex;
+  flex-direction: column;
   border: none; 
-  position: absolute;
   top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
   width: 100%;
   background-color: white;
   transition: height 1s ease-out;
   margin-top: 10px;
+  z-index: 3;
 }
 
 #details div {
@@ -19,53 +27,11 @@
   margin-left: 5px;
 }
 
-#plusBtn {
-  /* width: 60px;
-  height: 60px; */
-  width: 0;
-  height: 0;
-  border-radius: 50%;
-  position: absolute;
-  background-color: #2387aa;
-  color: white;
-  font-size: 0;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  top: 47vh;
-  right: 25px;
-  transition: 0.6s;
-  z-index: 1;
-  box-shadow: 1px 3px 5px -1px rgba(0,0,0,0.75);
-
-  transition: width 0.3s linear, height 0.3s linear, font-size 0.3s linear;
-}
-
-
-.dropdown-content {
-  display: none;
-  position: relative;
-  margin-left: 70%;
-  margin-top: 4%;
-  width: 28%;
-  background-color: lightgray;
-  overflow: auto;
-  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
-  z-index: 1;
-}
-.dropdown-content a {
-  color: black;
-  padding: 12px 16px;
-  text-decoration: none;
-  display: block;
-  font-size: 18px;
-}
-
-
-
 .show {
   display: block;
 }
+
+
 
 
 #nombreSitio{
@@ -76,19 +42,28 @@
   position: relative;
 }
 
-#descripcion{
-  
-}
-
 .underlined-title {
+  display: inline-block;
+  flex-direction: column;
   font-family: Verdana, Geneva, Tahoma, sans-serif;
   font-size: 18px;
   font-weight: bold;
   position: relative;
-  border-bottom: #2387aa 3px solid;
   margin-left: 15px !important;
   width: auto;
+
+  border-bottom: #2387aa 2px solid;
 }
+
+.ut-title {
+  border-bottom: #2387aa 2px solid;
+}
+
+.ut-underline {
+  border-bottom: #2387aa 2px solid;  
+}
+
+
 
 .contenido{
   margin-left: 25px !important;
@@ -96,7 +71,7 @@
   font-family: Verdana, Geneva, Tahoma, sans-serif;
   font-size: 16px;  
   position: relative;
-  word-break: break-all;
+  word-wrap: break-word;
   padding-right: 20px;
 }
 
@@ -112,9 +87,6 @@
   opacity: 0.4;
 }
 
-#descripcion{
-  width: 50%;
-}
 
 #contenidoDescripcion{  
   font-family: Verdana, Geneva, Tahoma, sans-serif;
@@ -144,26 +116,53 @@
   flex-direction: row;
   font-size: 14px; 
   height: auto;
-  margin-bottom: 10px;
+  margin: 10px 15px !important;
 }
 
-.info-under-title button {
-  color: white;
+.info-under-title div {
+  width: 50%;
+}
+
+.accept-decline-space {
+  display: flex;
+  flex-direction: row-reverse;
+  margin-bottom: 15px;
+}
+
+.solid-background-btn {
   text-transform: uppercase;
   border: none;
-  opacity: 0.9;
+  padding: 10px;
+  font-weight: 700; 
+  border-radius: 3px;
 }
 
-.info-under-title .accept-button {
-  background-color: green;
+
+.accept-button {
+  color: white;
+  background-color: #2387aa;
+  margin-right: 10px;  
 }
 
-.info-under-title .decline-button {
-  background-color: red;
+.decline-button {
+  background-color: white;
+  color: #2387aa;
+}
+
+.iniciar-button {
+  color: white;
+  background-color: rgb(5, 160, 5);
+  margin: auto;
+}
+
+.terminar-button {
+  color: white;
+  background-color: rgb(218, 9, 9);
+  margin: auto;
 }
 
 #tipoTrabajo {
-  margin: 10px 0 10px 20px !important;
+  margin: 10px 0 10px 25px !important;
   opacity: 0.4;
 }
 
@@ -203,60 +202,6 @@
   flex-direction: row;
 }
 
-#acceptAssignment{
-  margin-top: 5%;
-  margin-left: 15%;
-  display: block;
-  width: 30%;
-  height: 5vh;
-  background-color: lightblue;
-  border: 2px ridge gray;
-  border-radius: 5px;
-}
-
-#refuseAssignment{
-  margin-top: 5%;
-  margin-left: 10%;
-  display: block;
-  width: 30%;
-  height: 5vh;
-  background-color: white;
-  border: 2px ridge gray;
-  border-radius: 5px;
-}
-
-#startAssignment{
-  margin-top: 5%;
-  margin-left: 25%;
-  display: block;
-  width: 50%;
-  height: 5vh;
-  background-color: whitesmoke;
-  border: 2px ridge gray;
-  border-radius: 20px;
-}
-
-#endAssignment{
-  margin-top: 5%;
-  margin-left: 25%;
-  display: block;
-  width: 50%;
-  height: 5vh;
-  background-color: #006486;
-  border: 2px ridge #006486;
-  border-radius: 20px;
-  color: white;
-}
-
-#finishedAssignment{
-  margin-top: 5%;
-  display: block;
-  text-align: center;
-  width: 100%;
-  height: 5vh;
-  font-family: Verdana, Geneva, Tahoma, sans-serif;
-  font-size: 24px;
-}
 
 /* Añadir link */
 .showMapLink {
@@ -264,4 +209,23 @@
   color: #0077FF;
   margin: auto;
   
+}
+
+/* Boton de reporte*/
+.report-hover-button {
+  position: sticky;
+  bottom: 20px;
+  max-width: 50%;
+  margin: 10px auto;
+  justify-content: center;
+  display: flex;
+  
+  padding: 15px 25px;
+  text-transform: uppercase;
+  border: none;
+  border-radius: 50px;
+  color: white;
+  font-weight: 600;
+  background-color: #2387aa;
+  box-shadow: -1px 0px 6px 0px rgba(117,117,117,1);
 }

@@ -11,8 +11,8 @@ import { NgxMaterialTimepickerThemeDirective } from 'ngx-material-timepicker';
 export class SaveIDBService {
 
   private mobileDB;
-  private reportFields = [ 'NombreEmpresa', 'NombreContacto', "NombreE", "NombreProyecto", 'NombreMarca', 'DenominacionInterna', 'NumeroProducto', 'NumeroSerial', 'CaracteristicasTecnicas', 'EstadoInicial', 'descripcionAlcance', 'actividadesRealizadas', 'conclusionesRecomendaciones', 'repuestosSugeridos', 'actividadesPendientes', 'campoEmisor', 'campoResponsableO', 'campoComerciante', 'campoResponsableP', 'campoCliente' ];
-  private firmasFields = ['campoEmisor', 'campoResponsableO', 'campoComerciante', 'campoResponsableP', 'campoCliente'];
+  private reportFields = [ 'NombreEmpresa', 'NombreContacto', "NombreE", "NombreProyecto", 'NombreMarca', 'DenominacionInterna', 'NumeroProducto', 'NumeroSerial', 'CaracteristicasTecnicas', 'EstadoInicial', 'descripcionAlcance', 'actividadesRealizadas', 'conclusionesRecomendaciones', 'repuestosSugeridos', 'actividadesPendientes', 'campoEmisor', 'campoCliente' ];
+  private firmasFields = ['campoEmisor', 'campoCliente'];
 
   constructor(private isOnline: OnlineStatusService, private componentsComms: ComponentsCommsService) {
     this.createDatabase();

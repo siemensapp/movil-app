@@ -5,7 +5,6 @@ import {Location} from '@angular/common';
 import { ComponentsCommsService } from '../../components-comms.service';
 import 'rxjs/add/operator/filter';
 import  Swal  from 'sweetalert2';
-import { endTimeRange } from '@angular/core/src/profile/wtf_impl';
 
 @Component({
   selector: 'app-content-frame',
@@ -87,7 +86,9 @@ export class ContentFrameComponent implements OnInit {
             localStorage.removeItem('dateToChange');
           });  
       })
-
+    } else if (url.includes('details')) {
+        let mapOpen = this.componentComms.getDetailsMapStatus();
+        this.componentComms.setDetailsMapStatus( !mapOpen );
     }
   }
 
@@ -98,6 +99,7 @@ export class ContentFrameComponent implements OnInit {
     var navbarbuttonright = document.getElementById('navbar-right-button');
     var title;
     var buttonicon;
+    var buttoniconright;
 
     if (url.includes('list')) {
       title = "Asignaciones";
@@ -108,7 +110,8 @@ export class ContentFrameComponent implements OnInit {
     else if (url.includes('details')) {
       title = "Detalles";
       buttonicon = "<i class='fas fa-arrow-left'></i>"
-      navbarbuttonright.style.display = "none";
+      buttoniconright = '<i class="fas fa-map-marked-alt"></i>'
+      navbarbuttonright.style.display = "inline";
     }
     else if (url.includes('report')) {
       title = "Reporte general";
@@ -118,11 +121,13 @@ export class ContentFrameComponent implements OnInit {
     else if (url.includes('hours')) {
       title = 'Hoja de horas';
       buttonicon = "<i class='fas fa-arrow-left'></i>"
+      buttoniconright = '<i class="fas fa-trash"></i>';
       navbarbuttonright.style.display = "inline";
       navbar.style.boxShadow = "none";
     }
     navbartitle.innerHTML = title;
     navbarbutton.innerHTML = buttonicon;
+    navbarbuttonright.innerHTML = buttoniconright;
   }
 
   subscribeRouteChanges() {

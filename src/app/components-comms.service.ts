@@ -10,6 +10,10 @@ export class ComponentsCommsService {
   private backSource = new BehaviorSubject(false);
   back = this.backSource.asObservable();
 
+  // Right navbar button
+  private rightNavBtnSource = new BehaviorSubject(false);
+  rightNavBtn = this.rightNavBtnSource.asObservable();
+
   // Hoja horas
   private hoursSource = new BehaviorSubject([]);
   hours = this.hoursSource.asObservable();
@@ -18,7 +22,16 @@ export class ComponentsCommsService {
   private startSource = new BehaviorSubject('');
   start = this.startSource.asObservable();
 
-  
+  // Para abrir y cerrar el mapa en assignment-details
+  setDetailsMapStatus( data:boolean ) {
+    this.rightNavBtnSource.next(data);
+  }
+
+  getDetailsMapStatus() {
+    return this.rightNavBtn['source']['value'];
+  }
+
+
   // Dice si usar back button
   setBackStatus( data: boolean ) {
     this.backSource.next(data);
