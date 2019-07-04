@@ -141,14 +141,7 @@ export class AddHoursComponent implements OnInit {
               localStorage.removeItem('dateToChange');
             });
     }
-   
-    
-
-    
-
-  
     
   }
-
 
 }

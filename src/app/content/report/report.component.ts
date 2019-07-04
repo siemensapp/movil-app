@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ComponentsCommsService } from '../../components-comms.service';
 import { HttpRequestsService } from 'src/app/http-requests.service';
 import { OnlineStatusService } from '../../online-status.service';
@@ -12,7 +12,7 @@ import {url} from '../../../assets/js/variables';
   templateUrl: './report.component.html',
   styleUrls: ['./report.component.css']
 })
-export class ReportComponent implements OnInit {
+export class ReportComponent implements OnInit, OnDestroy {
   private allInputs = [ 'NombreEmpresa', 'NombreContacto', "NombreE", "NombreProyecto", 'NombreMarca', 'DenominacionInterna', 'NumeroProducto', 'NumeroSerial', 'CaracteristicasTecnicas', 'EstadoInicial'];
   private textAreas = [ 'descripcionAlcance', 'actividadesRealizadas', 'conclusionesRecomendaciones', 'repuestosSugeridos', 'actividadesPendientes' ];
   private firmCanvas = [ 'campoEmisor', 'campoCliente' ];
@@ -23,6 +23,10 @@ export class ReportComponent implements OnInit {
   imagenes;
 
   constructor(private componentComms: ComponentsCommsService, private httpRequest: HttpRequestsService, private router: Router, private idb: SaveIDBService, private isOnline: OnlineStatusService) { }
+
+  ngOnDestroy() {
+    
+  }
 
   ngOnInit() {
     

@@ -125,6 +125,8 @@ body {
   background-color: #ebf0f5;
   outline: none;  
   margin-right: 20px;
+  border-radius: 50px;
+  padding: 6px;
 }
 
 /* #navbar-button i {

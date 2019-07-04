@@ -50,8 +50,9 @@ export class ContentFrameComponent implements OnInit {
   menuFunction() {
     if (this.componentComms.getBackStatus()) {
       let url = window.location.href;
-      if (url.includes('details')) this.router.navigate(['home/list']);
-      else if (url.includes('report')) this.router.navigate(['home/details']);
+      if (url.includes('details')) this.router.navigate(['home/assignments-list']);
+      else if (url.includes('reports-list')) this.router.navigate(['home/details']);
+      else if (url.includes('report')) this.router.navigate(['home/reports-list']);
       else if (url.includes('hours')) this.router.navigate(['home/report']);
     } else this.openSource.next(true);
   }
@@ -87,8 +88,10 @@ export class ContentFrameComponent implements OnInit {
           });  
       })
     } else if (url.includes('details')) {
+        let navbarbuttonright = document.getElementById('navbar-right-button');
         let mapOpen = this.componentComms.getDetailsMapStatus();
         this.componentComms.setDetailsMapStatus( !mapOpen );
+        navbarbuttonright.style.outline = (!mapOpen)? "solid 1px black" : "none";
     }
   }
 
@@ -101,7 +104,7 @@ export class ContentFrameComponent implements OnInit {
     var buttonicon;
     var buttoniconright;
 
-    if (url.includes('list')) {
+    if (url.includes('assignments-list')) {
       title = "Asignaciones";
       buttonicon = "<i class='fas fa-bars'></i>";
       navbarbuttonright.style.display = "none";
@@ -113,11 +116,17 @@ export class ContentFrameComponent implements OnInit {
       buttoniconright = '<i class="fas fa-map-marked-alt"></i>'
       navbarbuttonright.style.display = "inline";
     }
-    else if (url.includes('report')) {
-      title = "Reporte general";
+    else if (url.includes('reports-list')) {
+      title = "Reportes";
       buttonicon = "<i class='fas fa-arrow-left'></i>"
       navbarbuttonright.style.display = "none";
     }
+    else if (url.includes('report')) {
+      title = "Reporte general";
+      buttonicon = "<i class='fas fa-arrow-left'></i>"
+      buttoniconright = '<i class="fas fa-file-upload"></i>';
+      navbarbuttonright.style.display = "inline";
+    }    
     else if (url.includes('hours')) {
       title = 'Hoja de horas';
       buttonicon = "<i class='fas fa-arrow-left'></i>"

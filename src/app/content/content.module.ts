@@ -15,6 +15,7 @@ import { HttpClientModule  } from '@angular/common/http';
 import { ServiceWorkerModule } from '@angular/service-worker';
 import { environment } from 'src/environments/environment.prod';
 import { PushNotificationService } from '../pushService/push-notification.service';
+import { ReportsListComponent } from './reports-list/reports-list.component';
 
 
 export function tokenGetter() {
@@ -23,7 +24,7 @@ export function tokenGetter() {
 
 
 @NgModule({
-  declarations: [AssignmentListComponent, ContentFrameComponent, AssignmentDetailsComponent, EsriMapComponent, ReportComponent, AddHoursComponent],
+  declarations: [AssignmentListComponent, ContentFrameComponent, AssignmentDetailsComponent, EsriMapComponent, ReportComponent, AddHoursComponent, ReportsListComponent],
   imports: [
     JwtModule.forRoot({
       config: {

@@ -1,9 +1,10 @@
 #map-container {
   height: 100vh;
   width: 100vw;
-  position: absolute;
+  position: fixed;
+  top: 0;  
   left: -100vw;
-  z-index: 1;
+  z-index: 3;
   transition-duration: 0.5s ;
 }
 
@@ -19,7 +20,6 @@
   background-color: white;
   transition: height 1s ease-out;
   margin-top: 10px;
-  z-index: 3;
 }
 
 #details div {
@@ -52,15 +52,15 @@
   margin-left: 15px !important;
   width: auto;
 
-  border-bottom: #2387aa 2px solid;
+  border-bottom: #009999 2px solid;
 }
 
 .ut-title {
-  border-bottom: #2387aa 2px solid;
+  border-bottom: #009999 2px solid;
 }
 
 .ut-underline {
-  border-bottom: #2387aa 2px solid;  
+  border-bottom: #009999 2px solid;  
 }
 
 
@@ -140,13 +140,13 @@
 
 .accept-button {
   color: white;
-  background-color: #2387aa;
+  background-color: #009999;
   margin-right: 10px;  
 }
 
 .decline-button {
   background-color: white;
-  color: #2387aa;
+  color: #009999;
 }
 
 .iniciar-button {
@@ -226,6 +226,6 @@
   border-radius: 50px;
   color: white;
   font-weight: 600;
-  background-color: #2387aa;
+  background-color: #009999;
   box-shadow: -1px 0px 6px 0px rgba(117,117,117,1);
 }

@@ -1,0 +1,118 @@
+/* Loading Spinner */
+
+.lds-dual-ring {
+    display: flex;
+    width: 64px;
+    height: 64px;
+    margin: auto;
+  }
+  
+  .lds-dual-ring:after {
+    content: " ";
+    display: block;
+    width: 46px;
+    height: 46px;
+    margin: 1px;
+    border-radius: 50%;
+    border: 5px solid #1865e0;
+    border-color: #1865e0 transparent #1865e0 transparent;
+    animation: lds-dual-ring 1.2s linear infinite;
+  }
+  
+  @keyframes lds-dual-ring {
+    0% {
+      transform: rotate(0deg);
+    }
+  
+    100% {
+      transform: rotate(360deg);
+    }
+  }
+
+/* Propias del componente */
+.container {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+}
+/* .plus-hover-btn {
+    width: 60px;
+    height: 60px;
+    border: none;
+    border-radius: 50%;
+    position: fixed;
+    background-color: #2387aa;
+    color: white;
+    font-size: 1.5rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    bottom: 20px;
+    right: 20px;
+    z-index: 8;
+    outline: none;
+    box-shadow: 1px 3px 5px -1px rgba(0,0,0,0.75);
+} */
+
+.report-hover-button {
+    position: sticky;
+    bottom: 20px;
+    max-width: 50%;
+    margin: 10px auto;
+    
+    justify-content: center;
+    display: flex;
+    
+    padding: 15px 25px;
+    text-transform: uppercase;
+    border: none;
+    border-radius: 50px;
+    color: white;
+    font-weight: 600;
+    background-color: #009999;
+    box-shadow: -1px 0px 6px 0px rgba(117,117,117,1);
+  }
+
+.taskPreview {    
+    width: 100%;
+    background-color: inherit;    
+    position: relative;
+    transition: 0.3s;        
+    line-height: 20px;
+    background-color: white;
+    box-shadow: 1px 3px 5px -2px rgba(0,0,0,0.75);
+    margin: 50px auto;
+}
+
+/* No results */
+.no-results-img {
+    width: 40%;
+    margin: auto;
+    text-align: center;
+    color: lightgray;
+}
+
+.no-results-img img {
+    width: 100%;
+}
+
+@media (max-width: 500px) {
+    .gray-bar {
+      width: 100vw;
+      overflow-x: hidden;
+    }
+    .taskPreview {
+      width: 90vw;
+      
+    }
+  }
+  
+  @media (min-width: 501px) {
+    .main-content {
+      justify-content: center;
+    }
+    .taskPreview {
+      width: 60vw;
+      margin: 5px 0;
+    }
+  }

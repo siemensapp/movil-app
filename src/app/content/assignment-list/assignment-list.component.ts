@@ -6,7 +6,8 @@ import { Subject } from 'rxjs';
 import { url } from '../../../assets/js/variables';
 import { SwPush } from '@angular/service-worker';
 import { PushNotificationService } from '../../pushService/push-notification.service';
-import { AnimationGroupPlayer } from '@angular/animations/src/players/animation_group_player';
+import { SaveIDBService } from '../../save-idb.service';
+import { OnlineStatusService } from 'src/app/online-status.service';
 
 
 @Component({
@@ -21,7 +22,7 @@ export class AssignmentListComponent implements OnInit {
   private VAPID_PUBLIC = "BEwOkuB14wZmYFcToortGXoFqc6HO_aXhhn_3mOU-h8B9x_z92pZ_WUpCExXt0cbCo61F1mJZ_D_vRgncaHvbSs";
 
 
-  constructor(private http: HttpRequestsService, private componentsComms: ComponentsCommsService, private router: Router, private swPush: SwPush, private pushService: PushNotificationService) { }
+  constructor(private http: HttpRequestsService, private componentsComms: ComponentsCommsService, private router: Router, private swPush: SwPush, private pushService: PushNotificationService, private idb: SaveIDBService, private isOnline: OnlineStatusService) { }
 
   ngOnInit() {
     this.notificationsCheck();
@@ -115,10 +116,26 @@ export class AssignmentListComponent implements OnInit {
 
   getData() {
     this.user = localStorage.getItem('user');
-    this.http.getData(url + "/api/getWorkerAssignments/" + this.user).then( result =>{
-      console.log(result);
-      this.loadingData.next(result);
-    });     
+
+    this.isOnline.connectionExists().then( status => {
+      if ( status ) {
+        console.log('Online :)');
+        this.http.getData(url + "/api/getWorkerAssignments/" + this.user).then( result =>{
+          console.log(result);
+          this.idb.saveAssignmentsLocally(result);
+          this.loadingData.next(result);
+        });     
+      } else {
+        console.log('Offline :(');
+        this.idb.getAllAssignments().then( result => {
+          console.log(result);
+          this.loadingData.next(result);
+        })
+      }
+    })
+
+
+    
   }
 
   showAssignments(evt, status) {
@@ -135,7 +152,4 @@ export class AssignmentListComponent implements OnInit {
     evt.currentTarget.className += " active";
 
   }
-
-  
-
 }

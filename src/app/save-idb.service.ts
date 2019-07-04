@@ -1,9 +1,7 @@
 import { Injectable } from '@angular/core';
 import { ComponentsCommsService } from './components-comms.service';
-import { OnlineStatusService } from './online-status.service';
 import Dexie from 'dexie';
 import Swal from 'sweetalert2';
-import { NgxMaterialTimepickerThemeDirective } from 'ngx-material-timepicker';
 
 @Injectable({
   providedIn: 'root'
@@ -14,7 +12,7 @@ export class SaveIDBService {
   private reportFields = [ 'NombreEmpresa', 'NombreContacto', "NombreE", "NombreProyecto", 'NombreMarca', 'DenominacionInterna', 'NumeroProducto', 'NumeroSerial', 'CaracteristicasTecnicas', 'EstadoInicial', 'descripcionAlcance', 'actividadesRealizadas', 'conclusionesRecomendaciones', 'repuestosSugeridos', 'actividadesPendientes', 'campoEmisor', 'campoCliente' ];
   private firmasFields = ['campoEmisor', 'campoCliente'];
 
-  constructor(private isOnline: OnlineStatusService, private componentsComms: ComponentsCommsService) {
+  constructor(private componentsComms: ComponentsCommsService) {
     this.createDatabase();
   }
 
@@ -37,6 +35,21 @@ export class SaveIDBService {
     return String(idEmpresa + '-' + tecnica + '-' + fecha );
   }
 
+  newConsecutivo( assignment ) {
+    /**
+     * Consecutivo para guardar localmente antes de enviar
+     * 
+     * return IdEmpresa + IdTecnica + FechaInicio
+     */
+    let assignmentData = assignment;
+    let fechaCompleta = assignmentData['FechaInicio'].split("T")[0];
+    let idEmpresa = assignmentData['IdEmpresa'];
+    let tecnica = assignmentData['IdTecnica'];
+
+    let fechaAux = fechaCompleta.split("-");
+    let fecha = String(fechaAux[0] + fechaAux[1] + fechaAux[2]);
+    return String(idEmpresa + '-' + tecnica + '-' + fecha );
+  }
   
   createOrSaveReport() {
     /**
@@ -104,11 +117,30 @@ export class SaveIDBService {
   /**
    * Indexed DB
    */
+  
+  // Creates 2 DB's : reports and assignments
   createDatabase() {
+    console.log('Creating IDB database');
     this.mobileDB = new Dexie('mobileDB');
     this.mobileDB.version(1).stores({
-      reports: '&Consecutivo'
+      reports: '&Consecutivo',
+      assignments: '&Consecutivo'
     });
+  }
+
+  // Save assignments in bulk when getting data for assigments-list
+  saveAssignmentsLocally( list ) {
+    var records = [];
+    for( let assignment of list ) {
+      assignment['Consecutivo'] = this.newConsecutivo(assignment);
+      records.push(assignment);
+    }
+    console.log('Before saving assignments locally ...', records)
+    this.mobileDB.assignments.bulkPut(records).then(() => {
+      console.log('saveAssignmentsLocally: Asignaciones guardadas exitosamente');
+    }).catch(Dexie.BulkError, (e) => {
+      console.log('saveAssignmentsLocally: No todas se guardaron, solo ' + list.length + ' lo lograron.');
+    })
   }
 
   saveReport( report ) {
@@ -138,8 +170,12 @@ export class SaveIDBService {
     return this.mobileDB.reports.get(consecutivo);
   }
 
-  getAllReports() {
-    return this.mobileDB.reports.toArray();
+  getAllReports( consecutivo ) {
+    return this.mobileDB.reports.where('Consecutivo').startsWith(consecutivo).toArray();
+  }
+
+  getAllAssignments() {
+    return this.mobileDB.assignments.toArray();
   }
 
 }
