@@ -118,6 +118,7 @@ export class SaveIDBService {
     })
   }
 
+  // Guardar reporte por primera vez en IDB
   createReportIDB(newReport) {
     this.mobileDB.reports.put(newReport).then(() => {
       Swal.fire('Reporte creado', 'Guardado localmente', 'success');
@@ -135,7 +136,7 @@ export class SaveIDBService {
   saveReportHidden(report) {
     this.mobileDB.reports.put(report)
       .then(() => {
-        console.log('saved report');
+        console.log('Reporte actualizado!');
       })
   }
 

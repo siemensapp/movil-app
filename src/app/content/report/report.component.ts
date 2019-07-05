@@ -25,8 +25,13 @@ export class ReportComponent implements OnInit, OnDestroy {
   constructor(private componentComms: ComponentsCommsService, private httpRequest: HttpRequestsService, private router: Router, private idb: SaveIDBService, private isOnline: OnlineStatusService) { }
 
   ngOnDestroy() {
+    var report = this.crearReporte("LS");
     if(window.location.href.includes('reports-list')) {
+      this.idb.saveReportHidden(report);
       this.emptyLS();
+    } else {
+      for(let field of Object.keys(report)) localStorage.setItem(field, (field === 'hours')?JSON.stringify(report[field]): report[field])
+      console.log('Changed report!');
     }
   }
 
@@ -247,7 +252,7 @@ export class ReportComponent implements OnInit, OnDestroy {
     label.innerHTML = (files.length > 0)? '<i class="fas fa-paperclip"></i>  ' + files.length + ' archivos' : '<i class="fas fa-paperclip"></i> Elige archivos';
   }
 
-  crearReporte(){
+  crearReporte( tipo ){
     var nombreCliente = <HTMLInputElement> document.getElementById('NombreEmpresa');
     var NombreCliente = nombreCliente.value;
 
@@ -329,15 +334,33 @@ export class ReportComponent implements OnInit, OnDestroy {
         'RepuestosSugeridos' : RepuestosSugeridos,
         'ActividadesPendientes' : ActividadesPendientes,
         'FirmaEmisor' : imagencampoE,
-        'FirmaResponsableO' : imagencampoRO,
-        'FirmaComerciante' : imagencampoCo,
-        'FirmaResponsableP' : imagencampoRP,
         'FirmaCliente' : imagencampoCli,
         'IdAsignacion' : this.assignment,
         'FechaEnvio' : FechaCreacion,
         'Adjuntos' : this.imagenes
     }
-    return datos;
+
+    var saveIDB = {
+        'NombreEmpresa' : NombreCliente,
+        'NombreContacto' : NombreContacto,
+        'NombreE' : NombreColaborador,
+        'NombreProyecto' : NombreProyecto,
+        'descripcionAlcance' : DescripcionAlcance,
+        'hours' : hojaTiempo,
+        'NombreMarca' : Marca,
+        'DenominacionInterna' : DenominacionInterna,
+        'NumeroProducto' : NumeroProducto,
+        'NumeroSerial' : NumeroSerial,
+        'CaracteristicasTecnicas' : CaracteristicasTecnicas,
+        'EstadoInicial' : EstadoInicial,
+        'actividadesRealizadas' : ActividadesRealizadas,
+        'conclusionesRecomendaciones' : ConclusionesRecomendaciones,
+        'repuestosSugeridos' : RepuestosSugeridos,
+        'actividadesPendientes' : ActividadesPendientes,
+        'campoEmisor' : imagencampoE,
+        'campoCliente' : imagencampoCli
+    }
+    return (tipo === "LS")? saveIDB : datos;
   }
 
   nuevoConsecutivo() {
@@ -359,7 +382,7 @@ export class ReportComponent implements OnInit, OnDestroy {
 
   subirReporte() {
     this.isOnline.connectionExists().then( online => {
-      let reporte = this.crearReporte();
+      let reporte = this.crearReporte("enviar");
       (online)? this.enviarReporte(reporte) : this.guardarReporte(reporte);
     })    
   }
