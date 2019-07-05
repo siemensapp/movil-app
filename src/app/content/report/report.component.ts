@@ -381,7 +381,7 @@ export class ReportComponent implements OnInit, OnDestroy {
 
   guardarReporte( reporte ){
     this.idb.saveReport(reporte);
-    console.log('Reportes: \n', this.idb.getAllReports());
+    console.log('Reportes: \n', this.idb.getAllReports( this.idb.nuevoConsecutivo() ));
   }
 
   enviarReporte( reporte ) {

@@ -1,13 +1,22 @@
 <div class="container">
+  <div class="nombreEmpresa">{{nombreEmpresa}}</div>
+  <div class="consecutivo">{{consecutivo}}</div>
 
   <div class="main-content" *ngIf="loadingData | async as results; else loading">
     <div *ngIf="results.length; else emptyResults">
 
       <div *ngFor="let tasks of results">
-        <div (click)="goToDetails(tasks)" class="taskPreview">
-          {{tasks.Consecutivo}}<br>
-          Reporte General
-        </div>        
+        <div>
+          <div class="taskPreview" (click)="toggleDropdown($event)">
+              {{tasks.NombreReporte}}<br>
+              Reporte General<br>
+              {{tasks.Consecutivo}}
+              <div class="report-button" (click)="goToReport(tasks)"><i class="fas fa-angle-right"></i></div>
+          </div>
+          <div class="taskPreviewDropdown" (click)="deleteReport(tasks.Consecutivo)">
+              <i class="fas fa-trash-alt"></i> ELIMINAR
+          </div>  
+        </div>      
       </div>
 
     </div>
@@ -15,7 +24,7 @@
 
 
   <!-- <button class="plus-hover-btn"><i class="fas fa-plus"></i></button> -->
-  <button class="report-hover-button">crear reporte</button>
+  <button class="report-hover-button"(click)="crearReporte()">crear reporte</button>
 </div>
 
 

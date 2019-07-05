@@ -1,5 +1,9 @@
-import { Injectable } from '@angular/core';
-import { ComponentsCommsService } from './components-comms.service';
+import {
+  Injectable
+} from '@angular/core';
+import {
+  ComponentsCommsService
+} from './components-comms.service';
 import Dexie from 'dexie';
 import Swal from 'sweetalert2';
 
@@ -9,7 +13,7 @@ import Swal from 'sweetalert2';
 export class SaveIDBService {
 
   private mobileDB;
-  private reportFields = [ 'NombreEmpresa', 'NombreContacto', "NombreE", "NombreProyecto", 'NombreMarca', 'DenominacionInterna', 'NumeroProducto', 'NumeroSerial', 'CaracteristicasTecnicas', 'EstadoInicial', 'descripcionAlcance', 'actividadesRealizadas', 'conclusionesRecomendaciones', 'repuestosSugeridos', 'actividadesPendientes', 'campoEmisor', 'campoCliente' ];
+  private reportFields = ['NombreEmpresa', 'NombreContacto', "NombreE", "NombreProyecto", 'NombreMarca', 'DenominacionInterna', 'NumeroProducto', 'NumeroSerial', 'CaracteristicasTecnicas', 'EstadoInicial', 'descripcionAlcance', 'actividadesRealizadas', 'conclusionesRecomendaciones', 'repuestosSugeridos', 'actividadesPendientes', 'campoEmisor', 'campoCliente'];
   private firmasFields = ['campoEmisor', 'campoCliente'];
 
   constructor(private componentsComms: ComponentsCommsService) {
@@ -19,6 +23,8 @@ export class SaveIDBService {
   /**
    * LocalStorage
    */
+
+  // Crear consecutivo con asignacion actual
   nuevoConsecutivo() {
     /**
      * Consecutivo para guardar localmente antes de enviar
@@ -32,10 +38,11 @@ export class SaveIDBService {
 
     let fechaAux = fechaCompleta.split("-");
     let fecha = String(fechaAux[0] + fechaAux[1] + fechaAux[2]);
-    return String(idEmpresa + '-' + tecnica + '-' + fecha );
+    return String(idEmpresa + '-' + tecnica + '-' + fecha);
   }
 
-  newConsecutivo( assignment ) {
+  // Crear consecutivo con datos de una asignacion
+  newConsecutivo(assignment) {
     /**
      * Consecutivo para guardar localmente antes de enviar
      * 
@@ -48,76 +55,44 @@ export class SaveIDBService {
 
     let fechaAux = fechaCompleta.split("-");
     let fecha = String(fechaAux[0] + fechaAux[1] + fechaAux[2]);
-    return String(idEmpresa + '-' + tecnica + '-' + fecha );
+    return String(idEmpresa + '-' + tecnica + '-' + fecha);
   }
-  
-  createOrSaveReport() {
-    /**
-     * Si viene de 'list'
-     *    => Carga reporte de IDB, si no existe, lo crea
-     *    => Monta reporte en LS
-     * Si viene de 'report'
-     *    => Revisa campo firmas a ver si existen
-     *    Si existen
-     *      => los toma del reporte
-     *      => Si no, los crea ""
-     *    => Guarda report en IDB     
-    */
-    var lastURL = localStorage.getItem('lastURL');
-    if(lastURL.includes("list")) {
-      console.log("list")
-      this.getReport(this.nuevoConsecutivo()).then(result => {
-        if (result !== undefined) {
 
-          // Guarda reporte actualizado en LS 
-          localStorage.setItem(this.nuevoConsecutivo(), JSON.stringify(result)); 
-          console.log("Reporte existe - cargando a LS: ", result)
-          
-          // Carga de firmas a LS
-          console.log('Carga de firmas a LS')
-          for(let x of this.firmasFields) localStorage.setItem(x, result[x]);
+  // Crear nuevo reporte con datos de asignación actual
+  crearReporte(nombre, numeroReportes) {
+    let assignment = this.componentsComms.getDataAssignment();
 
-        } else {  
+    // Llena el reporte
+    let newReport = {
+      Consecutivo: (numeroReportes > 0) ? String(this.nuevoConsecutivo() + "-" + (numeroReportes + 1)) : this.nuevoConsecutivo(),
+      NombreReporte: nombre,
+      NombreEmpresa: assignment['NombreEmpresa'],
+      NombreE: this.componentsComms.getNameE(),
+      NombreMarca: 'SIEMENS',
+      descripcionAlcance: assignment['Descripcion'],
+      NombreContacto: assignment['NombreContacto'],
+      hours: {}
+    };
 
-          // Se crea nuevo reporte        
-          var report = { Consecutivo: this.nuevoConsecutivo(), hours: {}};
-          for( let x of this.reportFields) report[x] = "";
-  
-          // Local Storage
-          localStorage.setItem(this.nuevoConsecutivo(), JSON.stringify(report));
-  
-          // Indexed DB
-          this.saveReportHidden(report);
-          console.log('Reporte creado en IDB y LS: ', report);
+    for (let field of this.reportFields) {
+      if (!newReport.hasOwnProperty(field)) {
+        newReport[field] = "";
+      }
+    }
 
-          // Carga de firmas a LS
-          console.log('Carga de firmas a LS')
-          for(let x of this.firmasFields) localStorage.setItem(x, report[x]);
-        }
-      })
-    } else if (lastURL.includes("report")) {
-      var report = JSON.parse(localStorage.getItem(this.nuevoConsecutivo()));
+    return newReport;
+  }
 
-      // Actualiza el reporte con los nuevos cambios
-      for( let x of this.reportFields) report[x] = localStorage.getItem(x);
-      
-      // Carga las horas actualizadas en el reporte
-      report['hours'] = this.componentsComms.getHours();
-      console.log('report coming from report :', report);
-
-      // Lo carga en caso de entrar y volver a salir del reporte a los detalles
-      localStorage.setItem(this.nuevoConsecutivo(), JSON.stringify(report));
-
-      // Lo guarda en IDB
-      this.saveReportHidden(report);
+  loadReportLS(report) {
+    for (let field of Object.keys(report)) {
+      localStorage.setItem(field, report[field]);
     }
   }
-
 
   /**
    * Indexed DB
    */
-  
+
   // Creates 2 DB's : reports and assignments
   createDatabase() {
     console.log('Creating IDB database');
@@ -129,9 +104,9 @@ export class SaveIDBService {
   }
 
   // Save assignments in bulk when getting data for assigments-list
-  saveAssignmentsLocally( list ) {
+  saveAssignmentsLocally(list) {
     var records = [];
-    for( let assignment of list ) {
+    for (let assignment of list) {
       assignment['Consecutivo'] = this.newConsecutivo(assignment);
       records.push(assignment);
     }
@@ -143,7 +118,13 @@ export class SaveIDBService {
     })
   }
 
-  saveReport( report ) {
+  createReportIDB(newReport) {
+    this.mobileDB.reports.put(newReport).then(() => {
+      Swal.fire('Reporte creado', 'Guardado localmente', 'success');
+    })
+  }
+
+  saveReport(report) {
     Swal.showLoading()
     this.mobileDB.reports.put(report)
       .then(() => {
@@ -151,26 +132,39 @@ export class SaveIDBService {
       })
   }
 
-  saveReportHidden( report ) {
+  saveReportHidden(report) {
     this.mobileDB.reports.put(report)
       .then(() => {
         console.log('saved report');
       })
   }
 
-  deleteReport( consecutivo ) {
-    this.mobileDB.reports.delete(consecutivo)
-      .then(() => {
-        Swal.fire('Reporte eliminado', 'de la memoria local', 'success');
-      })
+  deleteReport(consecutivo) {
+    Swal.fire({
+      title: 'Estas seguro?',
+      text: `No podras recuperar el reporte ${consecutivo}`,
+      type: 'warning',
+      showCancelButton: true,
+      confirmButtonText: 'Borrar',
+      cancelButtonColor: '#d33'
+    }).then(result => {
+        if (result.value) {
+          //Swal.fire('Reporte eliminado', 'de la memoria local', 'success');
+          this.mobileDB.reports.delete(consecutivo)
+            .then(() => {
+              Swal.fire('Reporte eliminado', 'de la memoria local', 'success');
+            })
+        }
+    })
   }
 
-  getReport( consecutivo ) {
+
+  getReport(consecutivo) {
     // return this.mobileDB.reports.where({Consecutivo: consecutivo}).toArray();
     return this.mobileDB.reports.get(consecutivo);
   }
 
-  getAllReports( consecutivo ) {
+  getAllReports(consecutivo) {
     return this.mobileDB.reports.where('Consecutivo').startsWith(consecutivo).toArray();
   }
 

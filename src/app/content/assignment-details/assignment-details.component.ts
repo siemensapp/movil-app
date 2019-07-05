@@ -40,7 +40,6 @@ export class AssignmentDetailsComponent implements OnInit {
     });
 
     this.componentsComms.getCurrentCords(false + '');
-    this.saveIDB.createOrSaveReport();
     
     // Carga los detalles de la asignacion 
     this.data = this.componentsComms.getDataAssignment();

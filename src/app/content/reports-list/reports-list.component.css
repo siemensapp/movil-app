@@ -54,6 +54,22 @@
     box-shadow: 1px 3px 5px -1px rgba(0,0,0,0.75);
 } */
 
+.nombreEmpresa {
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+  font-size: 20px;
+  font-weight: bold;
+  text-align: center;
+  position: relative;
+  margin: 20px 0 0 0;
+}
+
+.consecutivo {
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+  opacity: 0.4;
+  text-align: center;
+  /* margin: 10px 15px !important; */
+}
+
 .report-hover-button {
     position: sticky;
     bottom: 20px;
@@ -73,7 +89,7 @@
     box-shadow: -1px 0px 6px 0px rgba(117,117,117,1);
   }
 
-.taskPreview {    
+.taskPreview, .taskPreviewDropdown {    
     width: 100%;
     background-color: inherit;    
     position: relative;
@@ -81,7 +97,29 @@
     line-height: 20px;
     background-color: white;
     box-shadow: 1px 3px 5px -2px rgba(0,0,0,0.75);
-    margin: 50px auto;
+    margin: 20px auto 0 auto;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    padding: 15px 0 15px 15px;
+    border: 1px solid lightslategray;
+}
+
+.taskPreviewDropdown {
+  margin: 0 auto;
+  justify-content: flex-start;
+  display: none;
+}
+
+.taskPreviewDropdown i {
+  margin-right: 10px;
+}
+
+
+.report-button {
+  align-self: center;
+  font-size: 20px;
+  padding: 15px;
 }
 
 /* No results */
@@ -101,7 +139,7 @@
       width: 100vw;
       overflow-x: hidden;
     }
-    .taskPreview {
+    .taskPreview, .taskPreviewDropdown {
       width: 90vw;
       
     }
@@ -111,8 +149,8 @@
     .main-content {
       justify-content: center;
     }
-    .taskPreview {
+    .taskPreview, .taskPreviewDropdown {
       width: 60vw;
-      margin: 5px 0;
+      margin: 20px auto;
     }
   }

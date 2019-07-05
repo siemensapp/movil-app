@@ -130,7 +130,7 @@ export class ContentFrameComponent implements OnInit {
     else if (url.includes('hours')) {
       title = 'Hoja de horas';
       buttonicon = "<i class='fas fa-arrow-left'></i>"
-      buttoniconright = '<i class="fas fa-trash"></i>';
+      buttoniconright = '<i class="fas fa-trash-alt"></i>';
       navbarbuttonright.style.display = "inline";
       navbar.style.boxShadow = "none";
     }
