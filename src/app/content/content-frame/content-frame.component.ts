@@ -1,7 +1,6 @@
 import {Component,OnInit} from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import { Router, NavigationEnd, Event } from '@angular/router';
-import {Location} from '@angular/common';
 import { ComponentsCommsService } from '../../components-comms.service';
 import 'rxjs/add/operator/filter';
 import  Swal  from 'sweetalert2';
@@ -13,7 +12,7 @@ import  Swal  from 'sweetalert2';
 })
 export class ContentFrameComponent implements OnInit {
 
-  constructor(private router: Router, private componentComms: ComponentsCommsService, private location: Location) {
+  constructor(private router: Router, private componentComms: ComponentsCommsService) {
     this.subscribeRouteChanges();
     this.subscribeLastURL();
   }

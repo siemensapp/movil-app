@@ -85,7 +85,7 @@ export class SaveIDBService {
 
   loadReportLS(report) {
     for (let field of Object.keys(report)) {
-      localStorage.setItem(field, report[field]);
+      localStorage.setItem(field, (field === 'hours')? JSON.stringify(report[field]) : report[field]);
     }
   }
 

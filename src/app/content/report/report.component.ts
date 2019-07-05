@@ -25,7 +25,9 @@ export class ReportComponent implements OnInit, OnDestroy {
   constructor(private componentComms: ComponentsCommsService, private httpRequest: HttpRequestsService, private router: Router, private idb: SaveIDBService, private isOnline: OnlineStatusService) { }
 
   ngOnDestroy() {
-    
+    if(window.location.href.includes('reports-list')) {
+      this.emptyLS();
+    }
   }
 
   ngOnInit() {
@@ -35,22 +37,13 @@ export class ReportComponent implements OnInit, OnDestroy {
     
     this.aparicionBoton();
     this.assignmentData = this.componentComms.getDataAssignment();
-    this.reportData = JSON.parse(localStorage.getItem(this.nuevoConsecutivo()));
-    console.log('Report Data : ', this.reportData);
     this.componentComms.setBackStatus(true);
     localStorage.removeItem('dateToChange');
 
     // Se cargan las horas
-    if( localStorage.getItem('lastURL').includes('hours') ) {
-      this.hours = this.componentComms.getHours()
-    } else {
-      this.hours = this.reportData['hours'];
-      // Carga las horas a localStorage si vienen de hours
-      localStorage.setItem('hours', JSON.stringify(this.hours));
-    }
-    
+    this.hours = this.componentComms.getHours();
+    console.log('hours :', this.hours);
 
-    console.log(this.hours);
     this.resizeAndSetTextArea();
     this.saveAndSetInputValues();
     this.SetCanvas();
@@ -74,6 +67,16 @@ export class ReportComponent implements OnInit, OnDestroy {
     })
   }
 
+  
+  emptyLS() {
+    for(let input of this.allInputs) localStorage.removeItem(input);
+    for(let text of this.textAreas) localStorage.removeItem(text);
+    for(let firmas of this.firmCanvas) localStorage.removeItem(firmas);
+    localStorage.removeItem('hours');
+    localStorage.removeItem('Consecutivo');
+    console.log('LS is empty'); 
+  }
+  
   mostrar(campo: string, borrar:string, guardar:string){
     var canvas = <HTMLCanvasElement> document.getElementById(campo);
     var context = canvas.getContext('2d'); 
@@ -180,11 +183,9 @@ export class ReportComponent implements OnInit, OnDestroy {
 
   resizeAndSetTextArea() {
     for (let id of this.textAreas) {
+      console.log('Just textArea: ', id);
       let item = <HTMLTextAreaElement>document.getElementById(id);
-
-      if ( this.reportData.hasOwnProperty(id) ) {
-        item.value = this.reportData[id];
-      }
+      item.value = localStorage.getItem(id);
 
       //Event listener para guardar contenido del input al perder focus
       item.addEventListener('blur', () => {
@@ -201,9 +202,10 @@ export class ReportComponent implements OnInit, OnDestroy {
   SetCanvas() {
     for (let id of this.firmCanvas) {
       let item = <HTMLCanvasElement>document.getElementById(id);
-
+      let firma = localStorage.getItem(id);
       // Carga firma si ya existia anterirormente
-      if (this.reportData.hasOwnProperty(id)) {
+      console.log('Just firma: ', id, firma);
+      if (firma !== "") {
         let ctx = item.getContext("2d");
         let image = new Image();
         image.onload = () => {
@@ -212,22 +214,14 @@ export class ReportComponent implements OnInit, OnDestroy {
         image.src = this.reportData[id];
         if(this.reportData[id] !== "" && this.reportData[id] !== null && this.reportData[id] !== 'null') document.getElementById('checked' + id).style.visibility = "visible";
       }
-
     }
   }
 
   saveAndSetInputValues() {
     for (let id of this.allInputs) {
+      console.log('Just inputs: ', id);
       let item = <HTMLInputElement>document.getElementById(id);
-
-      /** Si el dato existe en el reporte, lo carga.
-       *  Si no, revisa si esta en datos de la asignacion
-       *    => Si es asi, lo carga
-       *    => Si no, crea una cadena vacia0
-       */      
-
-      item.value = ( this.assignmentData.hasOwnProperty(id) ) ? this.assignmentData[id]: this.reportData[id] ;
-      if(id == "NombreMarca") item.value = "SIEMENS"
+      item.value = localStorage.getItem(id);
       
       // Event listener para guardar datos cuando el input pierde focus
       item.addEventListener('blur', () => {
@@ -305,15 +299,6 @@ export class ReportComponent implements OnInit, OnDestroy {
 
     var campoE = <HTMLCanvasElement> document.getElementById('campoEmisor');
     var imagencampoE = campoE.toDataURL();
-
-    var campoRO = <HTMLCanvasElement> document.getElementById('campoResponsableO');
-    var imagencampoRO = campoRO.toDataURL();
-
-    var campoCo = <HTMLCanvasElement> document.getElementById('campoComerciante');
-    var imagencampoCo = campoCo.toDataURL();
-
-    var campoRP = <HTMLCanvasElement> document.getElementById('campoResponsableP');
-    var imagencampoRP = campoRP.toDataURL();
 
     var campoCli = <HTMLCanvasElement> document.getElementById('campoCliente');
     var imagencampoCli = campoCli.toDataURL();
