@@ -322,7 +322,7 @@ export class ReportComponent implements OnInit, OnDestroy {
         'NombreColaborador' : NombreColaborador,
         'NombreProyecto' : NombreProyecto,
         'DescripcionAlcance' : DescripcionAlcance,
-        'HojaTiempo' : hojaTiempo,
+        'hours' : hojaTiempo,
         'Marca' : Marca,
         'DenominacionInterna' : DenominacionInterna,
         'NumeroProducto' : NumeroProducto,
