@@ -14,6 +14,8 @@ export class AddHoursComponent implements OnInit {
   dateToChange = null;
   dateForInput = null;
 
+  assignmentDates = [];
+
   ngOnInit() {
     this.aparicionBoton();
     this.dateToChange = localStorage.getItem('dateToChange');
@@ -23,6 +25,12 @@ export class AddHoursComponent implements OnInit {
     let dateForInputAux = new Date(this.dateToChange);
     dateForInputAux.setDate(dateForInputAux.getDate() + 1); 
     this.dateForInput = dateForInputAux.toISOString().split("T")[0];
+
+    // Obtener fechas de asignacion
+    this.assignmentDates.push(this.componentComms.getDataAssignment()['FechaInicio'])
+    this.assignmentDates.push(this.componentComms.getDataAssignment()['FechaFin'])
+    console.log('Fecha inicio asignacion:', new Date(this.assignmentDates[0]).toISOString().split('T')[0])
+    console.log('Fecha fin asignacion:', new Date(this.assignmentDates[1]).toISOString().split('T')[0])
 
     // Flujo normal
     this.componentComms.setBackStatus(true);
@@ -42,22 +50,43 @@ export class AddHoursComponent implements OnInit {
     })
   }
 
+  returnTimeFromString( time ) {
+    let aux = new Date();
+    aux.setHours(parseInt(time.split(':')[0]));
+    aux.setMinutes(parseInt(time.split(':')[1]));
+    return aux;
+  }
+
   diferenciaEntreTiempos( tiempo1, tiempo2) {
     // Diferencia entre Desde y Hasta
-    let auxDiffDesde = new Date();
-    let auxDiffHasta = new Date();
-
-    auxDiffDesde.setHours( parseInt(tiempo1.split(':')[0]) )
-    auxDiffDesde.setMinutes( parseInt(tiempo1.split(':')[1]) )
-
-    auxDiffHasta.setHours( parseInt(tiempo2.split(':')[0]) )
-    auxDiffHasta.setMinutes( parseInt(tiempo2.split(':')[1]) )
+    let auxDiffDesde = this.returnTimeFromString(tiempo1);
+    let auxDiffHasta = this.returnTimeFromString(tiempo2);
 
     let diff = Math.abs(auxDiffHasta.getTime() - auxDiffDesde.getTime());
     let hh = Math.floor(diff / 1000 / 60 / 60);
     diff -= hh * 1000 * 60 * 60;
     let mm = Math.floor( diff / 1000 / 60);
 
+    let diffString = String( (hh < 10 ? '0' + hh : hh) + ':' + (mm < 10 ? '0' + mm : mm) );
+    return diffString;
+  }
+
+  sumaDeTiempos( fecha, descuento, servicioSitio, entrenamiento, tiempoViaje, tiempoEspera ) {
+    let auxFecha = this.returnTimeFromString(fecha).getTime();
+    let auxDescuento = this.returnTimeFromString(descuento).getTime();
+    let auxServicioSitio = this.returnTimeFromString(servicioSitio).getTime();
+    let auxEntrenamiento = this.returnTimeFromString(entrenamiento).getTime();
+    let auxTiempoViaje = this.returnTimeFromString(tiempoViaje).getTime()
+    let auxTiempoEspera = this.returnTimeFromString(tiempoEspera).getTime();
+
+    let suma = Math.abs(auxDescuento + auxServicioSitio + auxEntrenamiento + auxTiempoViaje + auxTiempoEspera);
+    suma -= auxFecha;
+    console.log('suma :', suma )
+
+    let hh = Math.floor(suma / 1000 / 60 / 60);
+    suma -= hh * 1000 * 60 * 60;
+    let mm = Math.floor( suma / 1000 / 60);
+    
     let diffString = String( (hh < 10 ? '0' + hh : hh) + ':' + (mm < 10 ? '0' + mm : mm) );
     return diffString;
   }
@@ -86,12 +115,15 @@ export class AddHoursComponent implements OnInit {
     let tiempoViaje = ( (<HTMLInputElement>document.getElementById("tiempoViaje")).value == "")? "00:00" : (<HTMLInputElement>document.getElementById("tiempoViaje")).value;
     let tiempoEspera = ( (<HTMLInputElement>document.getElementById("tiempoEspera")).value == "")? "00:00" : (<HTMLInputElement>document.getElementById("tiempoEspera")).value;
 
+    console.log('Suma de horas: ', this.sumaDeTiempos(fecha, descuento, servicioSitio, entrenamiento, tiempoViaje, tiempoEspera));
 
     /**
      *  VALIDACIONES
      * 
      *  Para ser guardado debe:
      *  => Haber una fecha
+     *  => La fecha elegida no esta en el rango de las fechas de la asignacion
+     *  => Desde y Hasta no pueden ser 00:00 a la vez
      *  => Desde < Hasta
      *  => Descuento < Desde - Hasta
      */
@@ -102,6 +134,22 @@ export class AddHoursComponent implements OnInit {
         type: 'warning',
         title: 'Debes ingresar una fecha !',
         text: "Toca en 'Selecciona una fecha'"
+      })
+    }
+    // La fecha esta en el rango de las fechas de asignacion?
+    else if ( (new Date(fecha) < new Date(this.assignmentDates[0])) || (new Date(fecha) > new Date(this.assignmentDates[1]))) {
+      Swal.fire({
+        type: 'warning',
+        title: 'Fecha no esta en el rango !',
+        html: "La fecha elegida no esta en el rango de las fechas de la asignación.<br><strong>Fecha Inicio: </strong>" + String(new Date(this.assignmentDates[0]).toISOString().split('T')[0]) + "<br><strong>Fecha Fin: </strong>" + String(new Date(this.assignmentDates[1]).toISOString().split('T')[0])
+      })
+    }
+    // Ambos valores desde y hasta no pueden ser 00:00
+    else if (desde == '00:00' && hasta == '00:00') {
+      Swal.fire({
+        type: 'warning',
+        title: "Ambos valores 'Desde' y 'Hasta' no pueden ser '00:00'",
+        text: "Selecciona valores validos"
       })
     }
     // Desde < Hasta 
