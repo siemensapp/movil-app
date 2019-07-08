@@ -13,7 +13,7 @@ import Swal from 'sweetalert2';
 export class SaveIDBService {
 
   private mobileDB;
-  private reportFields = ['NombreEmpresa', 'NombreContacto', "NombreE", "NombreProyecto", 'NombreMarca', 'DenominacionInterna', 'NumeroProducto', 'NumeroSerial', 'CaracteristicasTecnicas', 'EstadoInicial', 'descripcionAlcance', 'actividadesRealizadas', 'conclusionesRecomendaciones', 'repuestosSugeridos', 'actividadesPendientes', 'campoEmisor', 'campoCliente'];
+  private reportFields = ['NombreEmpresa', 'NombreContacto', "NombreE", "NombreProyecto", 'NombreMarca', 'DenominacionInterna', 'NumeroProducto', 'NumeroSerial', 'CaracteristicasTecnicas', 'EstadoInicial', 'DescripcionAlcance', 'ActividadesRealizadas', 'ConclusionesRecomendaciones', 'RepuestosSugeridos', 'ActividadesPendientes', 'campoEmisor', 'campoCliente'];
   private firmasFields = ['campoEmisor', 'campoCliente'];
 
   constructor(private componentsComms: ComponentsCommsService) {
@@ -69,7 +69,7 @@ export class SaveIDBService {
       NombreEmpresa: assignment['NombreEmpresa'],
       NombreE: this.componentsComms.getNameE(),
       NombreMarca: 'SIEMENS',
-      descripcionAlcance: assignment['Descripcion'],
+      DescripcionAlcance: assignment['Descripcion'],
       NombreContacto: assignment['NombreContacto'],
       hours: {}
     };
@@ -134,9 +134,14 @@ export class SaveIDBService {
   }
 
   saveReportHidden(report) {
-    this.mobileDB.reports.put(report)
+    // this.mobileDB.reports.put(report, report['Consecutivo'])
+    //   .then(() => {
+    //     console.log('Reporte actualizado!');
+    //   })
+    console.log('Reporte que llega a saveReportHidden : ', report);
+    this.mobileDB.reports.update(report['Consecutivo'], report)
       .then(() => {
-        console.log('Reporte actualizado!');
+        console.log('Reporte actualizado')
       })
   }
 

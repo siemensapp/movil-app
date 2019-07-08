@@ -14,8 +14,9 @@ import {url} from '../../../assets/js/variables';
 })
 export class ReportComponent implements OnInit, OnDestroy {
   private allInputs = [ 'NombreEmpresa', 'NombreContacto', "NombreE", "NombreProyecto", 'NombreMarca', 'DenominacionInterna', 'NumeroProducto', 'NumeroSerial', 'CaracteristicasTecnicas', 'EstadoInicial'];
-  private textAreas = [ 'descripcionAlcance', 'actividadesRealizadas', 'conclusionesRecomendaciones', 'repuestosSugeridos', 'actividadesPendientes' ];
+  private textAreas = [ 'DescripcionAlcance', 'ActividadesRealizadas', 'ConclusionesRecomendaciones', 'RepuestosSugeridos', 'ActividadesPendientes' ];
   private firmCanvas = [ 'campoEmisor', 'campoCliente' ];
+  private whiteCanvas = "data:image/png;base64,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";
   hours;
   assignment;
   assignmentData;
@@ -26,6 +27,7 @@ export class ReportComponent implements OnInit, OnDestroy {
 
   ngOnDestroy() {
     var report = this.crearReporte("LS");
+    console.log('Report on destroy:', report);
     if(window.location.href.includes('reports-list')) {
       this.idb.saveReportHidden(report);
       this.emptyLS();
@@ -188,7 +190,6 @@ export class ReportComponent implements OnInit, OnDestroy {
 
   resizeAndSetTextArea() {
     for (let id of this.textAreas) {
-      console.log('Just textArea: ', id);
       let item = <HTMLTextAreaElement>document.getElementById(id);
       item.value = localStorage.getItem(id);
 
@@ -209,22 +210,20 @@ export class ReportComponent implements OnInit, OnDestroy {
       let item = <HTMLCanvasElement>document.getElementById(id);
       let firma = localStorage.getItem(id);
       // Carga firma si ya existia anterirormente
-      console.log('Just firma: ', id, firma);
       if (firma !== "") {
         let ctx = item.getContext("2d");
         let image = new Image();
         image.onload = () => {
           ctx.drawImage(image, 0, 0);
         }
-        image.src = this.reportData[id];
-        if(this.reportData[id] !== "" && this.reportData[id] !== null && this.reportData[id] !== 'null') document.getElementById('checked' + id).style.visibility = "visible";
+        image.src = firma;
+        if(firma !== this.whiteCanvas && firma !== "" && firma !== null && firma !== 'null') document.getElementById('checked' + id).style.visibility = "visible";
       }
     }
   }
 
   saveAndSetInputValues() {
     for (let id of this.allInputs) {
-      console.log('Just inputs: ', id);
       let item = <HTMLInputElement>document.getElementById(id);
       item.value = localStorage.getItem(id);
       
@@ -238,7 +237,8 @@ export class ReportComponent implements OnInit, OnDestroy {
   // Para file input
   changeFiles(event){
     this.imagenes="";
-    var files = event.target.files; 
+    var files = event.target.files;
+    console.log("files", files) 
     for (var i = 0; i < files.length; i++) {
       var file = files[i];
       var picReader = new FileReader();
@@ -266,7 +266,7 @@ export class ReportComponent implements OnInit, OnDestroy {
     var nombreProyecto = <HTMLInputElement> document.getElementById('NombreProyecto');
     var NombreProyecto = nombreProyecto.value;
   
-    var descripcionAlcance = <HTMLTextAreaElement> document.getElementById('descripcionAlcance');
+    var descripcionAlcance = <HTMLTextAreaElement> document.getElementById('DescripcionAlcance');
     var DescripcionAlcance = descripcionAlcance.value;
 
     var hojaTiempo = this.hours;
@@ -289,16 +289,16 @@ export class ReportComponent implements OnInit, OnDestroy {
     var estadoInicial = <HTMLInputElement> document.getElementById('EstadoInicial');
     var EstadoInicial = estadoInicial.value;
 
-    var actividadesRealizadas = <HTMLTextAreaElement> document.getElementById('actividadesRealizadas');
+    var actividadesRealizadas = <HTMLTextAreaElement> document.getElementById('ActividadesRealizadas');
     var ActividadesRealizadas = actividadesRealizadas.value;
 
-    var conclusionesRecomendaciones = <HTMLTextAreaElement> document.getElementById('conclusionesRecomendaciones');
+    var conclusionesRecomendaciones = <HTMLTextAreaElement> document.getElementById('ConclusionesRecomendaciones');
     var ConclusionesRecomendaciones = conclusionesRecomendaciones.value;
 
-    var repuestosSugeridos = <HTMLTextAreaElement> document.getElementById('repuestosSugeridos');
+    var repuestosSugeridos = <HTMLTextAreaElement> document.getElementById('RepuestosSugeridos');
     var RepuestosSugeridos = repuestosSugeridos.value;
 
-    var actividadesPendientes = <HTMLTextAreaElement> document.getElementById('actividadesPendientes');
+    var actividadesPendientes = <HTMLTextAreaElement> document.getElementById('ActividadesPendientes');
     var ActividadesPendientes = actividadesPendientes.value;
 
 
@@ -315,7 +315,7 @@ export class ReportComponent implements OnInit, OnDestroy {
     let realMonth = (month < 10) ? String( '0' + month ) : String(month);
     let FechaCreacion = String(year) + '-' + realMonth + '-' + realDate;
 
-    var datos = {
+    var saveIDB = {
         'Consecutivo': this.nuevoConsecutivo(),
         'NombreCliente' : NombreCliente,
         'NombreContacto' : NombreContacto,
@@ -340,7 +340,7 @@ export class ReportComponent implements OnInit, OnDestroy {
         'Adjuntos' : this.imagenes
     }
 
-    var saveIDB = {
+    var datos = {
         'NombreEmpresa' : NombreCliente,
         'NombreContacto' : NombreContacto,
         'NombreE' : NombreColaborador,
