@@ -33,7 +33,6 @@
 .container {
     display: flex;
     flex-direction: column;
-    height: 100vh;
 }
 /* .plus-hover-btn {
     width: 60px;
@@ -73,11 +72,16 @@
 .report-hover-button {
     position: sticky;
     bottom: 20px;
+    left: 0;
+    right: 0;
+    margin-right: auto !important;
+    margin-left: auto !important;
     max-width: 50%;
     margin: 10px auto;
     outline: none;  
     
     justify-content: center;
+    align-self: center;
     display: flex;
     
     padding: 15px 25px;

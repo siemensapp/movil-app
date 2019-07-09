@@ -91,6 +91,9 @@ export class ContentFrameComponent implements OnInit {
         let mapOpen = this.componentComms.getDetailsMapStatus();
         this.componentComms.setDetailsMapStatus( !mapOpen );
         navbarbuttonright.style.outline = (!mapOpen)? "solid 1px black" : "none";
+    } else if (url.includes('report')) {
+        let mapOpen = this.componentComms.getDetailsMapStatus();
+        this.componentComms.setDetailsMapStatus( !mapOpen );
     }
   }
 

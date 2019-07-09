@@ -6,6 +6,7 @@ import { SaveIDBService } from '../../save-idb.service';
 import { Router } from '@angular/router';
 import  Swal  from 'sweetalert2';
 import {url} from '../../../assets/js/variables';
+import { BehaviorSubject } from 'rxjs';
 
 @Component({
   selector: 'app-report',
@@ -20,8 +21,8 @@ export class ReportComponent implements OnInit, OnDestroy {
   hours;
   assignment;
   assignmentData;
-  reportData;
-  imagenes;
+  auxImages = [];
+  imagenes = new BehaviorSubject([]);
 
   constructor(private componentComms: ComponentsCommsService, private httpRequest: HttpRequestsService, private router: Router, private idb: SaveIDBService, private isOnline: OnlineStatusService) { }
 
@@ -39,10 +40,11 @@ export class ReportComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     
-    // // Elimina posibles firmas residuales, para solo trabajar con las del reporte
-    // for(let x of this.firmCanvas)localStorage.removeItem(x);
+    // Suscribir a boton derecho de navbar
+    this.componentComms.rightNavBtn.subscribe(mapOpen => {
+      this.subirReporte();
+    });
     
-    this.aparicionBoton();
     this.assignmentData = this.componentComms.getDataAssignment();
     this.componentComms.setBackStatus(true);
     localStorage.removeItem('dateToChange');
@@ -65,15 +67,6 @@ export class ReportComponent implements OnInit, OnDestroy {
     localStorage.setItem('dateToChange', date);
     this.router.navigate(['home/hours']);
   }
-
-  aparicionBoton(){
-    var originalSize = window.innerWidth + window.innerHeight;
-    var sendButton = document.getElementById("sendBtn");
-    window.addEventListener("resize", () => {
-      (window.innerHeight + window.innerWidth !== originalSize) ? sendButton.style.display = "none" : sendButton.style.display = "flex";
-    })
-  }
-
   
   emptyLS() {
     for(let input of this.allInputs) localStorage.removeItem(input);
@@ -178,7 +171,7 @@ export class ReportComponent implements OnInit, OnDestroy {
       canvas.style.visibility = 'visible';
       canvas.style.height = '250px';
       canvas.style.width = '500px';
-      canvas.style.margin = "auto";
+      canvas.style.margin = "0 auto 100px auto";
       let signBorrar = document.getElementById(borrar);
       let signGuardar = document.getElementById(guardar);
       signBorrar.style.visibility = 'visible';
@@ -236,20 +229,38 @@ export class ReportComponent implements OnInit, OnDestroy {
 
   // Para file input
   changeFiles(event){
-    this.imagenes="";
+    var images = [];
     var files = event.target.files;
     console.log("files", files) 
     for (var i = 0; i < files.length; i++) {
-      var file = files[i];
-      var picReader = new FileReader();
-      picReader.addEventListener("load", (event:any) => {
-          var picFile = event.target;
-          this.imagenes = this.imagenes + String(picFile.result);
-      });
-      picReader.readAsDataURL(file);
+      var reader = new FileReader();
+      reader.onload = function(e) {
+        images.push( (<FileReader>e.target).result)
+        console.log('images onload', images);
+      }
+      reader.readAsDataURL(files[i]);
     }
+    this.imagenes.next(images);
+    console.log('imagenes adjuntas: ', images);
     let label = <HTMLLabelElement>document.getElementById('label-camara');
-    label.innerHTML = (files.length > 0)? '<i class="fas fa-paperclip"></i>  ' + files.length + ' archivos' : '<i class="fas fa-paperclip"></i> Elige archivos';
+    label.innerHTML = (files.length > 0)? files.length + ' Adjuntos' : '<i class="fas fa-paperclip"></i> Adjuntar';
+  }
+
+  nuevoConsecutivo() {
+    /**
+     * Consecutivo para guardar localmente antes de enviar
+     * 
+     * return IdEmpresa + IdTecnica + FechaInicio
+     */
+    let fechaCompleta = this.assignmentData['FechaInicio'].split("T")[0];
+    let idEmpresa = this.assignmentData['IdEmpresa'];
+    let tecnica = this.assignmentData['IdTecnica'];
+
+    let fechaAux = fechaCompleta.split("-");
+    let fecha = String(fechaAux[0] + fechaAux[1] + fechaAux[2]);
+
+
+    return String(idEmpresa + '-' + tecnica + '-' + fecha );
   }
 
   crearReporte( tipo ){
@@ -315,8 +326,11 @@ export class ReportComponent implements OnInit, OnDestroy {
     let realMonth = (month < 10) ? String( '0' + month ) : String(month);
     let FechaCreacion = String(year) + '-' + realMonth + '-' + realDate;
 
-    var saveIDB = {
-        'Consecutivo': this.nuevoConsecutivo(),
+    var datos;
+
+    if (tipo == "enviar") {
+      datos = {
+        'Consecutivo': this.idb.nuevoConsecutivo(),
         'NombreCliente' : NombreCliente,
         'NombreContacto' : NombreContacto,
         'NombreColaborador' : NombreColaborador,
@@ -334,13 +348,10 @@ export class ReportComponent implements OnInit, OnDestroy {
         'RepuestosSugeridos' : RepuestosSugeridos,
         'ActividadesPendientes' : ActividadesPendientes,
         'FirmaEmisor' : imagencampoE,
-        'FirmaCliente' : imagencampoCli,
-        'IdAsignacion' : this.assignment,
-        'FechaEnvio' : FechaCreacion,
-        'Adjuntos' : this.imagenes
-    }
-
-    var datos = {
+        'FirmaCliente' : imagencampoCli,        
+      }
+    } else {
+      datos = {
         'NombreEmpresa' : NombreCliente,
         'NombreContacto' : NombreContacto,
         'NombreE' : NombreColaborador,
@@ -358,33 +369,36 @@ export class ReportComponent implements OnInit, OnDestroy {
         'repuestosSugeridos' : RepuestosSugeridos,
         'actividadesPendientes' : ActividadesPendientes,
         'campoEmisor' : imagencampoE,
-        'campoCliente' : imagencampoCli
+        'campoCliente' : imagencampoCli,
+        'IdAsignacion' : this.assignment,
+        'FechaEnvio' : FechaCreacion,
+        'Adjuntos' : this.crearAdjuntosParaEnvio()
+      }
     }
-    return (tipo === "LS")? saveIDB : datos;
+
+    return datos;
   }
 
-  nuevoConsecutivo() {
-    /**
-     * Consecutivo para guardar localmente antes de enviar
-     * 
-     * return IdEmpresa + IdTecnica + FechaInicio
-     */
-    let fechaCompleta = this.assignmentData['FechaInicio'].split("T")[0];
-    let idEmpresa = this.assignmentData['IdEmpresa'];
-    let tecnica = this.assignmentData['IdTecnica'];
-
-    let fechaAux = fechaCompleta.split("-");
-    let fecha = String(fechaAux[0] + fechaAux[1] + fechaAux[2]);
-
-
-    return String(idEmpresa + '-' + tecnica + '-' + fecha );
+  crearAdjuntosParaEnvio() {
+    var imagenes = this.imagenes.getValue();
+    var comments = document.getElementsByClassName('fotos-comments');
+    var adjuntos = {};
+    for(let i = 0; i < imagenes.length; i++) {
+      adjuntos[`Foto ${i+1}`] = imagenes[i];
+      adjuntos[`Comentario ${i+1}`] = (<HTMLTextAreaElement>comments[i]).value;
+    }
+    return adjuntos;
   }
+
+  
 
   subirReporte() {
-    this.isOnline.connectionExists().then( online => {
-      let reporte = this.crearReporte("enviar");
-      (online)? this.enviarReporte(reporte) : this.guardarReporte(reporte);
-    })    
+    console.log('enviaria reporte si descomentara las funciones')
+    console.log(this.crearReporte("enviar"));
+    // this.isOnline.connectionExists().then( online => {
+    //   let reporte = this.crearReporte("enviar");
+    //   (online)? this.enviarReporte(reporte) : this.guardarReporte(reporte);
+    // })    
   }
 
   guardarReporte( reporte ){
