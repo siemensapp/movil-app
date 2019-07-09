@@ -29,8 +29,6 @@ export class AddHoursComponent implements OnInit {
     // Obtener fechas de asignacion
     this.assignmentDates.push(this.componentComms.getDataAssignment()['FechaInicio'])
     this.assignmentDates.push(this.componentComms.getDataAssignment()['FechaFin'])
-    console.log('Fecha inicio asignacion:', new Date(this.assignmentDates[0]).toISOString().split('T')[0])
-    console.log('Fecha fin asignacion:', new Date(this.assignmentDates[1]).toISOString().split('T')[0])
 
     // Flujo normal
     this.componentComms.setBackStatus(true);
@@ -71,30 +69,31 @@ export class AddHoursComponent implements OnInit {
     return diffString;
   }
 
-  sumaDeTiempos( fecha, descuento, servicioSitio, entrenamiento, tiempoViaje, tiempoEspera ) {
-    let auxFecha = this.returnTimeFromString(fecha).getTime();
-    let auxDescuento = this.returnTimeFromString(descuento).getTime();
-    let auxServicioSitio = this.returnTimeFromString(servicioSitio).getTime();
-    let auxEntrenamiento = this.returnTimeFromString(entrenamiento).getTime();
-    let auxTiempoViaje = this.returnTimeFromString(tiempoViaje).getTime()
-    let auxTiempoEspera = this.returnTimeFromString(tiempoEspera).getTime();
+  sumaDeTiempos( descuento, servicioSitio, entrenamiento, tiempoViaje, tiempoEspera ) {
+    let auxTimes = [];
+    auxTimes.push(this.returnTimeFromString(descuento));
+    auxTimes.push(this.returnTimeFromString(servicioSitio));
+    auxTimes.push(this.returnTimeFromString(entrenamiento));
+    auxTimes.push(this.returnTimeFromString(tiempoViaje));
+    auxTimes.push(this.returnTimeFromString(tiempoEspera));
 
-    let suma = Math.abs(auxDescuento + auxServicioSitio + auxEntrenamiento + auxTiempoViaje + auxTiempoEspera);
-    suma -= auxFecha;
-    console.log('suma :', suma )
+    var totalH = 0;
+    var totalM = 0;
+    for(let time of auxTimes) {
+      totalH += parseInt(time.getHours());
+      totalM += parseInt(time.getMinutes());
+    }
 
-    let hh = Math.floor(suma / 1000 / 60 / 60);
-    suma -= hh * 1000 * 60 * 60;
-    let mm = Math.floor( suma / 1000 / 60);
-    
-    let diffString = String( (hh < 10 ? '0' + hh : hh) + ':' + (mm < 10 ? '0' + mm : mm) );
-    return diffString;
+    if (totalM > 60) {
+      totalH += Math.floor(totalM / 60);
+      totalM = totalM % 60;
+    }
+    return String( (totalH < 10 ? '0' + totalH : totalH) + ':' + (totalM < 10 ? '0' + totalM : totalM) );
   }
 
   addOrModifyHours() {
     if( this.dateToChange ) {
       var dateData = this.componentComms.getHours()[this.dateToChange];    
-      console.log('date data:', dateData);
       (<HTMLInputElement>document.getElementById("desde")).value = dateData['desde'];
       (<HTMLInputElement>document.getElementById("hasta")).value = dateData['hasta'];
       (<HTMLInputElement>document.getElementById("descuento")).value = dateData['descuento'];
@@ -114,8 +113,6 @@ export class AddHoursComponent implements OnInit {
     let entrenamiento = ( (<HTMLInputElement>document.getElementById("entrenamiento")).value == "")? "00:00" : (<HTMLInputElement>document.getElementById("entrenamiento")).value;
     let tiempoViaje = ( (<HTMLInputElement>document.getElementById("tiempoViaje")).value == "")? "00:00" : (<HTMLInputElement>document.getElementById("tiempoViaje")).value;
     let tiempoEspera = ( (<HTMLInputElement>document.getElementById("tiempoEspera")).value == "")? "00:00" : (<HTMLInputElement>document.getElementById("tiempoEspera")).value;
-
-    console.log('Suma de horas: ', this.sumaDeTiempos(fecha, descuento, servicioSitio, entrenamiento, tiempoViaje, tiempoEspera));
 
     /**
      *  VALIDACIONES
@@ -167,7 +164,18 @@ export class AddHoursComponent implements OnInit {
         title: 'Descuento invalido',
         text: "El tiempo 'descuento' debe ser menor que el tiempo entre 'hasta' y 'desde'"
       })
-    } else {
+    } 
+    // La suma de las horas de viaje, descuento, entrenamiento, etc.
+    // Deben ser menores o iguales a Desde - Hasta
+    else if ( this.diferenciaEntreTiempos(desde, hasta) < this.sumaDeTiempos(descuento, servicioSitio, entrenamiento, tiempoViaje, tiempoEspera) ){
+      Swal.fire({
+        type: 'warning',
+        title: 'Error de horas',
+        text: "La suma de las horas no concuerda con el tiempo entre 'Desde' y 'Hasta'."
+      })
+    }
+
+    else {
       let hours = this.componentComms.getHours();
       console.log("hours 1:", hours);
       hours[fecha] = {
