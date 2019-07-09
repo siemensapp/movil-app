@@ -349,15 +349,19 @@ export class ReportComponent implements OnInit, OnDestroy {
         'ActividadesPendientes' : ActividadesPendientes,
         'FirmaEmisor' : imagencampoE,
         'FirmaCliente' : imagencampoCli,        
+        'IdAsignacion' : this.assignment,
+        'FechaEnvio' : FechaCreacion,
+        'Adjuntos' : this.crearAdjuntosParaEnvio()
       }
     } else {
       datos = {
+        'Consecutivo': this.idb.nuevoConsecutivo(),
         'NombreEmpresa' : NombreCliente,
         'NombreContacto' : NombreContacto,
         'NombreE' : NombreColaborador,
         'NombreProyecto' : NombreProyecto,
         'descripcionAlcance' : DescripcionAlcance,
-        'hours' : hojaTiempo,
+        'HojaTiempo' : hojaTiempo,
         'NombreMarca' : Marca,
         'DenominacionInterna' : DenominacionInterna,
         'NumeroProducto' : NumeroProducto,
@@ -369,10 +373,7 @@ export class ReportComponent implements OnInit, OnDestroy {
         'repuestosSugeridos' : RepuestosSugeridos,
         'actividadesPendientes' : ActividadesPendientes,
         'campoEmisor' : imagencampoE,
-        'campoCliente' : imagencampoCli,
-        'IdAsignacion' : this.assignment,
-        'FechaEnvio' : FechaCreacion,
-        'Adjuntos' : this.crearAdjuntosParaEnvio()
+        'campoCliente' : imagencampoCli        
       }
     }
 

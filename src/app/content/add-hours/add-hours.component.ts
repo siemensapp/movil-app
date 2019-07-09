@@ -36,8 +36,13 @@ export class AddHoursComponent implements OnInit {
   }
 
   formatDate( date ) {
+    console.log('Fecha sola:', date)
     let auxDate = new Date(date);
-    return String(auxDate.getFullYear() + "-" + ( (auxDate.getMonth() + 1 < 10)? "0" + (auxDate.getMonth() + 1) : (auxDate.getMonth() + 1) ) + "-" + ( (auxDate.getDate() < 10)? "0" + auxDate.getDate(): auxDate.getDate() ));
+    // Para comparar solo las fechas sin preocuparse por la hora
+    auxDate.setHours(0,0,0,0);
+    console.log('Fecha antes del formateo :', auxDate)
+    console.log('Fecha transformada', String(auxDate.getFullYear() + "-" + ( (auxDate.getMonth() + 1 < 10)? "0" + (auxDate.getMonth() + 1) : (auxDate.getMonth() + 1) ) + "-" + ( (auxDate.getDate() < 10)? "0" + auxDate.getDate(): auxDate.getDate() )));
+    return String(auxDate.getFullYear() + "-" + ( (auxDate.getMonth() + 1 < 10)? "0" + (auxDate.getMonth() + 1) : (auxDate.getMonth() + 1) ) + "-" + ( (auxDate.getDate() < 10)? "0" + auxDate.getDate() : auxDate.getDate()));
   }
 
   aparicionBoton(){
@@ -105,7 +110,8 @@ export class AddHoursComponent implements OnInit {
   }
 
   saveHours() {
-    let fecha = (this.dateToChange !== null) ? this.dateToChange : this.formatDate((<HTMLInputElement>document.getElementById("fecha")).value);
+    // let fecha = (this.dateToChange !== null) ? this.dateToChange : this.formatDate((<HTMLInputElement>document.getElementById("fecha")).value);
+    let fecha = this.formatDate((<HTMLInputElement>document.getElementById("fecha")).value);
     let desde = ( (<HTMLInputElement>document.getElementById("desde")).value == "")? "00:00" : (<HTMLInputElement>document.getElementById("desde")).value;
     let hasta = ( (<HTMLInputElement>document.getElementById("hasta")).value == "")? "00:00" : (<HTMLInputElement>document.getElementById("hasta")).value;
     let descuento = ( (<HTMLInputElement>document.getElementById("descuento")).value == "")? "00:00" : (<HTMLInputElement>document.getElementById("descuento")).value;
@@ -113,6 +119,12 @@ export class AddHoursComponent implements OnInit {
     let entrenamiento = ( (<HTMLInputElement>document.getElementById("entrenamiento")).value == "")? "00:00" : (<HTMLInputElement>document.getElementById("entrenamiento")).value;
     let tiempoViaje = ( (<HTMLInputElement>document.getElementById("tiempoViaje")).value == "")? "00:00" : (<HTMLInputElement>document.getElementById("tiempoViaje")).value;
     let tiempoEspera = ( (<HTMLInputElement>document.getElementById("tiempoEspera")).value == "")? "00:00" : (<HTMLInputElement>document.getElementById("tiempoEspera")).value;
+
+    // Para validaciones
+    let fechaMadeDate = new Date(fecha);
+    fechaMadeDate.setDate(fechaMadeDate.getDate() + 1);
+    // Para comparar solo las fechas sin preocuparse por la hora
+    fechaMadeDate.setHours(0,0,0,0);
 
     /**
      *  VALIDACIONES
@@ -134,7 +146,7 @@ export class AddHoursComponent implements OnInit {
       })
     }
     // La fecha esta en el rango de las fechas de asignacion?
-    else if ( (new Date(fecha) < new Date(this.assignmentDates[0])) || (new Date(fecha) > new Date(this.assignmentDates[1]))) {
+    else if ( (fechaMadeDate < new Date(this.assignmentDates[0])) || (fechaMadeDate > new Date(this.assignmentDates[1]))) {
       Swal.fire({
         type: 'warning',
         title: 'Fecha no esta en el rango !',
