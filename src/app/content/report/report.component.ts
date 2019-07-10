@@ -42,7 +42,7 @@ export class ReportComponent implements OnInit, OnDestroy {
     
     // Suscribir a boton derecho de navbar
     this.componentComms.rightNavBtn.subscribe(mapOpen => {
-      this.subirReporte();
+      if ( mapOpen) this.subirReporte();      
     });
     
     this.assignmentData = this.componentComms.getDataAssignment();
@@ -336,7 +336,7 @@ export class ReportComponent implements OnInit, OnDestroy {
         'NombreColaborador' : NombreColaborador,
         'NombreProyecto' : NombreProyecto,
         'DescripcionAlcance' : DescripcionAlcance,
-        'hours' : hojaTiempo,
+        'HojaTiempo' : hojaTiempo,
         'Marca' : Marca,
         'DenominacionInterna' : DenominacionInterna,
         'NumeroProducto' : NumeroProducto,
@@ -361,7 +361,7 @@ export class ReportComponent implements OnInit, OnDestroy {
         'NombreE' : NombreColaborador,
         'NombreProyecto' : NombreProyecto,
         'descripcionAlcance' : DescripcionAlcance,
-        'HojaTiempo' : hojaTiempo,
+        'hours' : hojaTiempo,
         'NombreMarca' : Marca,
         'DenominacionInterna' : DenominacionInterna,
         'NumeroProducto' : NumeroProducto,
@@ -394,12 +394,36 @@ export class ReportComponent implements OnInit, OnDestroy {
   
 
   subirReporte() {
-    console.log('enviaria reporte si descomentara las funciones')
-    console.log(this.crearReporte("enviar"));
-    // this.isOnline.connectionExists().then( online => {
-    //   let reporte = this.crearReporte("enviar");
-    //   (online)? this.enviarReporte(reporte) : this.guardarReporte(reporte);
-    // })    
+    /**
+     *  VALIDACIONES
+     */
+    var serial = (<HTMLInputElement>document.getElementById('NumeroSerial')).value;
+    var firma = (<HTMLCanvasElement>document.getElementById('campoCliente')).toDataURL();
+    // Tiene el serial escrito ? 
+    if( serial == '' ) {
+      Swal.fire({
+        type: 'warning',
+        title: 'Datos faltantes',
+        text: "El serial falta en el informe"
+      })
+    }
+    // La firma del cliente esta en blanco ?
+    else if( firma == this.whiteCanvas ) {
+      Swal.fire({
+        type: 'warning',
+        title: 'Datos faltantes',
+        text: "Falta la firma del cliente"
+      })
+    }
+    // Lo envia
+    else {
+      this.isOnline.connectionExists().then( online => {
+        let reporte = this.crearReporte("enviar");
+        console.log('Reporte para enviar :', reporte);
+        (online)? this.enviarReporte(reporte) : this.guardarReporte(reporte);
+      })    
+    }
+    
   }
 
   guardarReporte( reporte ){
