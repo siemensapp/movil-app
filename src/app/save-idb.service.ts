@@ -71,7 +71,8 @@ export class SaveIDBService {
       NombreMarca: 'SIEMENS',
       DescripcionAlcance: assignment['Descripcion'],
       NombreContacto: assignment['NombreContacto'],
-      hours: {}
+      hours: {},
+      Enviado: false
     };
 
     for (let field of this.reportFields) {

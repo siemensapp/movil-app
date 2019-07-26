@@ -11,7 +11,7 @@
               {{tasks.NombreReporte}}<br>
               Reporte General<br>
               {{tasks.Consecutivo}}
-              <div class="report-button" (click)="goToReport(tasks)"><i class="fas fa-angle-right"></i></div>
+              <div *ngIf="tasks.Enviado; else editIcon" class="report-button" (click)="goToReport(tasks)"><i style="color:green " class="fas fa-check-circle"></i></div>
           </div>
           <div class="taskPreviewDropdown" (click)="deleteReport(tasks.Consecutivo)">
               <i class="fas fa-trash-alt"></i> ELIMINAR
@@ -31,6 +31,10 @@
 
 <ng-template #loading>
   <div class="lds-dual-ring"></div>
+</ng-template>
+
+<ng-template #editIcon>
+  <i class="fas fa-angle-right"></i>
 </ng-template>
 
 <ng-template #emptyResults>
