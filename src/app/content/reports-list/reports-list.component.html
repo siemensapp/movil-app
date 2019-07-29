@@ -11,7 +11,7 @@
               {{tasks.NombreReporte}}<br>
               Reporte General<br>
               {{tasks.Consecutivo}}
-              <div *ngIf="tasks.Enviado; else editIcon" class="report-button" (click)="goToReport(tasks)"><i style="color:green " class="fas fa-check-circle"></i></div>
+              <div class="report-button" (click)="goToReport(tasks)"><i *ngIf="tasks.Enviado; else editIcon" style="color:green " class="fas fa-check-circle"></i></div>
           </div>
           <div class="taskPreviewDropdown" (click)="deleteReport(tasks.Consecutivo)">
               <i class="fas fa-trash-alt"></i> ELIMINAR

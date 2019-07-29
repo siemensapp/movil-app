@@ -37,6 +37,7 @@ export class ReportsListComponent implements OnInit {
   // Ir al reporte
   goToReport( report ) {
     this.idb.loadReportLS(report);
+    console.log('Reporte a Cargar: ', report);
     console.log('Report set in LS');
     this.router.navigate(["home/report"]);
   }
@@ -52,8 +53,9 @@ export class ReportsListComponent implements OnInit {
 
   // Eliminar reporte
   deleteReport( consecutivo ) {
-    this.idb.deleteReport(consecutivo);
-    this.getReportsFromAssignment();
+    this.idb.deleteReport(consecutivo).then(() => {
+      this.getReportsFromAssignment();
+    });    
   }
 
   // Crear reporte

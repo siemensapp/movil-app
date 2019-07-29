@@ -115,14 +115,14 @@ input, textarea {
 }
 
 
-#campoEmisor{
+#FirmaEmisor{
     visibility: hidden;
     height: 0px;
     border: 1px ridge gray;
     border-radius: 10px;
 }
 
-#campoCliente{
+#FirmaCliente{
     visibility: hidden;
     height: 0px;
     border: 1px ridge gray;

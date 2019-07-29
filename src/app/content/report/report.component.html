@@ -14,7 +14,7 @@
   </div>
   <div class="oneField">
     <div class="styledInput">
-      <input type="text" id="NombreE" placeholder=" " ><br>
+      <input type="text" id="NombreColaborador" placeholder=" " ><br>
       <label>Nombre Colaborador</label>
     </div>
   </div>
@@ -138,21 +138,21 @@
       </div>
     </div>
   <div class="subtitleReport">Firmas</div>
-      <a (click)="mostrar('campoEmisor', 'borrarEmisor', 'guardarEmisor')"><i class="fas fa-plus"></i> Añadir Firma Emisor
+      <a (click)="mostrar('FirmaEmisor', 'borrarEmisor', 'guardarEmisor')"><i class="fas fa-plus"></i> Añadir Firma Emisor
         <!-- <span *ngIf="this.reportData['campoEmisor'] && this.reportData['campoEmisor'] !== null && this.reportData['campoEmisor'] !== ''"><i style="color:green " class="fas fa-check-circle"></i></span> -->
-        <span id="checkedcampoEmisor" style="visibility: hidden"><i style="color:green " class="fas fa-check-circle"></i></span>
+        <span id="checkedFirmaEmisor" style="visibility: hidden"><i style="color:green " class="fas fa-check-circle"></i></span>
 
       </a>
         <button class="botonBorrado" id='borrarEmisor'>Borrar</button>
         <button class="botonGuardado" id='guardarEmisor'>Guardar</button>
-      <canvas id="campoEmisor" height="250" width="500" style="touch-action: none"></canvas>
-      <a (click)="mostrar('campoCliente', 'borrarCliente', 'guardarCliente')"><i class="fas fa-plus"></i> Añadir Firma Recibido Cliente
+      <canvas id="FirmaEmisor" height="250" width="500" style="touch-action: none"></canvas>
+      <a (click)="mostrar('FirmaCliente', 'borrarCliente', 'guardarCliente')"><i class="fas fa-plus"></i> Añadir Firma Recibido Cliente
         <!-- <span *ngIf="this.reportData['campoCliente'] && this.reportData['campoCliente'] !== null && this.reportData['campoCliente'] !== ''"><i style="color:green " class="fas fa-check-circle"></i></span> -->
-        <span id="checkedcampoCliente" style="visibility: hidden"><i style="color:green " class="fas fa-check-circle"></i></span>
+        <span id="checkedFirmaCliente" style="visibility: hidden"><i style="color:green " class="fas fa-check-circle"></i></span>
       </a>
         <button class="botonBorrado" id='borrarCliente'>Borrar</button>
         <button class="botonGuardado" id='guardarCliente'>Guardar</button>
-      <canvas id="campoCliente" height="250" width="500" style="touch-action: none; margin-bottom: 100px !important;"></canvas>
+      <canvas id="FirmaCliente" height="250" width="500" style="touch-action: none; margin-bottom: 100px !important;"></canvas>
       
   <div style="margin-bottom: 100px" *ngIf="imagenes | async as results">
     <div class="subtitleReport">Anexos Fotográficos</div>

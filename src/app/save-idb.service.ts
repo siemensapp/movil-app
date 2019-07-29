@@ -6,6 +6,7 @@ import {
 } from './components-comms.service';
 import Dexie from 'dexie';
 import Swal from 'sweetalert2';
+import { Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root'
@@ -13,10 +14,10 @@ import Swal from 'sweetalert2';
 export class SaveIDBService {
 
   private mobileDB;
-  private reportFields = ['NombreEmpresa', 'NombreContacto', "NombreE", "NombreProyecto", 'NombreMarca', 'DenominacionInterna', 'NumeroProducto', 'NumeroSerial', 'CaracteristicasTecnicas', 'EstadoInicial', 'DescripcionAlcance', 'ActividadesRealizadas', 'ConclusionesRecomendaciones', 'RepuestosSugeridos', 'ActividadesPendientes', 'campoEmisor', 'campoCliente'];
-  private firmasFields = ['campoEmisor', 'campoCliente'];
+  private reportFields = ['NombreEmpresa', 'NombreContacto', "NombreE", "NombreProyecto", 'NombreMarca', 'DenominacionInterna', 'NumeroProducto', 'NumeroSerial', 'CaracteristicasTecnicas', 'EstadoInicial', 'DescripcionAlcance', 'ActividadesRealizadas', 'ConclusionesRecomendaciones', 'RepuestosSugeridos', 'ActividadesPendientes', 'FirmaEmisor', 'FirmaCliente'];
+  private firmasFields = ['CampoEmisor', 'CampoCliente'];
 
-  constructor(private componentsComms: ComponentsCommsService) {
+  constructor(private componentsComms: ComponentsCommsService, private router: Router) {
     this.createDatabase();
   }
 
@@ -67,7 +68,7 @@ export class SaveIDBService {
       Consecutivo: (numeroReportes > 0) ? String(this.nuevoConsecutivo() + "-" + (numeroReportes + 1)) : this.nuevoConsecutivo(),
       NombreReporte: nombre,
       NombreEmpresa: assignment['NombreEmpresa'],
-      NombreE: this.componentsComms.getNameE(),
+      NombreColaborador: localStorage.getItem('NombreColaborador'),
       NombreMarca: 'SIEMENS',
       DescripcionAlcance: assignment['Descripcion'],
       NombreContacto: assignment['NombreContacto'],
@@ -146,7 +147,11 @@ export class SaveIDBService {
       })
   }
 
-  deleteReport(consecutivo) {
+  refreshAfterDelete() {
+    this.router.navigate['/home/reports-list'];
+  }
+
+  async deleteReport(consecutivo) {
     Swal.fire({
       title: 'Estas seguro?',
       text: `No podras recuperar el reporte ${consecutivo}`,
@@ -159,7 +164,8 @@ export class SaveIDBService {
           //Swal.fire('Reporte eliminado', 'de la memoria local', 'success');
           this.mobileDB.reports.delete(consecutivo)
             .then(() => {
-              Swal.fire('Reporte eliminado', 'de la memoria local', 'success');
+              Swal.fire('Reporte eliminado', 'de la memoria local', 'success')
+                .then(() => { this.refreshAfterDelete() });
             })
         }
     })

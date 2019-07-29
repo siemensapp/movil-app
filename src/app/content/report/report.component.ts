@@ -6,7 +6,7 @@ import { SaveIDBService } from '../../save-idb.service';
 import { Router } from '@angular/router';
 import  Swal  from 'sweetalert2';
 import {url} from '../../../assets/js/variables';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-report',
@@ -14,15 +14,14 @@ import { BehaviorSubject } from 'rxjs';
   styleUrls: ['./report.component.css']
 })
 export class ReportComponent implements OnInit, OnDestroy {
-  private allInputs = [ 'NombreEmpresa', 'NombreContacto', "NombreE", "NombreProyecto", 'NombreMarca', 'DenominacionInterna', 'NumeroProducto', 'NumeroSerial', 'CaracteristicasTecnicas', 'EstadoInicial'];
+  private allInputs = [ 'NombreEmpresa', 'NombreContacto', "NombreColaborador", "NombreProyecto", 'NombreMarca', 'DenominacionInterna', 'NumeroProducto', 'NumeroSerial', 'CaracteristicasTecnicas', 'EstadoInicial'];
   private textAreas = [ 'DescripcionAlcance', 'ActividadesRealizadas', 'ConclusionesRecomendaciones', 'RepuestosSugeridos', 'ActividadesPendientes' ];
-  private firmCanvas = [ 'campoEmisor', 'campoCliente' ];
+  private firmCanvas = [ 'FirmaEmisor', 'FirmaCliente' ];
   private whiteCanvas = "data:image/png;base64,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";
-  private enviado;
-  
+  private enviado = (localStorage.getItem('Enviado') !== null && localStorage.getItem('Enviado') == 'true')? true : false;
+  private RightBtnSubscription: Subscription;
+
   hours;
-
-
   assignment;
   assignmentData;
   auxImages = [];
@@ -31,6 +30,8 @@ export class ReportComponent implements OnInit, OnDestroy {
   constructor(private componentComms: ComponentsCommsService, private httpRequest: HttpRequestsService, private router: Router, private idb: SaveIDBService, private isOnline: OnlineStatusService) { }
 
   ngOnDestroy() {
+    this.componentComms.setDetailsMapStatus(false);
+    this.RightBtnSubscription.unsubscribe();
     var report = this.crearReporte("LS");
     console.log('Report on destroy:', report);
     if(window.location.href.includes('reports-list')) {
@@ -43,9 +44,9 @@ export class ReportComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    
+    // this.enviado = false;
     // Suscribir a boton derecho de navbar
-    this.componentComms.rightNavBtn.subscribe(mapOpen => {
+    this.RightBtnSubscription = this.componentComms.rightNavBtn.subscribe(mapOpen => {
       if ( mapOpen) this.subirReporte();      
     });
     
@@ -73,11 +74,12 @@ export class ReportComponent implements OnInit, OnDestroy {
   }
   
   emptyLS() {
-    for(let input of this.allInputs) localStorage.removeItem(input);
+    for(let input of this.allInputs) if(input === 'NombreColaborador') continue; else localStorage.removeItem(input);
     for(let text of this.textAreas) localStorage.removeItem(text);
     for(let firmas of this.firmCanvas) localStorage.removeItem(firmas);
     localStorage.removeItem('hours');
     localStorage.removeItem('Consecutivo');
+    localStorage.removeItem('Enviado');
     console.log('LS is empty'); 
   }
   
@@ -275,7 +277,7 @@ export class ReportComponent implements OnInit, OnDestroy {
     var NombreContacto = nombreContacto.value;
 
     
-    var nombreColaborador = <HTMLInputElement> document.getElementById('NombreE');
+    var nombreColaborador = <HTMLInputElement> document.getElementById('NombreColaborador');
     var NombreColaborador = nombreColaborador.value;
 
     var nombreProyecto = <HTMLInputElement> document.getElementById('NombreProyecto');
@@ -317,10 +319,10 @@ export class ReportComponent implements OnInit, OnDestroy {
     var ActividadesPendientes = actividadesPendientes.value;
 
 
-    var campoE = <HTMLCanvasElement> document.getElementById('campoEmisor');
+    var campoE = <HTMLCanvasElement> document.getElementById('FirmaEmisor');
     var imagencampoE = campoE.toDataURL();
 
-    var campoCli = <HTMLCanvasElement> document.getElementById('campoCliente');
+    var campoCli = <HTMLCanvasElement> document.getElementById('FirmaCliente');
     var imagencampoCli = campoCli.toDataURL();
     var timeStampCreacion = new Date();
     let date = timeStampCreacion.getDate();
@@ -334,7 +336,7 @@ export class ReportComponent implements OnInit, OnDestroy {
 
     if (tipo == "enviar") {
       datos = {
-        'Consecutivo': this.idb.nuevoConsecutivo(),
+        'Consecutivo': localStorage.getItem('Consecutivo'),
         'NombreCliente' : NombreCliente,
         'NombreContacto' : NombreContacto,
         'NombreColaborador' : NombreColaborador,
@@ -342,6 +344,7 @@ export class ReportComponent implements OnInit, OnDestroy {
         'DescripcionAlcance' : DescripcionAlcance,
         'HojaTiempo' : hojaTiempo,
         'Marca' : Marca,
+        'Enviado': this.enviado,
         'DenominacionInterna' : DenominacionInterna,
         'NumeroProducto' : NumeroProducto,
         'NumeroSerial' : NumeroSerial,
@@ -359,26 +362,26 @@ export class ReportComponent implements OnInit, OnDestroy {
       }
     } else {
       datos = {
-        'Consecutivo': this.idb.nuevoConsecutivo(),
+        'Consecutivo': localStorage.getItem('Consecutivo'),
         'NombreEmpresa' : NombreCliente,
         'NombreContacto' : NombreContacto,
         'NombreE' : NombreColaborador,
         'NombreProyecto' : NombreProyecto,
-        'descripcionAlcance' : DescripcionAlcance,
+        'DescripcionAlcance' : DescripcionAlcance,
         'hours' : hojaTiempo,
         'NombreMarca' : Marca,
         'DenominacionInterna' : DenominacionInterna,
         'NumeroProducto' : NumeroProducto,
         'NumeroSerial' : NumeroSerial,
-        'Enviado': true,
+        'Enviado': this.enviado,        
         'CaracteristicasTecnicas' : CaracteristicasTecnicas,
         'EstadoInicial' : EstadoInicial,
-        'actividadesRealizadas' : ActividadesRealizadas,
-        'conclusionesRecomendaciones' : ConclusionesRecomendaciones,
-        'repuestosSugeridos' : RepuestosSugeridos,
-        'actividadesPendientes' : ActividadesPendientes,
-        'campoEmisor' : imagencampoE,
-        'campoCliente' : imagencampoCli        
+        'ActividadesRealizadas' : ActividadesRealizadas,
+        'ConclusionesRecomendaciones' : ConclusionesRecomendaciones,
+        'RepuestosSugeridos' : RepuestosSugeridos,
+        'ActividadesPendientes' : ActividadesPendientes,
+        'FirmaEmisor' : imagencampoE,
+        'FirmaCliente' : imagencampoCli        
       }
     }
 
@@ -403,7 +406,7 @@ export class ReportComponent implements OnInit, OnDestroy {
      *  VALIDACIONES
      */
     var serial = (<HTMLInputElement>document.getElementById('NumeroSerial')).value;
-    var firma = (<HTMLCanvasElement>document.getElementById('campoCliente')).toDataURL();
+    var firma = (<HTMLCanvasElement>document.getElementById('FirmaCliente')).toDataURL();
     // Tiene el serial escrito ? 
     if( serial == '' ) {
       Swal.fire({
@@ -444,7 +447,11 @@ export class ReportComponent implements OnInit, OnDestroy {
       else {
         // Saves user number
         Swal.fire({type: "success", title: "Exito", text: 'Reporte enviado'})
-          .then(() => { this.router.navigate(['home/details']) });
+          .then(() => {
+            this.enviado = true;
+            console.log('')
+            this.router.navigate(['home/reports-list'])
+          });
       }
     });
   }

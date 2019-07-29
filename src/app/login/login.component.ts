@@ -25,10 +25,11 @@ export class LoginComponent implements OnInit {
         // Saves user number
         localStorage.setItem('Foto', result['Foto']);
         localStorage.setItem('NombreE', result['NombreE']);
+        localStorage.setItem('NombreColaborador', result['NombreColaborador']);
         localStorage.setItem('tokenApp', result['token']);
         localStorage.setItem('user', user);
 
-        Swal.fire({type: "success", title: "Exito", text: 'Inicio de sesiòn exitoso.'} )
+        Swal.fire({type: "success", title: "Exito", text: 'Inicio de sesión exitoso.'} )
           .then(() => { this.router.navigate(['home/assignments-list']) });
       }
     })

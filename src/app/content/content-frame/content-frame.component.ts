@@ -126,8 +126,9 @@ export class ContentFrameComponent implements OnInit {
     else if (url.includes('report')) {
       title = "Reporte general";
       buttonicon = "<i class='fas fa-arrow-left'></i>"
-      buttoniconright = '<i class="fas fa-file-upload"></i>';
-      navbarbuttonright.style.display = "inline";
+      buttoniconright ='<i class="fas fa-file-upload"></i>';
+      // Si el reporte ya ha sido enviado, no se muestra el boton de envio
+      navbarbuttonright.style.display = (localStorage.getItem('Enviado') == "true")? "none":"inline";
     }    
     else if (url.includes('hours')) {
       title = 'Hoja de horas';

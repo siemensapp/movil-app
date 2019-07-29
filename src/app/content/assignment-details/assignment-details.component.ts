@@ -1,5 +1,5 @@
 
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ComponentsCommsService } from '../../components-comms.service';
 import { HttpRequestsService } from 'src/app/http-requests.service';
 import { url } from '../../../assets/js/variables';
@@ -7,6 +7,7 @@ import Swal from 'sweetalert2';
 import { Router } from '@angular/router';
 import { SaveIDBService } from '../../save-idb.service';
 import { map } from 'rxjs-compat/operator/map';
+import { Subscription } from 'rxjs';
 
 
 @Component({
@@ -14,7 +15,11 @@ import { map } from 'rxjs-compat/operator/map';
   templateUrl: './assignment-details.component.html',
   styleUrls: ['./assignment-details.component.css']
 })
-export class AssignmentDetailsComponent implements OnInit {
+export class AssignmentDetailsComponent implements OnInit, OnDestroy {
+  // Subscripcion a boton derecho de navbar
+  private RightBtnSubscription: Subscription;
+
+
   data = null;
 
   // Set our map properties
@@ -31,9 +36,14 @@ export class AssignmentDetailsComponent implements OnInit {
 
   constructor(private componentsComms: ComponentsCommsService, private httpRequests: HttpRequestsService, private router: Router, private saveIDB: SaveIDBService) { }
 
-  ngOnInit() {
+  ngOnDestroy() {
+    this.componentsComms.setDetailsMapStatus(false);
+    this.RightBtnSubscription.unsubscribe();
+  }
+
+  ngOnInit() {    
     // Suscribir a boton derecho de navbar
-    this.componentsComms.rightNavBtn.subscribe(mapOpen => {
+    this.RightBtnSubscription = this.componentsComms.rightNavBtn.subscribe(mapOpen => {
       this.mapOpen = mapOpen;
       this.showMap(this.mapOpen);
       console.log('is map open :', this.mapOpen);
@@ -109,7 +119,6 @@ export class AssignmentDetailsComponent implements OnInit {
   }
 
   showMap( show ) {
-    let details = <HTMLElement>document.getElementById('details');
     let mapContainer = <HTMLElement>document.getElementById('map-container');
     if ( show ) {      
       mapContainer.style.transform = "translatex(100vw)";
