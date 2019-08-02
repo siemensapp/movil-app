@@ -1,0 +1,8 @@
+version: '2'
+services:
+  cmms-movil:
+      build: .
+#      command: 'http-server -p 4200 -c-1 dist/movil-app'
+      command: 'ng serve --port 4300 --host 0.0.0.0'
+      ports:
+        - '4300:4300'
