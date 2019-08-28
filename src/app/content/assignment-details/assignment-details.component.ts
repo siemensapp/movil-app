@@ -87,6 +87,8 @@ export class AssignmentDetailsComponent implements OnInit, OnDestroy {
         return 'Puesta en servicio';
       case 'V':
         return 'Soporte ventas';
+      case 'O':
+        return 'OTRO';
     }
   }
 
@@ -186,6 +188,38 @@ export class AssignmentDetailsComponent implements OnInit, OnDestroy {
     }
     else{
       Swal.fire('ERROR','No se pudo terminar la asignación','error');
+    }
+    });
+  }
+
+  rechazarServicio(){
+    this.componentsComms.getCurrentCords(true+'-'+ this.data['IdAsignacion']);
+    var timeStampHoy = new Date().toLocaleString();
+    var fechaHoy;
+    if(parseInt(timeStampHoy.split(" ")[0].split("/")[1])<10){
+      fechaHoy = timeStampHoy.split(" ")[0].split("/")[2]+'-0'+timeStampHoy.split(" ")[0].split("/")[1]+'-'+timeStampHoy.split(" ")[0].split("/")[0];
+    }
+    else{
+      fechaHoy = timeStampHoy.split(" ")[0].split("/")[2]+'-'+timeStampHoy.split(" ")[0].split("/")[1]+'-'+timeStampHoy.split(" ")[0].split("/")[0];
+    }
+    var horaHoy = new Date().toLocaleTimeString();
+    var timeStampFinal = fechaHoy+' '+horaHoy;
+
+    this.data['StatusAsignacion'] = 4;
+    this.componentsComms.setDataAssignment(this.data);
+    var datos = {
+      'tiempoInicio' : timeStampFinal,
+      'tiempoFin' : timeStampFinal,
+      'IdAsignacion' : this.data['IdAsignacion'],
+      'StatusAsignacion' : 4
+  }
+  this.httpRequests.postData(url + '/api/updateTimeStamps', JSON.stringify(datos)).then((res) => {
+    if(res !== "Error en la base de datos"){
+      Swal.fire('Asignacion Rechazada', timeStampFinal, 'warning');
+      this.router.navigate(['home/assignments-list']);
+    }
+    else{
+      Swal.fire('ERROR','No se pudo rechazar la asignación','error');
     }
     });
   }

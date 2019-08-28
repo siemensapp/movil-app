@@ -33,7 +33,7 @@
     {{data.CiudadPlanta}}<br>
     {{data.NombreSitio}}
   </div>
-  
+  <hr>
   <button *ngIf="data.StatusAsignacion !== 0" class="report-hover-button" [routerLink]="['/home/reports-list']">reporte</button>
   <div *ngIf="data.StatusAsignacion == 0" class="accept-decline-space">
     <button class="solid-background-btn accept-button" (click)="aceptarServicio()">ACEPTAR</button>
