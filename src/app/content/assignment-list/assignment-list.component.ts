@@ -39,6 +39,8 @@ export class AssignmentListComponent implements OnInit {
         return '#006486';
       case 3: 
         return 'green';
+      case 4:
+        return 'red';
     }
   }
 

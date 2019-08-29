@@ -109,7 +109,7 @@
         <div (click)="goToDetails(tasks)" class="taskPreview"
           [ngStyle]="{'border': rejectedBorder(tasks.StatusAsignacion)}">
           <div class="indicator"
-            [ngStyle]="{'display': rejectedPosition(tasks.StatusAsignacion)}">
+            [ngStyle]="{'background-color': indicatorColor(tasks.StatusAsignacion), 'display': rejectedPosition(tasks.StatusAsignacion)}">
           </div>
           <div class="condicionMuestra" [ngStyle]="{'display': rejectedPosition(tasks.StatusAsignacion)}">
             {{tasks.Descripcion}}<br>
