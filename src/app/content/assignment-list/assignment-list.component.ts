@@ -98,6 +98,20 @@ export class AssignmentListComponent implements OnInit {
       return 'none';
   }
 
+  rejectedPosition(status){
+    if(status==4)
+      return 'block';
+    else
+      return 'none';
+  }
+
+  rejectedBorder(status){
+    if(status==4)
+      return '1px solid rgba(0, 0, 0, 0.2)';
+    else
+      return 'none';
+  }
+
   // Funcion para verificar si navegador puede usar service-workers
   notificationsCheck() {
     if( this.swPush.isEnabled ) {
