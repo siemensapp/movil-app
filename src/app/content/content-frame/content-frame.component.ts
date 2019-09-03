@@ -4,6 +4,8 @@ import { Router, NavigationEnd, Event } from '@angular/router';
 import { ComponentsCommsService } from '../../components-comms.service';
 import 'rxjs/add/operator/filter';
 import  Swal  from 'sweetalert2';
+import { HttpRequestsService } from 'src/app/http-requests.service';
+
 
 @Component({
   selector: 'app-content-frame',
@@ -12,7 +14,7 @@ import  Swal  from 'sweetalert2';
 })
 export class ContentFrameComponent implements OnInit {
 
-  constructor(private router: Router, private componentComms: ComponentsCommsService) {
+  constructor(private router: Router, private componentComms: ComponentsCommsService, private httpClient: HttpRequestsService) {
     this.subscribeRouteChanges();
     this.subscribeLastURL();
   }
@@ -31,6 +33,8 @@ export class ContentFrameComponent implements OnInit {
   ngOnInit() {
 
     this.Foto = localStorage.getItem('Foto');
+    //console.log("FOTO");
+    //console.log(this.Foto);
     this.NombreE = localStorage.getItem("NombreE");   
 
     this.open.subscribe(data => {

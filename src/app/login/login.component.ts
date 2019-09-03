@@ -23,6 +23,7 @@ export class LoginComponent implements OnInit {
       if (!result.hasOwnProperty('token')) Swal.fire({type: "error", title: "Error", text: String(result)});
       else {
         // Saves user number
+        console.log(result['Foto']);
         localStorage.setItem('Foto', result['Foto']);
         localStorage.setItem('NombreE', result['NombreE']);
         localStorage.setItem('NombreColaborador', result['NombreColaborador']);
