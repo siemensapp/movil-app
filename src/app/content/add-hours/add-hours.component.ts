@@ -36,12 +36,12 @@ export class AddHoursComponent implements OnInit {
   }
 
   formatDate( date ) {
-    console.log('Fecha sola:', date)
+    //console.log('Fecha sola:', date)
     let auxDate = new Date(date);
     // Para comparar solo las fechas sin preocuparse por la hora
     auxDate.setHours(0,0,0,0);
-    console.log('Fecha antes del formateo :', auxDate)
-    console.log('Fecha transformada', String(auxDate.getFullYear() + "-" + ( (auxDate.getMonth() + 1 < 10)? "0" + (auxDate.getMonth() + 1) : (auxDate.getMonth() + 1) ) + "-" + ( (auxDate.getDate() < 10)? "0" + auxDate.getDate(): auxDate.getDate() )));
+    //console.log('Fecha antes del formateo :', auxDate)
+    //console.log('Fecha transformada', String(auxDate.getFullYear() + "-" + ( (auxDate.getMonth() + 1 < 10)? "0" + (auxDate.getMonth() + 1) : (auxDate.getMonth() + 1) ) + "-" + ( (auxDate.getDate() < 10)? "0" + auxDate.getDate(): auxDate.getDate() )));
     return String(auxDate.getFullYear() + "-" + ( (auxDate.getMonth() + 1 < 10)? "0" + (auxDate.getMonth() + 1) : (auxDate.getMonth() + 1) ) + "-" + ( (auxDate.getDate() < 10)? "0" + auxDate.getDate() : auxDate.getDate()));
   }
 
@@ -189,7 +189,7 @@ export class AddHoursComponent implements OnInit {
 
     else {
       let hours = this.componentComms.getHours();
-      console.log("hours 1:", hours);
+      //console.log("hours 1:", hours);
       hours[fecha] = {
         fecha: fecha,
         desde: desde,
@@ -202,7 +202,7 @@ export class AddHoursComponent implements OnInit {
       }
       
       this.componentComms.setHours(hours);
-      console.log("hours 2:", hours);
+      //console.log("hours 2:", hours);
       Swal.fire({type: "success", title: "Exito", text: 'Hora guardada'})
             .then(() => { 
               this.router.navigate(['home/report']);

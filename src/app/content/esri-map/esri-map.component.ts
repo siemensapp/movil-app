@@ -153,7 +153,7 @@ export class EsriMapComponent implements OnInit, OnDestroy {
           components: ["attribution"]
         }
       };
-      console.log("Done loading modules");
+      //console.log("Done loading modules");
       let view = new EsriMapView(mapViewProperties);
       let markerParams = this.prepareSitePoint();
       view.graphics.add(
@@ -201,7 +201,7 @@ export class EsriMapComponent implements OnInit, OnDestroy {
 
   // Finalize a few things once the MapView has been loaded
   houseKeeping(mapView) {
-    console.log("Got into house keeping");
+    //console.log("Got into house keeping");
     mapView.when(() => {
       console.log('mapView ready: ', mapView.ready);
       this._loaded = mapView.ready;

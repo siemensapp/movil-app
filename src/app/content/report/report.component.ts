@@ -33,13 +33,13 @@ export class ReportComponent implements OnInit, OnDestroy {
     this.componentComms.setDetailsMapStatus(false);
     this.RightBtnSubscription.unsubscribe();
     var report = this.crearReporte("LS");
-    console.log('Report on destroy:', report);
+    //console.log('Report on destroy:', report);
     if(window.location.href.includes('reports-list')) {
       this.idb.saveReportHidden(report);
       this.emptyLS();
     } else {
       for(let field of Object.keys(report)) localStorage.setItem(field, (field === 'hours')?JSON.stringify(report[field]): report[field])
-      console.log('Changed report!');
+      //console.log('Changed report!');
     }
   }
 
@@ -56,7 +56,7 @@ export class ReportComponent implements OnInit, OnDestroy {
 
     // Se cargan las horas
     this.hours = this.componentComms.getHours();
-    console.log('hours :', this.hours);
+    //console.log('hours :', this.hours);
 
     this.resizeAndSetTextArea();
     this.saveAndSetInputValues();
@@ -80,7 +80,7 @@ export class ReportComponent implements OnInit, OnDestroy {
     localStorage.removeItem('hours');
     localStorage.removeItem('Consecutivo');
     localStorage.removeItem('Enviado');
-    console.log('LS is empty'); 
+    //console.log('LS is empty'); 
   }
   
   mostrar(campo: string, borrar:string, guardar:string){
@@ -237,17 +237,17 @@ export class ReportComponent implements OnInit, OnDestroy {
   changeFiles(event){
     var images = [];
     var files = event.target.files;
-    console.log("files", files) 
+    //console.log("files", files) 
     for (var i = 0; i < files.length; i++) {
       var reader = new FileReader();
       reader.onload = function(e) {
         images.push( (<FileReader>e.target).result)
-        console.log('images onload', images);
+        //console.log('images onload', images);
       }
       reader.readAsDataURL(files[i]);
     }
     this.imagenes.next(images);
-    console.log('imagenes adjuntas: ', images);
+    //console.log('imagenes adjuntas: ', images);
     let label = <HTMLLabelElement>document.getElementById('label-camara');
     label.innerHTML = (files.length > 0)? files.length + ' Adjuntos' : '<i class="fas fa-paperclip"></i> Adjuntar';
   }
@@ -427,7 +427,7 @@ export class ReportComponent implements OnInit, OnDestroy {
     else {
       this.isOnline.connectionExists().then( online => {
         let reporte = this.crearReporte("enviar");
-        console.log('Reporte para enviar :', reporte);
+        //console.log('Reporte para enviar :', reporte);
         (online)? this.enviarReporte(reporte) : this.guardarReporte(reporte);
       })    
     }
@@ -436,11 +436,11 @@ export class ReportComponent implements OnInit, OnDestroy {
 
   guardarReporte( reporte ){
     this.idb.saveReport(reporte);
-    console.log('Reportes: \n', this.idb.getAllReports( this.idb.nuevoConsecutivo() ));
+    //console.log('Reportes: \n', this.idb.getAllReports( this.idb.nuevoConsecutivo() ));
   }
 
   enviarReporte( reporte ) {
-    console.log('Online :)');
+    //console.log('Online :)');
     Swal.showLoading();
     this.httpRequest.postData(url + '/api/saveGeneralReport', JSON.stringify(reporte)). then( result => {
       if (result == "false") Swal.fire({type: "error", title: "Error", text: "Error en subir reporte"});
@@ -449,7 +449,7 @@ export class ReportComponent implements OnInit, OnDestroy {
         Swal.fire({type: "success", title: "Exito", text: 'Reporte enviado'})
           .then(() => {
             this.enviado = true;
-            console.log('')
+            //console.log('')
             this.router.navigate(['home/reports-list'])
           });
       }

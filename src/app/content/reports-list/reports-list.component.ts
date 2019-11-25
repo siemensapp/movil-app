@@ -29,7 +29,7 @@ export class ReportsListComponent implements OnInit {
   // Trae reportes desde IndexedDB
   getReportsFromAssignment() {
     this.idb.getAllReports(this.idb.nuevoConsecutivo()).then( result => {
-      console.log('Inside getReportsFromAssignment:', result);
+      //console.log('Inside getReportsFromAssignment:', result);
       this.numeroReportes = result.length;
       this.loadingData.next(result);
     })
@@ -37,8 +37,8 @@ export class ReportsListComponent implements OnInit {
   // Ir al reporte
   goToReport( report ) {
     this.idb.loadReportLS(report);
-    console.log('Reporte a Cargar: ', report);
-    console.log('Report set in LS');
+    //console.log('Reporte a Cargar: ', report);
+    //console.log('Report set in LS');
     this.router.navigate(["home/report"]);
   }
 
@@ -74,11 +74,11 @@ export class ReportsListComponent implements OnInit {
     })
 
     if (reportName !== undefined) {
-      console.log(reportName)
+      //console.log(reportName)
       let report = this.idb.crearReporte(reportName, this.numeroReportes);
       this.idb.createReportIDB(report);
       this.getReportsFromAssignment();
-      console.log('Reporte creado : ', report);
+      //console.log('Reporte creado : ', report);
     }
   }
   

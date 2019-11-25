@@ -1,1 +1,1 @@
-export var url:string = 'http://127.0.0.1:3000';
+export var url:string = 'http://10.39.81.68:3000';

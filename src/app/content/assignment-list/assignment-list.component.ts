@@ -135,16 +135,16 @@ export class AssignmentListComponent implements OnInit {
 
     this.isOnline.connectionExists().then( status => {
       if ( status ) {
-        console.log('Online :)');
+        //console.log('Online :)');
         this.http.getData(url + "/api/getWorkerAssignments/" + this.user).then( result =>{
-          console.log(result);
+          //console.log(result);
           this.idb.saveAssignmentsLocally(result);
           this.loadingData.next(result);
         });     
       } else {
-        console.log('Offline :(');
+        //console.log('Offline :(');
         this.idb.getAllAssignments().then( result => {
-          console.log(result);
+          //console.log(result);
           this.loadingData.next(result);
         })
       }

@@ -80,9 +80,9 @@ export class ContentFrameComponent implements OnInit {
         cancelButtonText: 'Cancelar'}).then(() => {
           var hours = this.componentComms.getHours();
           var date = localStorage.getItem('dateToChange');
-          console.log('hours: ', hours);
+          //console.log('hours: ', hours);
           delete hours[date];
-          console.log('changed hours: ', hours );
+          //console.log('changed hours: ', hours );
           this.componentComms.setHours(hours);
           Swal.fire({type: "success", title: "Exito", text: 'Hora guardada'})
           .then(() => { 
@@ -156,7 +156,7 @@ export class ContentFrameComponent implements OnInit {
   subscribeLastURL() {
     this.router.events.subscribe((event:Event) => {
       if(event instanceof NavigationEnd) {
-        console.log('lastURL :', this.lastURL)
+        //console.log('lastURL :', this.lastURL)
         localStorage.setItem('lastURL', this.lastURL);
         this.lastURL = event.url;
       }      

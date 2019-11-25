@@ -46,14 +46,14 @@ export class AssignmentDetailsComponent implements OnInit, OnDestroy {
     this.RightBtnSubscription = this.componentsComms.rightNavBtn.subscribe(mapOpen => {
       this.mapOpen = mapOpen;
       this.showMap(this.mapOpen);
-      console.log('is map open :', this.mapOpen);
+      ////console.log('is map open :', this.mapOpen);
     });
 
     this.componentsComms.getCurrentCords(false + '');
     
     // Carga los detalles de la asignacion 
     this.data = this.componentsComms.getDataAssignment();
-    console.log('Data assignment: ', this.data);
+    ////console.log('Data assignment: ', this.data);
     // VALIDACION - Se necesita el status de la asignacion para habilitar boton     
     this.mapCenter = [ parseFloat(this.data['CoordenadasSitio'].split(",")[0]), parseFloat(this.data['CoordenadasSitio'].split(",")[1]) ];
     this.siteMarker = [ parseFloat(this.data['CoordenadasSitio'].split(",")[0]), parseFloat(this.data['CoordenadasSitio'].split(",")[1]) ];
@@ -62,7 +62,7 @@ export class AssignmentDetailsComponent implements OnInit, OnDestroy {
 
   // See app.component.html
   mapLoadedEvent(status: boolean) {
-    console.log('The map loaded: ' + status);
+    ////console.log('The map loaded: ' + status);
   }
 
   parseDate(date1, date2) {
